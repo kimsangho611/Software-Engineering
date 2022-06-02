@@ -1,0 +1,46 @@
+@mixin pos-center-x($posType) {
+  @if ($posType==fixed or $posType==absolute) {
+    position: $posType;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@mixin pos-center-y($posType) {
+  @if ($posType==fixed or $posType==absolute) {
+    position: $posType;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+@mixin pos-center($posType) {
+  @if ($posType==fixed or $posType==absolute) {
+    position: $posType;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@mixin pos(
+  $posType: absolute,
+  $top: false,
+  $right: false,
+  $bottom: false,
+  $left: false
+) {
+  position: $posType;
+  @if (type-of($top) ==number) {
+    top: $top;
+  }
+  @if (type-of($right) ==number) {
+    right: $right;
+  }
+  @if (type-of($bottom) ==number) {
+    bottom: $bottom;
+  }
+  @if (type-of($left) ==number) {
+    left: $left;
+  }
+}
