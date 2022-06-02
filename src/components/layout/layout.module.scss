@@ -1,0 +1,17 @@
+@import "../../styles/main.module.scss";
+.layout {
+  @extend %page-base;
+
+  .topBar {
+    @include flexBox(between, center);
+    padding: 0 50px;
+
+    .topBarBtn {
+      @extend %btn-base;
+    }
+  }
+
+  .contentLayout {
+    padding: 30px 80px 60px;
+  }
+}
