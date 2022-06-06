@@ -1,0 +1,16 @@
+@import "../../styles/main.module.scss";
+
+.adminMain {
+  @include flexBox(even, center);
+  flex-direction: column;
+
+  h1 {
+    @include text(36px, $text, 700);
+  }
+
+  .cardLine {
+    @include flexBox(between, center);
+    width: 1325px;
+    margin-bottom: 37px;
+  }
+}
