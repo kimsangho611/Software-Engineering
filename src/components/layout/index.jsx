@@ -8,10 +8,11 @@ import {
   IC_SecondHand,
 } from "../../assets/icons";
 import classNames from "classnames";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const TopBar = ({ openSide, setOpenSide }) => {
+  const navigate = useNavigate();
   return (
     <div className={styles.topBar}>
       <button
@@ -21,10 +22,18 @@ const TopBar = ({ openSide, setOpenSide }) => {
       >
         <IC_Hamburger_Bar />
       </button>
-      <button type="button" className={styles.topBarBtn}>
+      <button
+        type="button"
+        className={styles.topBarBtn}
+        onClick={() => navigate("/")}
+      >
         <IC_Logo />
       </button>
-      <button type="button" className={styles.topBarBtn}>
+      <button
+        type="button"
+        className={styles.topBarBtn}
+        onClick={() => navigate("/search")}
+      >
         <IC_Search />
       </button>
     </div>
