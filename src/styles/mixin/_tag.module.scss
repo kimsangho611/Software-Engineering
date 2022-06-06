@@ -1,0 +1,13 @@
+@mixin tag($bg: $main) {
+  width: 233px;
+  height: 44px;
+  border: 0;
+  border-radius: 30px;
+  @if (type-of($bg) ==string) {
+    background-color: $bg;
+  }
+
+  span {
+    @include text(28px, $white);
+  }
+}

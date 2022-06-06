@@ -1,0 +1,75 @@
+@import "../../styles/main.module.scss";
+.reportModal {
+  h1 {
+    @include text(30px, $text, 700);
+    margin-bottom: 43px;
+  }
+
+  span {
+    @include text(24px, $text, 500);
+    margin: 0;
+  }
+
+  textarea {
+    width: 493px;
+    height: 276px;
+    padding: 18px;
+    margin: 18px 0 33px;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    resize: none;
+  }
+
+  textarea::placeholder {
+    @include text(18px, $light_grey, 500, left);
+  }
+}
+
+.buyModal,
+.buySuccessModal {
+  h1 {
+    @include text(36px, $text, 700);
+    margin-bottom: 77px;
+  }
+
+  div {
+    @include flexBox;
+    flex-direction: column;
+    margin-bottom: 41px;
+
+    span {
+      @include text(36px, $text, 400, center);
+      display: block;
+    }
+
+    strong {
+      @include text(54px, $main, 700);
+
+      span {
+        @include text(36px, $text, 500);
+        display: inline-block;
+      }
+    }
+  }
+
+  .alert {
+    @include text(16px, $text, 400);
+    margin: 62px 0 14px;
+  }
+
+  .buyBtn {
+    margin-bottom: 17px;
+  }
+}
+
+.buyFailModal {
+  h1 {
+    @include text(36px, $text, 700);
+    margin: 0;
+  }
+
+  .chargeBtn {
+    margin: 127px 0 17px;
+  }
+}

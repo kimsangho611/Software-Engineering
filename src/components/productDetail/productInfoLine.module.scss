@@ -1,0 +1,15 @@
+@import "../../styles/main.module.scss";
+
+.infoLine {
+  @include flexBox(start, start);
+
+  .infoTitle {
+    @include text(24px, $text, 500, left);
+    width: 30%;
+  }
+
+  .infoContent {
+    @include text(24px, $text, 500, left);
+    width: 60%;
+  }
+}

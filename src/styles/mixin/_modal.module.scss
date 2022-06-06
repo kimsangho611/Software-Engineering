@@ -1,0 +1,20 @@
+%modal-base {
+  @include flexBox;
+  @include pos-center(absolute);
+  z-index: 2;
+  flex-direction: column;
+  width: 663px;
+  height: 675px;
+  background-color: $white;
+  border-radius: 30px;
+}
+
+%modal-background {
+  @extend %page-base;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 1;
+  background-color: rgba(196, 196, 196, 0.5);
+  transform: translateX(-50%);
+}
