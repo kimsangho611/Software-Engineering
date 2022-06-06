@@ -1,0 +1,42 @@
+@import "../../styles/main.module.scss";
+
+.mypagePoint,
+.mypageAsk {
+  @include flexBox(even, center);
+  flex-direction: column;
+
+  .mypagePointTitle,
+  .mypageAskTitle {
+    @include text(36px, $text, 700);
+    margin: 0;
+  }
+
+  .current {
+    @include flexBox(even);
+    width: 40%;
+    margin: 72px 0 46px;
+
+    .currentPoint {
+      @include text(36px, $text, 700);
+    }
+
+    .customBtn {
+      @include btn-with-text($strong_orange, $white, 274px, 54px);
+      @include text(32px, $white, 700, center);
+    }
+  }
+
+  .date {
+    @include text(24px, $text, 400, left);
+    width: 100%;
+    margin-left: -50px;
+  }
+}
+
+.mypageAsk {
+  .customBtn {
+    @include btn-with-text($strong_orange, $white, 274px, 54px);
+    @include text(32px, $white, 700, center);
+    margin: 54px 0 48px;
+  }
+}
