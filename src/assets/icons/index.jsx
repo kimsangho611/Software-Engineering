@@ -12,8 +12,6 @@ import { ReactComponent as IC_Piggy_Bank } from "./piggy_bank.svg";
 import { ReactComponent as IC_Speaker } from "./speaker.svg";
 import { ReactComponent as IC_CheckBox } from "./checkbox.svg";
 import { ReactComponent as IC_LogOut } from "./logout.svg";
-import { ReactComponent as IC_SecondHand } from "./secondhand.svg";
-import { ReactComponent as IC_Close } from "./closebtn.svg";
 
 export {
   IC_Hamburger_Bar,
@@ -30,6 +28,4 @@ export {
   IC_Speaker,
   IC_CheckBox,
   IC_LogOut,
-  IC_SecondHand,
-  IC_Close,
 };
