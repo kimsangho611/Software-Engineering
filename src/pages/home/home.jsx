@@ -23,6 +23,47 @@ const Home = () => {
               title={"한 번 입은 니트 판매합니다!!"}
               view={"1200"}
               price={"12000"}
+              state={"판매 완료"}
+            />
+            <ProductBlock
+              img={ClothesImg}
+              like={"1200"}
+              firstCate={"WOMEN"}
+              secondCate={"니트"}
+              title={"한 번 입은 니트 판매합니다!!"}
+              view={"1200"}
+              price={"12000"}
+            />
+            <ProductBlock
+              img={ClothesImg}
+              like={"1200"}
+              firstCate={"WOMEN"}
+              secondCate={"니트"}
+              title={"한 번 입은 니트 판매합니다!!"}
+              view={"1200"}
+              price={"12000"}
+            />
+            <ProductBlock
+              img={ClothesImg}
+              like={"1200"}
+              firstCate={"WOMEN"}
+              secondCate={"니트"}
+              title={"한 번 입은 니트 판매합니다!!"}
+              view={"1200"}
+              price={"12000"}
+              state={"거래 중"}
+            />
+          </div>
+          <div className="productOneLine">
+            <ProductBlock
+              img={ClothesImg}
+              like={"1200"}
+              firstCate={"WOMEN"}
+              secondCate={"니트"}
+              title={"한 번 입은 니트 판매합니다!!"}
+              view={"1200"}
+              price={"12000"}
+              state={"판매 완료"}
             />
             <ProductBlock
               img={ClothesImg}
