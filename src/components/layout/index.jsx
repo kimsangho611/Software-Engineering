@@ -35,7 +35,7 @@ const Sidebar = ({ openSide, setOpenSide }) => {
   return (
     <div className="wholesidebar">
       <div className="sidebar">
-        <IC_SecondHand />
+        <IC_SecondHand className="typologo" />
         <div className="cates">
           <Link to={"/login"} className="bigcate">
             로그인/회원가입
