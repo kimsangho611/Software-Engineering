@@ -1,9 +1,11 @@
 @mixin tag($bg: $main) {
+  @include flexBox;
   width: 233px;
   height: 44px;
   border: 0;
   border-radius: 30px;
-  @if (type-of($bg) ==string) {
+
+  @if (type-of($bg) == color) {
     background-color: $bg;
   }
 

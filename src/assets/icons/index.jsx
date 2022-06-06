@@ -14,6 +14,8 @@ import { ReactComponent as IC_CheckBox } from "./checkbox.svg";
 import { ReactComponent as IC_LogOut } from "./logout.svg";
 import { ReactComponent as IC_SecondHand } from "./secondhand.svg";
 import { ReactComponent as IC_Close } from "./closebtn.svg";
+import { ReactComponent as IC_Down } from "./down.svg";
+import { ReactComponent as IC_Up } from "./up.svg";
 
 export {
   IC_Hamburger_Bar,
@@ -32,4 +34,6 @@ export {
   IC_LogOut,
   IC_SecondHand,
   IC_Close,
+  IC_Down,
+  IC_Up,
 };
