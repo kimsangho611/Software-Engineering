@@ -4,3 +4,12 @@
   border: 0;
   outline: none;
 }
+
+@mixin btn-with-text($bg, $color, $width: 400px, $height: 86px) {
+  @extend %btn-base;
+  @include text(36px, $color, 700, center);
+  width: $width;
+  height: $height;
+  background-color: $bg;
+  border-radius: 30px;
+}

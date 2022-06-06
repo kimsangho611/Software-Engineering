@@ -1,0 +1,105 @@
+@import "../styles/main.module.scss";
+
+.productDetailLayout {
+  @include flexBox(even, start);
+
+  .productImg {
+    width: 612px;
+    height: 844px;
+  }
+
+  .productInfo {
+    padding: 0 72px;
+
+    .categoryInfo {
+      @include flexBox(between);
+      margin-bottom: 22px;
+
+      .category {
+        @include text(24px, $text, 500);
+      }
+
+      button {
+        @extend %btn-base;
+        @include text(20px, $text, 500);
+      }
+    }
+
+    h1 {
+      @include text(48px, $text, 700, left);
+      margin-bottom: 22px;
+    }
+
+    .dealInfo {
+      @include flexBox(between);
+      margin-bottom: 41px;
+
+      .status {
+        @include text(42px, $main, 700);
+      }
+
+      .price {
+        @include text(42px, $main, 700);
+
+        span {
+          @include text(30px, $text, 500);
+        }
+      }
+    }
+
+    .line {
+      width: 100%;
+      height: 1px;
+      margin-bottom: 17px;
+      background-color: $text;
+    }
+
+    .postInfo {
+      @include flexBox(between);
+      margin-bottom: 75px;
+
+      div {
+        @include flexBox(between);
+        width: 180px;
+      }
+
+      span {
+        @include text(20px, $text, 400);
+        @include flexBox;
+      }
+    }
+
+    .infos {
+      height: 260px;
+      margin-bottom: 75px;
+    }
+
+    .btns {
+      @include flexBox(even, center);
+
+      .whiteBtn {
+        @include flexBox;
+        @include btn-with-text($white, $main);
+        width: 196px;
+        border: 5px solid $main;
+
+        .heartFill,
+        .heartNotFill {
+          width: 51px;
+          height: 41px;
+          margin-right: 10px;
+
+          path {
+            stroke: $main;
+            stroke-width: 2;
+          }
+        }
+
+        .heartFill {
+          border: 0;
+          fill: $main;
+        }
+      }
+    }
+  }
+}
