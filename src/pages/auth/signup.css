@@ -1,0 +1,59 @@
+.signup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signupTitle {
+  font-family: "Font";
+  font-size: 36px;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
+
+.signup .inputSet {
+  display: flex;
+  flex-direction: column;
+  height: 544px;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.signup .btntrue {
+  width: 600px;
+  height: 70px;
+  background: #737373;
+  border-radius: 30px;
+  font-family: "Font";
+  font-weight: 700;
+  font-size: 36px;
+  color: white;
+  border: 0px;
+}
+
+.signup .btnfalse {
+  width: 600px;
+  height: 70px;
+  background: #ffa243;
+  border-radius: 30px;
+  font-family: "Font";
+  font-weight: 700;
+  font-size: 36px;
+  color: white;
+  border: 0px;
+}
+
+.signup .btnBottom {
+  margin-top: 17px;
+}
+
+.signup .link {
+  font-family: "Font";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  color: #000000;
+  text-decoration: none;
+  margin-left: 2px;
+  margin-right: 2px;
+}

@@ -12,6 +12,7 @@ const ProductBlock = ({
 }) => {
   return (
     <div className="productBlock">
+      {state === "판매 완료" ? <div className="alreadySell" /> : <></>}
       <div className="imgPart">
         <img className="img" src={img} alt={"clothes"} />
         <div className="heart">
