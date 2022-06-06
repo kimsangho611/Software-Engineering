@@ -1,0 +1,37 @@
+.dropSuccess {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dropTitle {
+  font-family: "Font";
+  font-size: 36px;
+  font-weight: 700;
+  padding-bottom: 70px;
+}
+.dropSuccess .success {
+  font-family: "Font";
+  font-weight: 400;
+  font-size: 48px;
+  color: #2c343f;
+}
+.dropSuccess .btn {
+  width: 600px;
+  height: 70px;
+  background: #737373;
+  border-radius: 30px;
+  font-family: "Font";
+  font-weight: 700;
+  font-size: 36px;
+  color: white;
+  border: 0px;
+  margin-top: 250px;
+}
+.dropSuccess .align {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 180px;
+}
