@@ -1,0 +1,30 @@
+.searchbar {
+  width: 80%;
+  height: 90px;
+  border: 6px solid #ffe589;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.searchbar .text {
+  width: 100%;
+  font-family: "Font";
+  font-weight: 500;
+  font-size: 30px;
+  color: #2c343f;
+  border: 0px;
+  outline: none;
+}
+.searchbar .btn {
+  background-color: white;
+  outline: none;
+  border: none;
+}
+
+.searchbar .btn:focus {
+  border: none !important;
+  outline: none !important;
+}

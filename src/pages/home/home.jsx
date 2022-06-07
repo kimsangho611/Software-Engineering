@@ -91,6 +91,33 @@ const Home = () => {
               view={"1200"}
               price={"12000"}
             />
+            <ProductBlock
+              img={ClothesImg}
+              like={"1200"}
+              firstCate={"WOMEN"}
+              secondCate={"니트"}
+              title={"한 번 입은 니트 판매합니다!!"}
+              view={"1200"}
+              price={"12000"}
+            />
+            <ProductBlock
+              img={ClothesImg}
+              like={"1200"}
+              firstCate={"WOMEN"}
+              secondCate={"니트"}
+              title={"한 번 입은 니트 판매합니다!!"}
+              view={"1200"}
+              price={"12000"}
+            />
+            <ProductBlock
+              img={ClothesImg}
+              like={"1200"}
+              firstCate={"WOMEN"}
+              secondCate={"니트"}
+              title={"한 번 입은 니트 판매합니다!!"}
+              view={"1200"}
+              price={"12000"}
+            />
           </div>
         </section>
       </Layout>

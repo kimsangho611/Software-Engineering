@@ -14,14 +14,14 @@ const Drop = () => {
         <div className="dropTitle">회원탈퇴</div>
         <section className="inputSet">
           <AuthInput
-            ispass={false}
+            type={"email"}
             name={"email"}
             placeholder={"이메일"}
             value={email}
             setValue={setEmail}
           />
           <AuthInput
-            ispass={true}
+            type={"password"}
             name={"password"}
             placeholder={"비밀번호"}
             value={password}
@@ -33,7 +33,7 @@ const Drop = () => {
             탈퇴를 원하시면, 아래 입력창에 '탈퇴'라고 적어주세요.
           </span>
           <AuthInput
-            ispass={false}
+            type={"text"}
             name={"drop"}
             placeholder={"탈퇴"}
             value={drop}

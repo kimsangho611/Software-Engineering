@@ -11,6 +11,54 @@ import classNames from "classnames";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+const SearchBar = () => {
+  const navigate = useNavigate();
+  const [word, setWord] = useState("");
+  const [style, setStyle] = useState({ display: "none" });
+  const onClick = () => {
+    word === "" ? alert("검색어를 입력해주세요!") : navigate(`/search/${word}`);
+  };
+  return (
+    <>
+      <div
+        style={style}
+        className={styles.search}
+        onMouseEnter={(e) => {
+          setStyle({ display: "block" });
+        }}
+        onMouseLeave={(e) => {
+          setStyle({ display: "none" });
+        }}
+      >
+        <input
+          className={styles.text}
+          type={"text"}
+          value={word}
+          onChange={(e) => setWord(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              onClick();
+            }
+          }}
+        />
+      </div>
+      <button
+        type="button"
+        className={styles.topBarBtn}
+        onClick={onClick}
+        onMouseEnter={(e) => {
+          setStyle({ display: "block" });
+        }}
+        onMouseLeave={(e) => {
+          setStyle({ display: "none" });
+        }}
+      >
+        <IC_Search />
+      </button>
+    </>
+  );
+};
+
 const TopBar = ({ openSide, setOpenSide }) => {
   const navigate = useNavigate();
   return (
@@ -29,13 +77,7 @@ const TopBar = ({ openSide, setOpenSide }) => {
       >
         <IC_Logo />
       </button>
-      <button
-        type="button"
-        className={styles.topBarBtn}
-        onClick={() => navigate("/search")}
-      >
-        <IC_Search />
-      </button>
+      <SearchBar />
     </div>
   );
 };

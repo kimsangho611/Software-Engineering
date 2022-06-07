@@ -29,10 +29,10 @@ export const AuthRadio = () => {
   );
 };
 
-export const AuthInput = ({ ispass, name, placeholder, value, setValue }) => {
+export const AuthInput = ({ type, name, placeholder, value, setValue }) => {
   return (
     <input
-      type={ispass ? "password" : "email"}
+      type={type}
       name={name}
       value={value}
       placeholder={placeholder}
