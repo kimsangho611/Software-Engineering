@@ -7,7 +7,7 @@
 }
 
 .greyBtn {
-  @include btn-with-text($light_grey, $main, 36px);
+  @include btn-with-text($light_grey, $white, 36px);
   width: 400px;
   height: 86px;
 }
