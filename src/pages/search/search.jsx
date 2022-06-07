@@ -7,6 +7,7 @@ import ClothesImg from "../../assets/samples/product.png";
 import { useParams } from "react-router-dom";
 const Search = () => {
   const params = useParams();
+  console.log("params=", params);
   const [searchString, setSearchString] = useState(params.word);
   const [list, setList] = useState([]);
   return (
