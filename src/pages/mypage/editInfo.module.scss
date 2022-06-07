@@ -1,0 +1,34 @@
+@import "../../styles/main.module.scss";
+.editInfo {
+  @include flexBox;
+  flex-direction: column;
+
+  h1 {
+    @include text(36px, $text, 700);
+    margin-bottom: 56px;
+  }
+
+  input {
+    width: 600px;
+    height: 96px;
+    padding: 33px 24px;
+    margin-bottom: 16px;
+    font-size: 30px;
+    border: 2px solid $grey;
+  }
+
+  input::placeholder {
+    @include text(24px, $grey, 400, left);
+  }
+
+  .dis {
+    @include btn-with-text($grey, $white, 600px, 70px);
+    margin-top: 50px;
+    cursor: default;
+  }
+
+  .ok {
+    @include btn-with-text($main, $white, 600px, 70px);
+    margin-top: 50px;
+  }
+}

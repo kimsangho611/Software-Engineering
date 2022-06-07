@@ -1,0 +1,36 @@
+@import "../../styles/main.module.scss";
+
+.mypageBuyList {
+  .title {
+    @include text(36px, $text, 700);
+    margin: 0 0 30px 0;
+  }
+
+  select {
+    width: 260px;
+    height: 56px;
+    padding: 14px 18px;
+    background-color: $white;
+    background-image: url("../../assets/icons/triangle.svg");
+    background-position: 220px center;
+    background-repeat: no-repeat;
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    -webkit-appearance: none;
+  }
+
+  .lists {
+    @include flexBox(between, center);
+
+    .card {
+      @include flexBox(center, start);
+      flex-direction: column;
+
+      .date {
+        @include text(24px, $text, 400, left);
+      }
+    }
+  }
+}
