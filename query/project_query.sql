@@ -54,22 +54,23 @@ where u.u_email = "" and u_pw = "";
 # 상품 문의 대댓글 (판매자) 작성
 
 
+# 검색 - 상품의 제목에서 원하는 검색 결과가 있는 상품 정보를 선택함.
+select count(*), p.*
+from product p
+where trim(p.p_title) like "%?%";
+
+
+# 찜
+
+
+# ================= Point =================
+# 포인트 관련 Query
+
 # 현재 포인트 조회
 select u_point 
 from user 
 where u_id = 1;
 
-
-# 1:1 문의 작성
-
-
-# 검색 - 상품의 제목에서 원하는 검색 결과가 있는 상품 정보를 선택함.
-select count(*), p.*
-from product p
-where trim(p.p_title) like "%{}%";
-
-
-# 찜
 
 # ================= 마이페이지 구매/판매/활동 목록 =================
 # 상품 관련 Query
