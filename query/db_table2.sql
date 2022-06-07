@@ -179,15 +179,15 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`ProductInquiry` (
   `pi_answer` VARCHAR(300) NULL DEFAULT NULL,
   `User_u_id` INT NOT NULL,
   `Product_p_id` INT NOT NULL,
+  INDEX `fk_Comments_User1_idx` (`User_u_id` ASC) VISIBLE,
+  INDEX `fk_Comments_Product1_idx` (`Product_p_id` ASC) VISIBLE,
   PRIMARY KEY (`pi_id`),
-  INDEX `fk_ProductInquiry_User1_idx` (`User_u_id` ASC) VISIBLE,
-  INDEX `fk_ProductInquiry_Product1_idx` (`Product_p_id` ASC) VISIBLE,
-  CONSTRAINT `fk_ProductInquiry_User1`
+  CONSTRAINT `fk_Comments_User1`
     FOREIGN KEY (`User_u_id`)
     REFERENCES `secondhand`.`User` (`u_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ProductInquiry_Product1`
+  CONSTRAINT `fk_Comments_Product1`
     FOREIGN KEY (`Product_p_id`)
     REFERENCES `secondhand`.`Product` (`p_id`)
     ON DELETE NO ACTION
