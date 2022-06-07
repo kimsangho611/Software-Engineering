@@ -1,4 +1,4 @@
-use market;
+use secondhand;
 
 # ================= User =================
 # 사용자 관련 Query
@@ -21,9 +21,54 @@ update user
 set u_report = 1
 where u_email = "";
 
-# 사용자 조회
-select *
-from user;
+# 사용자 조회 - 이메일, 이름, 휴대폰, 가입날짜, 판매횟수
+select u.u_email, u.u_name, u.u_phone, u.u_sign_date, count(*) as sell_count
+from user u join product p
+where u.u_id = p.User_u_id and u.u_id = 1;
+
+# 신고처리 리스트
+
+
+# 신고처리 상세보기
+
+
+# 사용자 정지 - 사용자의 이메일과 동일한 아이디를 가진 사용자를 정지함
+update user
+set u_report = ""
+where u_email = "";
+
+# 로그인 - 로그인 정보와 맞는 데이터의 개수를 반환
+select count(*)
+from user u
+where u.u_email = "" and u_pw = "";
+
+# hot, new item 리스트 반환
+
+
+# 상품 문의 댓글 조회
+
+
+# 상품 문의 댓글 (구매자) 작성
+
+
+# 상품 문의 대댓글 (판매자) 작성
+
+
+# 현재 포인트 조회
+select u_point 
+from user 
+where u_id = 1;
+
+# 활동 목록
+
+
+# 1:1 문의 작성
+
+
+# 검색
+
+
+# 찜
 
 
 # ================= Product =================
@@ -94,6 +139,29 @@ where post_id = 1;
 # 공지사항 삭제
 delete from announce
 where post_id = 1;
+
+# ================= Question =================
+# 문의사항 관련 Query
+
+# 문의사항 리스트 조회
+select u.u_id, q.q_title, q.q_date, q.q_answer
+from user u join questions q;
+
+# 문의사항 세부사항 조회
+select *
+from user u join questions q
+where u.u_id = q.User_u_id and q.q_id = 1;
+
+# 문의사항 답변 등록
+update questions
+set q_answer = ""
+where q_id = 1; 
+
+
+
+
+
+
 
 
 

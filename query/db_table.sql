@@ -8,19 +8,19 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema market
+-- Schema secondhand
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema market
+-- Schema secondhand
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `market` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-USE `market` ;
+CREATE SCHEMA IF NOT EXISTS `secondhand` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `secondhand` ;
 
 -- -----------------------------------------------------
--- Table `market`.`User`
+-- Table `secondhand`.`User`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `market`.`User` (
+CREATE TABLE IF NOT EXISTS `secondhand`.`User` (
   `u_id` INT NOT NULL AUTO_INCREMENT,
   `u_email` VARCHAR(45) NOT NULL,
   `u_pw` VARCHAR(45) NOT NULL,
@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `market`.`User` (
   `u_phone` VARCHAR(15) NOT NULL,
   `u_report` INT NULL DEFAULT 0,
   `u_point` INT NULL DEFAULT 0,
+  `u_sign_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE INDEX `u_email_UNIQUE` (`u_email` ASC) VISIBLE,
   UNIQUE INDEX `u_phone_UNIQUE` (`u_phone` ASC) VISIBLE,
   PRIMARY KEY (`u_id`))
@@ -35,9 +36,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `market`.`Product`
+-- Table `secondhand`.`Product`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `market`.`Product` (
+CREATE TABLE IF NOT EXISTS `secondhand`.`Product` (
   `p_id` INT NOT NULL AUTO_INCREMENT,
   `p_thumnail` VARCHAR(45) NULL DEFAULT NULL,
   `p_image` VARCHAR(45) NULL DEFAULT NULL,
@@ -54,22 +55,21 @@ CREATE TABLE IF NOT EXISTS `market`.`Product` (
   `p_trade` VARCHAR(10) NULL DEFAULT '판매중',
   `p_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `p_view` INT ZEROFILL NULL DEFAULT 0,
-  `p_likeitem` INT NULL DEFAULT 0,
   `User_u_id` INT NOT NULL,
   PRIMARY KEY (`p_id`),
   INDEX `fk_Product_User1_idx` (`User_u_id` ASC) VISIBLE,
   CONSTRAINT `fk_Product_User1`
     FOREIGN KEY (`User_u_id`)
-    REFERENCES `market`.`User` (`u_id`)
+    REFERENCES `secondhand`.`User` (`u_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `market`.`Order`
+-- Table `secondhand`.`Order`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `market`.`Order` (
+CREATE TABLE IF NOT EXISTS `secondhand`.`Order` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
   `User_u_id` INT NOT NULL,
   `Product_p_id` INT NOT NULL,
@@ -78,44 +78,44 @@ CREATE TABLE IF NOT EXISTS `market`.`Order` (
   INDEX `fk_Seller_Product1_idx` (`Product_p_id` ASC) VISIBLE,
   CONSTRAINT `fk_Seller_User1`
     FOREIGN KEY (`User_u_id`)
-    REFERENCES `market`.`User` (`u_id`)
+    REFERENCES `secondhand`.`User` (`u_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Seller_Product1`
     FOREIGN KEY (`Product_p_id`)
-    REFERENCES `market`.`Product` (`p_id`)
+    REFERENCES `secondhand`.`Product` (`p_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `market`.`ShopBasket`
+-- Table `secondhand`.`ShopBasket`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `market`.`ShopBasket` (
+CREATE TABLE IF NOT EXISTS `secondhand`.`ShopBasket` (
   `sb_id` INT NOT NULL AUTO_INCREMENT,
-  `User_u_id` INT NULL DEFAULT NULL,
-  `Product_p_id` INT NULL DEFAULT NULL,
-  INDEX `fk_Basket_User1_idx` (`User_u_id` ASC) VISIBLE,
-  INDEX `fk_Basket_Product1_idx` (`Product_p_id` ASC) VISIBLE,
+  `User_u_id` INT NOT NULL,
+  `Product_p_id` INT NOT NULL,
   PRIMARY KEY (`sb_id`),
-  CONSTRAINT `fk_Basket_User1`
-    FOREIGN KEY (`User_u_id`)
-    REFERENCES `market`.`User` (`u_id`)
+  INDEX `fk_ShopBasket_Product1_idx` (`Product_p_id` ASC) VISIBLE,
+  INDEX `fk_ShopBasket_User1_idx` (`User_u_id` ASC) VISIBLE,
+  CONSTRAINT `fk_ShopBasket_Product1`
+    FOREIGN KEY (`Product_p_id`)
+    REFERENCES `secondhand`.`Product` (`p_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Basket_Product1`
-    FOREIGN KEY (`Product_p_id`)
-    REFERENCES `market`.`Product` (`p_id`)
+  CONSTRAINT `fk_ShopBasket_User1`
+    FOREIGN KEY (`User_u_id`)
+    REFERENCES `secondhand`.`User` (`u_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `market`.`Questions`
+-- Table `secondhand`.`Questions`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `market`.`Questions` (
+CREATE TABLE IF NOT EXISTS `secondhand`.`Questions` (
   `q_id` INT NOT NULL,
   `q_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `q_title` VARCHAR(90) NOT NULL,
@@ -126,16 +126,16 @@ CREATE TABLE IF NOT EXISTS `market`.`Questions` (
   PRIMARY KEY (`q_id`),
   CONSTRAINT `fk_Questions_User1`
     FOREIGN KEY (`User_u_id`)
-    REFERENCES `market`.`User` (`u_id`)
+    REFERENCES `secondhand`.`User` (`u_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `market`.`Announce`
+-- Table `secondhand`.`Announce`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `market`.`Announce` (
+CREATE TABLE IF NOT EXISTS `secondhand`.`Announce` (
   `post_id` INT NOT NULL AUTO_INCREMENT,
   `post_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `post_title` VARCHAR(45) NOT NULL,
@@ -146,9 +146,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `market`.`Report`
+-- Table `secondhand`.`Report`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `market`.`Report` (
+CREATE TABLE IF NOT EXISTS `secondhand`.`Report` (
   `r_id` INT NOT NULL AUTO_INCREMENT,
   `r_contents` VARCHAR(100) NULL,
   `User_u_id` INT NOT NULL,
@@ -158,21 +158,21 @@ CREATE TABLE IF NOT EXISTS `market`.`Report` (
   PRIMARY KEY (`r_id`),
   CONSTRAINT `fk_Report_User1`
     FOREIGN KEY (`User_u_id`)
-    REFERENCES `market`.`User` (`u_id`)
+    REFERENCES `secondhand`.`User` (`u_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Report_Product1`
     FOREIGN KEY (`Product_p_id`)
-    REFERENCES `market`.`Product` (`p_id`)
+    REFERENCES `secondhand`.`Product` (`p_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `market`.`Comments`
+-- Table `secondhand`.`Comments`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `market`.`Comments` (
+CREATE TABLE IF NOT EXISTS `secondhand`.`Comments` (
   `c_id` INT NOT NULL AUTO_INCREMENT,
   `c_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `c_contents` VARCHAR(300) NOT NULL,
@@ -184,28 +184,28 @@ CREATE TABLE IF NOT EXISTS `market`.`Comments` (
   PRIMARY KEY (`c_id`),
   CONSTRAINT `fk_Comments_User1`
     FOREIGN KEY (`User_u_id`)
-    REFERENCES `market`.`User` (`u_id`)
+    REFERENCES `secondhand`.`User` (`u_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Comments_Product1`
     FOREIGN KEY (`Product_p_id`)
-    REFERENCES `market`.`Product` (`p_id`)
+    REFERENCES `secondhand`.`Product` (`p_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `market`.`ProductPrice`
+-- Table `secondhand`.`ProductPrice`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `market`.`ProductPrice` (
+CREATE TABLE IF NOT EXISTS `secondhand`.`ProductPrice` (
   `pp_date` DATETIME NULL,
   `pp_avg_price` DOUBLE NULL DEFAULT 0,
   `Product_p_id` INT NOT NULL,
   INDEX `fk_ProductPrice_Product1_idx` (`Product_p_id` ASC) VISIBLE,
   CONSTRAINT `fk_ProductPrice_Product1`
     FOREIGN KEY (`Product_p_id`)
-    REFERENCES `market`.`Product` (`p_id`)
+    REFERENCES `secondhand`.`Product` (`p_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
