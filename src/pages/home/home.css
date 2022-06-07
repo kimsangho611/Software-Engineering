@@ -25,6 +25,7 @@
 }
 .productOneLine {
   display: flex;
+  flex-wrap: wrap;
   width: 1390px;
   margin-top: 25px;
   margin-bottom: 25px;
