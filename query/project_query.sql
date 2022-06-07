@@ -42,8 +42,18 @@ select count(*)
 from user u
 where u.u_email = "" and u_pw = "";
 
-# hot, new item 리스트 반환
-
+# hot, new item 리스트 반환 
+# hot -> 찜 많은 순으로 상품 정보를 출력
+select *
+from (select sb.Product_p_id as hot_p_id, count(*) as hot_p_count
+    from shopbasket sb
+    group by sb.Product_p_id
+    order by count(sb.Product_p_id)) sb join product p on sb.hot_p_id = p.p_id;
+    
+# new -> 최근 등록 순으로 상품 정보를 출력
+select *
+from product p
+order by p.p_date desc;
 
 # 상품 문의 댓글 조회
 
@@ -55,7 +65,7 @@ where u.u_email = "" and u_pw = "";
 
 
 # 검색 - 상품의 제목에서 원하는 검색 결과가 있는 상품 정보를 선택함.
-select count(*), p.*
+select count(*) as search_cnt, p.*
 from product p
 where trim(p.p_title) like "%?%";
 
@@ -69,6 +79,13 @@ where trim(p.p_title) like "%?%";
 # 현재 포인트 조회
 select u_point 
 from user 
+where u_id = 1;
+
+# 포인트 중천 및 사용 내역
+
+# 포인트 충전
+update user
+set u_point = u_point + 10000
 where u_id = 1;
 
 
@@ -90,9 +107,20 @@ where u.u_id = 1;
 
 # 활동 목록
 # type = 1 -> 찜한 게시물
-
+select *
+from product p
+where p.p_id = (
+	select sb.Product_p_id
+    from user u join shopbasket sb on u.u_id = sb.User_u_id
+    where u.u_id = 1 );
 
 # type = 2 -> 댓글 단 게시물
+select *
+from product p
+where p.p_id = (
+	select pi.Product_p_id
+    from user u join productinquiry pi on u.u_id = pi.User_u_id
+    where u.u_id = 1 );
 
 
 # ================= Product =================
@@ -103,10 +131,13 @@ SELECT * FROM product;
 insert into product(p_thumnail, p_image, p_category1, p_category2, p_title, p_price, p_listprice, p_size, p_status, p_puton_count, p_dirty, p_contents, User_u_id) 
 values (null, null, "카테고리1", "카테고리2", "블라우스 팝니다.", 30000, 100000, "S", "좋음", 10, "N", "많이 입지 않은 블라우스 팝니다.", 1);
 
-# 개별 상품 디테일 
+# 개별 상품 디테일 - 구매자 이름, 구매자 평점, 제품 관련 정보 전달
 select * 
 from product 
 where p_id = 1;
+
+# 개별 상품 디테일에서 구매자 이름 및 평점을 전달하는 쿼리
+
 
 # HOT item 상위 N개 선택하기
 select * 
