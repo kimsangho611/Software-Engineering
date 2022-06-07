@@ -22,14 +22,14 @@ const Login = () => {
         <AuthRadio />
         <div className="inputSet">
           <AuthInput
-            ispass={false}
+            type={"email"}
             name={"email"}
             placeholder={"이메일"}
             value={email}
             setValue={setEmail}
           />
           <AuthInput
-            ispass={true}
+            type={"password"}
             name={"password"}
             placeholder={"비밀번호"}
             value={password}

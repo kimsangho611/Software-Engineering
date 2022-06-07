@@ -14,9 +14,16 @@
 .signup .inputSet {
   display: flex;
   flex-direction: column;
-  height: 544px;
+  height: 500px;
   justify-content: space-between;
-  margin-bottom: 50px;
+}
+
+.signup .errmsg {
+  font-family: "Font";
+  font-weight: 500;
+  font-size: 18px;
+  color: #ffa243;
+  padding: 10px;
 }
 
 .signup .btntrue {
