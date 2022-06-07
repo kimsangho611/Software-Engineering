@@ -1,0 +1,36 @@
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.search .result {
+  font-family: "Font";
+  font-weight: 500;
+  font-size: 28px;
+  color: #2c343f;
+  width: 80%;
+  padding-top: 50px;
+}
+.search .no {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.search .no .nocontents {
+  font-family: "Font";
+  font-weight: 900;
+  font-size: 250px;
+  color: #ffffff;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(255, 229, 137, 0.2);
+
+  text-shadow: 0px 10px 10px rgba(0, 0, 0, 0.25);
+}
+.search .no .noexplain {
+  font-family: "Font";
+  font-weight: 400;
+  font-size: 30px;
+  text-align: left;
+  color: #737373;
+  white-space: pre-line;
+}
