@@ -1,0 +1,26 @@
+%card-base {
+  position: relative;
+  width: 287px;
+  height: 323px;
+  background-color: $white;
+  border: 0;
+  box-shadow: 0 12px 40px rgba(0, 19, 37, 0.1);
+
+  img {
+    @include pos(absolute, 0, 0);
+    width: 287px;
+    height: 187px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    object-fit: cover;
+  }
+
+  .contents {
+    @include pos(absolute, false, false, 0, 0);
+    width: 287px;
+    height: 133px;
+    padding: 13px 17px 17px;
+    margin: 0;
+    border-radius: 10px;
+  }
+}

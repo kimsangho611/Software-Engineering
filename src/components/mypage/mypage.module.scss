@@ -103,3 +103,28 @@
     }
   }
 }
+
+.mypageProductCard {
+  @extend %card-base;
+
+  .category {
+    @include text(12px, $text, 900, left);
+  }
+
+  h1 {
+    @include text(18px, $text, 700, left);
+  }
+
+  .greyTag {
+    @include tag($light_grey);
+  }
+
+  .orangeTag {
+    @include tag($main);
+  }
+
+  .greyTag,
+  .orangeTag {
+    margin: 15px auto 0;
+  }
+}
