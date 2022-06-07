@@ -15,3 +15,91 @@
     margin-top: 23px;
   }
 }
+
+.mypagePointLine,
+.mypageAskLine {
+  @include flexBox(between);
+  width: 100%;
+  height: 126px;
+  padding: 43px;
+  margin-bottom: 20px;
+  border: 0;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+  .title {
+    @include text(28px, $text, 700, left);
+    width: 615px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rightSide {
+    @include flexBox;
+
+    .pointAdd {
+      @include text(36px, $main, 700, right);
+    }
+
+    .pointSub {
+      @include text(36px, $blue, 700, right);
+    }
+
+    .pointAdd,
+    .pointSub {
+      width: 300px;
+
+      span {
+        @include text(36px, $text, 700);
+      }
+    }
+
+    .greyTag {
+      @include tag($light_grey);
+    }
+
+    .orangeTag {
+      @include tag($main);
+    }
+  }
+}
+
+.mypageAskLine {
+  cursor: pointer;
+
+  .arrow {
+    margin-left: 30px;
+  }
+}
+
+.contents {
+  width: 100%;
+  margin-bottom: 50px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+  .userQ {
+    @include text(24px, $text, 400, left);
+    padding: 30px;
+  }
+
+  .line {
+    width: 95%;
+    height: 1px;
+    margin: 0 auto;
+    background-color: $text;
+  }
+
+  .adminA {
+    @include flexBox(center, start);
+    flex-direction: column;
+    padding: 30px;
+
+    .admin {
+      @include text(24px, $text, 700, left);
+    }
+
+    .answer {
+      @include text(24px, $text, 400, left);
+    }
+  }
+}
