@@ -17,7 +17,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/drop" element={<Drop />} />
           <Route path="/drop/success" element={<DropSuccess />} />
-          <Route path="/search" element={<Search />} />
+          <Route path="/search/:word" element={<Search />} />
         </Routes>
       </BrowserRouter>
     </div>
