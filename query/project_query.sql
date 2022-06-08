@@ -16,7 +16,7 @@ delete
 from user
 where u_email = "ksh@naver.com" and u_pw = "2345";
 
-# 사용자 정지
+# 사용자 정지 - 사용자의 이메일과 동일한 아이디를 가진 사용자를 정지함
 update user
 set u_report = 1
 where u_email = "";
@@ -26,25 +26,33 @@ select u.u_email, u.u_name, u.u_phone, u.u_sign_date, count(*) as sell_count
 from user u join product p on u.u_id = p.User_u_id
 where u.u_id = 1;
 
-# 신고처리 리스트
-
-
-# 신고처리 상세보기
-
-
-# 사용자 정지 - 사용자의 이메일과 동일한 아이디를 가진 사용자를 정지함
-update user
-set u_report = ""
-where u_email = "";
-
 # 로그인 - 로그인 정보(이메일, 비밀번호)와 맞는 데이터의 개수를 반환
-select count(*)
+select *
 from user u
 where u.u_email = "" and u_pw = "";
 
+# ================= Report =================
+# 신고 관련 Query
+
+# 유저 신고 - 사용자쪽에서 제품의 신고 버튼을 눌렀을 때 
+insert into report(r_title, r_contents, User_u_id, Product_p_id)
+values ("허위매물", "이 제품은 한국에서 판매 안하는 짝퉁입니다.", 1, 1);
+
+# 신고처리 리스트
+# report의 User_u_id에는 신고한 사람 u_id가 들어가 있음
+# product와 user를 join하면 p_id에 해당하는 사람 정보를 찾으면 신고당한 사람을 찾을 수 있음
+# user와 report를 join하면 신고한 사람을 찾을 수 있음
+# 따라서 이를 활용하면 불 수 있을 것으로 보임
+
+# 신고처리 상세보기
+select u.u_email, r.r_title, r.r_contents
+from user u join report r on u.u_id = r.User_u_id
+where r.r_id = 1;
+
+
 # hot, new item 리스트 반환 
 # hot -> 찜 많은 순으로 상품 정보를 출력
-select *
+select p.*
 from (select sb.Product_p_id as hot_p_id, count(*) as hot_p_count
     from shopbasket sb
     group by sb.Product_p_id
@@ -59,7 +67,8 @@ order by p.p_date desc;
 
 
 # 상품 문의 댓글 (구매자) 작성
-
+insert into productinquiry() 
+values ();
 
 # 상품 문의 대댓글 (판매자) 작성
 
@@ -70,7 +79,9 @@ from product p
 where trim(p.p_title) like "%?%";
 
 
-# 찜
+# 찜 - 찜 역할을 하는 shopbasket 테이블에 사용자 번호와 제품 번호를 저장함
+insert into shopbasket(User_u_id, Product_p_id)
+values (1, 1);
 
 
 # ================= Point =================
@@ -149,13 +160,13 @@ LIMIT 10;
 # 1 -> 최근 등록순으로 내림차순으로 정렬하여 가격 범위내에 있는 상품들을 선택함
 select * 
 from product
-where p_price between 0 and 100000
+where (p_price between 0 and 100000) and p_category1 = "" and p_category2 = ""
 order by p_date DESC;
 
 # 2 -> 조회가 많은 순으로 내림차순으로 정렬하여 가격 범위내에 있는 상품들을 선택함
 select * 
 from product
-where p_price between 0 and 100000
+where (p_price between 0 and 100000) and p_category1 = "" and p_category2 = ""
 order by p_view DESC;
 
 # ================= Announce =================
