@@ -4,6 +4,19 @@ const jwt = require("../module/jwt");
 const pool = require("../module/mysql");
 const pool2 = require("../module/mysql2");
 
+router.get("/", function (req, res) {
+  var token = req.query;
+  try {
+    var check = jwt.verify(token, "");
+    if (check) {
+      res.status(200).send({ success: true, msg: "유효한 토큰입니다." });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(401).send({ success: false, msg: "토큰이 만료되었습니다." });
+  }
+});
+
 router.post("/login/:type", function (req, res, next) {
   const type = req.params.type;
   var email = req.body.email;
