@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`User` (
   `u_pw` VARCHAR(45) NOT NULL,
   `u_name` VARCHAR(45) NOT NULL,
   `u_phone` VARCHAR(15) NOT NULL,
-  `u_report` INT NULL DEFAULT 0,
+  `u_stop` INT NULL DEFAULT 0,
   `u_point` INT NULL DEFAULT 0,
   `u_sign_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE INDEX `u_email_UNIQUE` (`u_email` ASC) VISIBLE,
@@ -150,7 +150,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `secondhand`.`Report` (
   `r_id` INT NOT NULL AUTO_INCREMENT,
-  `r_contents` VARCHAR(100) NULL,
+  `r_title` VARCHAR(90) NOT NULL,
+  `r_contents` VARCHAR(100) NULL DEFAULT NULL,
   `User_u_id` INT NOT NULL,
   `Product_p_id` INT NOT NULL,
   INDEX `fk_Report_User1_idx` (`User_u_id` ASC) VISIBLE,
