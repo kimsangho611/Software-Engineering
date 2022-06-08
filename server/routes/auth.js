@@ -35,6 +35,7 @@ router.post("/login/:type", function (req, res, next) {
       } else {
         if (result.length > 0) {
           const jwtToken = await jwt.sign({
+            uid: result[0].u_id,
             id: result[0].u_email,
             name: result[0].u_name,
           });
@@ -104,6 +105,62 @@ router.delete("/drop", async function (req, res, next) {
       });
     }
   } catch (err) {
+    res.status(500).send({ success: false, msg: "서버 오류" + err });
+  } finally {
+    connection.release();
+  }
+});
+
+router.post("/report", async function (req, res) {
+  const { token, title, contents, productId } = req.body;
+  var token_res = await jwt.verify(token);
+  var datas = [title, contents, token_res.uid, productId];
+
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    if (token_res === 401) {
+      res.status(401).send({
+        success: false,
+        msg: "로그인 기한이 만료되어 신고에 실패했습니다. 다시 로그인해주세요.",
+      });
+    } else {
+      await connection.query(
+        "insert into report(r_title, r_contents, User_u_id, Product_p_id) values (?,?,?,?);",
+        datas
+      );
+      res
+        .status(200)
+        .send({ success: true, msg: "해당 게시물이 신고 처리 되었습니다." });
+    }
+  } catch (err) {
+    res.status(500).send({ success: false, msg: "서버 오류" });
+  } finally {
+    connection.release();
+  }
+});
+
+router.post("/editInfo", async function (req, res) {
+  const { token, email, oldpw, newpw, name, phone } = req.body;
+  var token_res = await jwt.verify(token);
+  var datas = [name, newpw, phone, email, token_res.id, oldpw];
+  console.log(datas);
+
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    if (token_res === 401) {
+      res.status(401).send({
+        success: false,
+        msg: "로그인 기한이 만료되어 수정에 실패했습니다. 다시 로그인해주세요.",
+      });
+    } else {
+      await connection.query(
+        "update user set u_name = ?, u_pw = ?, u_phone=?, u_email=? where u_email =? and u_pw = ?;",
+        datas
+      );
+      res.status(200).send({ success: true, msg: "수정이 완료되었습니다." });
+    }
+  } catch (err) {
+    console.log(err);
     res.status(500).send({ success: false, msg: "서버 오류" + err });
   } finally {
     connection.release();
