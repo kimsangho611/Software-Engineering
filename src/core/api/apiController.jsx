@@ -3,6 +3,8 @@ import axios from "axios";
 const myAxios = axios.create({ baseURL: "http://localhost:5000" });
 myAxios.interceptors.request.use(
   async (config) => {
+    let token = localStorage.getItem("accessToken");
+    if (token) config.headers.Authorization = token;
     return config;
   },
   (err) => {
