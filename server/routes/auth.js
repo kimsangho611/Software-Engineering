@@ -81,6 +81,7 @@ router.post("/signup/:type", async function (req, res, next) {
 
 router.delete("/drop", async function (req, res, next) {
   const { email, password } = req.body;
+  var token_res = await jwt.verify(req.headers.authorization);
   var datas = [email, password];
 
   const connection = await pool2.getConnection(async (conn) => conn);
@@ -91,8 +92,9 @@ router.delete("/drop", async function (req, res, next) {
     );
     if (result1.length > 0) {
       await connection.query(
-        "delete from user where u_email =? and u_pw =?;",
-        datas
+        "delete from shopbasket where User_u_id=?;\
+        delete from user where u_email =? and u_pw =?;",
+        [token_res.uid, email, password]
       );
       res
         .status(200)
