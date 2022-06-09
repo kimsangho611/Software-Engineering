@@ -1,7 +1,7 @@
 %modal-base {
   @include flexBox;
   @include pos-center(absolute);
-  z-index: 2;
+  z-index: 1000;
   flex-direction: column;
   width: 663px;
   height: 675px;
@@ -14,7 +14,7 @@
   position: absolute;
   top: 0;
   left: 50%;
-  z-index: 1;
+  z-index: 500;
   background-color: rgba(196, 196, 196, 0.5);
   transform: translateX(-50%);
 }

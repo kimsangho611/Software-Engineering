@@ -167,7 +167,9 @@ const Sidebar = ({ openSide, setOpenSide }) => {
             </a>
           </div>
           {localStorage.getItem("accessToken") ? (
-            <span className="bigcate">마이페이지</span>
+            <Link to={"/mypage"} className="bigcate">
+              마이페이지
+            </Link>
           ) : (
             <></>
           )}

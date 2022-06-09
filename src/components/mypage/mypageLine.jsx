@@ -4,41 +4,25 @@ import styles from "./mypage.module.scss";
 export const MypagePointLine = ({ pointInfo }) => {
   return (
     <div className={styles.mypagePointLine}>
-      <h1 className={styles.title}>{pointInfo.boughtProductTitle}</h1>
-      <div className={styles.rightSide}>
-        {pointInfo.isTradeConfirm !== "none" && (
-          <div
-            className={
-              pointInfo.isTradeConfirm === true
-                ? styles.greyTag
-                : styles.orangeTag
-            }
-          >
-            <span>
-              {pointInfo.isTradeConfirm === true ? "거래 완료" : "거래 확정"}
-            </span>
-          </div>
-        )}
-        <strong
-          className={
-            parseInt(pointInfo.pointTrade) > 0
-              ? styles.pointAdd
-              : styles.pointSub
-          }
-        >
-          {parseInt(pointInfo.pointTrade) > 0
-            ? `+${pointInfo.pointTrade}`
-            : pointInfo.pointTrade}
-          <span> point</span>
-        </strong>
-      </div>
+      <h1 className={styles.title}>{pointInfo.point_title}</h1>
+      <strong
+        className={
+          parseInt(pointInfo.point_amount) > 0
+            ? styles.pointAdd
+            : styles.pointSub
+        }
+      >
+        {parseInt(pointInfo.point_amount) > 0
+          ? `+${pointInfo.point_amount}`
+          : pointInfo.point_amount}
+        <span> point</span>
+      </strong>
     </div>
   );
 };
 
 export const MypageAskLine = ({ askInfo, setOpen, open }) => {
   return (
-    // <div className={styles.mypageAskAnswer}>
     <>
       <div
         className={styles.mypageAskLine}
@@ -71,7 +55,6 @@ export const MypageAskLine = ({ askInfo, setOpen, open }) => {
           )}
         </div>
       )}
-      {/* </div> */}
     </>
   );
 };

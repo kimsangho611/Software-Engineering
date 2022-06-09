@@ -17,7 +17,6 @@ export const productRegister = async (userInput) => {
     method: "POST",
     body: formData,
     headers: { Authorization: localStorage.getItem("accessToken") },
-    mode: "cors",
   });
   return res;
 };

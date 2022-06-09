@@ -39,6 +39,34 @@ router.post(
   }
 );
 
+router.post("/detail", async function (req, res, next) {
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    let sql2 =
+      "select *,count(Product_p_id) as likecnt from product LEFT JOIN shopbasket on shopbasket.Product_p_id = product.p_id where product.p_id=?;";
+    const detail = await connection.query(sql2, [req.body.productId]);
+    const detail2 = detail[0];
+    res.status(200).send(detail2[0]);
+  } catch (err) {
+    res.status(500).send();
+  } finally {
+    connection.release();
+  }
+});
+
+router.post("/hit", async function (req, res, next) {
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    let sql = "update product set p_view = p_view+1 where p_id = ?;";
+    await connection.query(sql, [req.body.productId]);
+    res.status(200).send();
+  } catch (err) {
+    res.status(500).send();
+  } finally {
+    connection.release();
+  }
+});
+
 router.get("/list", async function (req, res) {
   var { orderBy, min, max, bigCategory, smallCategory } = req.query;
   var datas = [min, max, bigCategory, smallCategory];
