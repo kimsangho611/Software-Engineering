@@ -1,15 +1,31 @@
 import { Layout } from "../../components/layout";
 import "./search.css";
 import { SearchBar } from "../../components/search/searchBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductBlock from "../../components/common/productBlock";
 import ClothesImg from "../../assets/samples/product.png";
 import { useParams } from "react-router-dom";
+import { GetAllProduct } from "../../core/api/product/getAllProduct";
+
 const Search = () => {
   const params = useParams();
   console.log("params=", params);
   const [searchString, setSearchString] = useState(params.word);
   const [list, setList] = useState([]);
+  const GetSearchList = async () => {
+    const res = await GetAllProduct();
+    const filterData = res.filter(
+      (i) =>
+        i.p_title.includes(params) ||
+        i.p_contents.includes(params) ||
+        i.p_category1.includes(params) ||
+        i.p_category2.includes(params)
+    );
+    console.log("res==", filterData);
+  };
+  useEffect(() => {
+    GetSearchList();
+  }, []);
   return (
     <Layout>
       <section className="search">
