@@ -16,7 +16,7 @@ const ProductBlock = ({
     <Link to={`/product/detail/${id}`} className="productBlock">
       {state === "판매 완료" ? <div className="alreadySell" /> : <></>}
       <div className="imgPart">
-        <img className="img" src={img} alt={"clothes"} />
+        <img className="img" src={`${img}`} alt={"clothes"} />
         <div className="heart">
           <IC_Heart className="heartIcon" />
           <span className="heartNum">
