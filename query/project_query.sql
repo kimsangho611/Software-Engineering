@@ -276,3 +276,7 @@ values (1, 1);
 
 
 # ==================================================================
+# 찜 개수를 선택함
+select count(*)
+from shopbasket sb join product p on sb.Product_p_id = p.p_id
+where p.p_id = ? and p.p_likeitem = 1;
