@@ -6,6 +6,7 @@ const main = require("./routes/main");
 const search = require("./routes/search");
 const point = require("./routes/point");
 const mypage = require("./routes/mypage");
+const oneToOneInquiry = require("./routes/oneToOneInquiry");
 const notice = require("./routes/notice");
 const inquire = require("./routes/inquire");
 
@@ -42,5 +43,6 @@ app.use("/main", main);
 app.use("/search", search);
 app.use("/point", point);
 app.use("/mypage", mypage);
+app.use("/oneToOneInquiry", oneToOneInquiry);
 app.use("/notice", notice);
 app.use("/inquire", inquire);

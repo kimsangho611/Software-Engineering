@@ -16,11 +16,10 @@ router.get("/list/buy", async function (req, res) {
       });
     } else {
       const result = await connection.query(
-        "select p.p_category1, p.p_category2, p.p_title, p.p_date, p.p_trade \
-                from product p where p.p_id = (select o.Product_p_id from user u join order o on u.u_id = o.User_u_id where u.u_id = ?);",
+        "select p.p_category1, p.p_category2, p.p_title, p.p_date, p.p_trade,p.p_image \
+                from product p where p.p_id = (select o.Product_p_id from user u join `order` o on u.u_id = o.User_u_id where u.u_id = ?);",
         [token_res.uid]
       );
-
       res.status(200).send({ success: true, result: result[0] });
     }
   } catch (err) {
@@ -31,7 +30,7 @@ router.get("/list/buy", async function (req, res) {
 });
 
 router.get("/list/sell", async function (req, res) {
-  var token_res = await jwt.verify(req.header.authorization);
+  var token_res = await jwt.verify(req.headers.authorization);
 
   const connection = await pool.getConnection(async (conn) => conn);
   try {
@@ -42,7 +41,7 @@ router.get("/list/sell", async function (req, res) {
       });
     } else {
       const result = await connection.query(
-        "select p.p_category1, p.p_category2, p.p_title, p.p_date, p.p_trade \
+        "select p.p_category1, p.p_category2, p.p_title, p.p_date, p.p_trade,p.p_image \
                 from user u join product p on u.u_id = p.User_u_id where u.u_id = ?;",
         [token_res.uid]
       );

@@ -13,22 +13,23 @@ export const MypageCard = ({ children, link }) => {
 };
 
 export const MypageProductCard = ({ productInfo }) => {
-  console.log("pi=", productInfo);
   return (
     <div className={styles.mypageProductCard}>
-      <img src={product} alt="clothes" />
+      <img src={productInfo.p_image} alt="clothes" />
       <div className={styles.contents}>
         <span
           className={styles.category}
-        >{`${productInfo.category1} > ${productInfo.category2}`}</span>
-        <h1>{productInfo.title}</h1>
-        <div
-          className={
-            productInfo.state === "판매중" ? styles.orangeTag : styles.greyTag
-          }
-        >
-          <span>{productInfo.state}</span>
-        </div>
+        >{`${productInfo.p_category1} > ${productInfo.p_category2}`}</span>
+        <h1>{productInfo.p_title}</h1>
+        {productInfo.p_trade === "거래확정" ? (
+          <button type="button" className={styles.orangeTag}>
+            <span>{productInfo.p_trade}</span>
+          </button>
+        ) : (
+          <div className={styles.greyTag}>
+            <span>{productInfo.p_trade}</span>
+          </div>
+        )}
       </div>
     </div>
   );
