@@ -50,9 +50,14 @@
   font-size: 26px;
   font-weight: 700;
   font-family: "Font";
+  text-align: left;
   margin-bottom: 6px;
   cursor: pointer;
   text-decoration: none;
+  background-color: transparent;
+  border: 0px;
+  outline: none;
+  padding: 0px;
 }
 .wholesidebar .sidebar .bigcate2 {
   color: #893100;

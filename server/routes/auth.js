@@ -27,7 +27,7 @@ router.post("/login/:type", function (req, res, next) {
     var sql =
       type === 1
         ? "SELECT * FROM user WHERE u_email=? and u_pw=?;"
-        : "SELECT * FROM user WHERE u_email=? and u_pw=?;";
+        : "SELECT * FROM user WHERE u_email=? and u_pw=?;"; //관리자로 변경해야함.
     connection.query(sql, datas, async function (err, result) {
       if (err) {
         res.status(500).send({ success: false, err: "DB 오류" + err });
@@ -51,16 +51,19 @@ router.post("/login/:type", function (req, res, next) {
   });
 });
 
-router.post("/signup", async function (req, res, next) {
+router.post("/signup/:type", async function (req, res, next) {
+  const type = req.params.type;
   const { email, password, name, phone } = req.body;
   var datas = [email, password, name, phone];
 
   const connection = await pool2.getConnection(async (conn) => conn);
   try {
-    const result1 = await connection.query(
-      "select * from user where u_email=?;",
-      [email]
-    );
+    const result1 =
+      type === 1
+        ? await connection.query("select * from user where u_email=?;", [email])
+        : await connection.query("select * from user where u_email=?;", [
+            email,
+          ]); //관리자로 변경해야함.
     const data1 = result1[0];
     if (data1.length > 0) {
       res.status(401).send({
