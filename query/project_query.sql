@@ -39,21 +39,18 @@ insert into report(r_title, r_contents, User_u_id, Product_p_id)
 values ("허위매물", "이 제품은 한국에서 판매 안하는 짝퉁입니다.", 1, 1);
 
 # 신고처리 리스트
-# report의 User_u_id에는 신고한 사람 u_id가 들어가 있음
-# product와 user를 join하면 p_id에 해당하는 사람 정보를 찾으면 신고당한 사람을 찾을 수 있음
-# user와 report를 join하면 신고한 사람을 찾을 수 있음
-# 따라서 이를 활용하면 불 수 있을 것으로 보임
-select u.u_email, r.*
-from user u join report r on u.u_id = r.User_u_id; # 신고한 사람의 이메일 정보
-
-select u.u_id, u.u_email
-from user u
-where u.u_id = (
-	select r.*
-	from report r join product p on r.Product_p_id = p.p_id
-    where p.p_id = 1 # 신고된 제품 ?
-); # 신고당한 사람의 user id
-    
+# u_p ==> 신고당한 제품과 그 제품을 등록한 사용자(신고당한 사용자)의 정보를 담은 테이블
+# report와 u_p를 join하여 신고당한 제품의 사용자 정보를 얻음
+select reporting_u.u_email, reported_u.u_email, reported_u.r_title
+from (select u.u_email, u.u_id
+	  from user u join report r 
+      on u.u_id = r.User_u_id) reporting_u join (
+	  select u_p.u_email, r.*
+	  from report r join (select u.u_email, u.u_id, p.p_id
+						from user u join product p on u.u_id = p.User_u_id) u_p
+	  on r.Product_p_id = u_p.p_id
+      ) reported_u
+on reporting_u.u_id = reported_u.User_u_id;
 
 # 신고처리 상세보기
 select u.u_email, r.r_title, r.r_contents
@@ -94,6 +91,17 @@ where u_id = 1;
 update user
 set u_point = u_point + 10000
 where u_id = 1;
+# 밑에 insert로 포인트 량과 해당 정보를 기입
+insert into point(point_use, User_u_id, Product_p_id)
+values ("포인트 충전", 1, 1);
+
+# 포인트로 상품구매
+update user
+set u_point = u_point - 10000
+where u_id = 1;
+# 포인트로 상품을 구매하면 위의 쿼리와 insert로 point 테이블에 상품 번호와 사용자 정보를 기입
+
+
 
 
 # ================= 마이페이지 구매/판매/활동 목록 =================
