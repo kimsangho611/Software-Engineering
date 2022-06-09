@@ -2,6 +2,7 @@ import styles from "./editInfo.module.scss";
 import { Layout } from "../../components/layout";
 import { useEffect, useState } from "react";
 import { emailValidation, phoneValidation } from "../../utils/validation";
+import { EditInfoApi, GetInfoApi } from "../../core/api/auth/editInfoApi";
 
 const EditInfo = () => {
   const [user, setUser] = useState({
@@ -18,8 +19,21 @@ const EditInfo = () => {
     msg: "빈칸을 모두 채워주세요.",
   });
 
+  const GetOldInfo = async () => {
+    const res = await GetInfoApi();
+    console.log("Res", res);
+    setUser({
+      ...user,
+      email: res.info[0].u_email,
+      name: res.info[0].u_name,
+      phone: res.info[0].u_phone,
+    });
+  };
   useEffect(() => {
-    console.log("user=", user);
+    GetOldInfo();
+  }, []);
+
+  useEffect(() => {
     if (
       user.email === "" ||
       user.pw === "" ||
@@ -88,11 +102,25 @@ const EditInfo = () => {
         placeholder={"휴대전화"}
         onChange={(e) => setUser({ ...user, phone: e.target.value })}
       />
-      {err.msg}
+      <h3>{err.msg}</h3>
       <button
         type="button"
         disabled={err.dis}
         className={err.dis ? styles.dis : styles.ok}
+        onClick={async () => {
+          const res = await EditInfoApi(
+            user.email,
+            user.pw,
+            user.newPw,
+            user.name,
+            user.phone
+          );
+          if (res.success) {
+            window.location.replace("/mypage/editInfo");
+          } else {
+            alert(res.msg);
+          }
+        }}
       >
         변경하기
       </button>

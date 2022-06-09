@@ -12,7 +12,6 @@ const Search = () => {
   const [list, setList] = useState([]);
   const GetSearchList = async () => {
     const res = await GetAllProduct();
-    console.log("res=", res);
     const filterData = res.list.filter(
       (i) =>
         i.p_title.includes(params.word) ||

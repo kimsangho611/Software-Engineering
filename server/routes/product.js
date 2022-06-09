@@ -67,4 +67,24 @@ router.post("/hit", async function (req, res, next) {
   }
 });
 
+router.get("/list", async function (req, res) {
+  var { orderBy, min, max, bigCategory, smallCategory } = req.query;
+  var datas = [min, max, bigCategory, smallCategory];
+ 
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    let sql =
+      orderBy === "1"
+        ? "select * ,count(Product_p_id) as likecnt from product LEFT outer join shopbasket on shopbasket.Product_p_id = product.p_id where (p_price between ? and ?) and p_category1 = ? and p_category2 = ? group by product.p_id order by p_date DESC;"
+        : "select * ,count(Product_p_id) as likecnt from product LEFT outer join shopbasket on shopbasket.Product_p_id = product.p_id where (p_price between ? and ?) and p_category1 = ? and p_category2 = ? group by product.p_id order by p_view DESC;";
+    const result1 = await connection.query(sql, datas);
+
+    res.status(200).send({ success: true, list: result1[0] });
+  } catch (err) {
+    res.status(500).send({ success: false, msg: "서버 오류" + err });
+  } finally {
+    connection.release();
+  }
+});
+
 module.exports = router;
