@@ -11,7 +11,7 @@ router.post(
     const body = req.body;
     let verify = await jwt.verify(req.headers.authorization);
     let datas = [
-      req.file.path,
+      req.file.path.split("public")[1],
       body.cate1,
       body.cate2,
       body.title,
