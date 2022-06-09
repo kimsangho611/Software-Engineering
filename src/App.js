@@ -14,6 +14,7 @@ import MyPageSellList from "./pages/mypage/sellList";
 import MyPageAsk from "./pages/mypage/ask";
 import EditInfo from "./pages/mypage/editInfo";
 import ProductDetail from "./pages/productDetail";
+import ViewCategory from "./pages/category/category";
 
 const App = () => {
   return (
@@ -36,6 +37,8 @@ const App = () => {
 
           <Route path="/product/register" element={<ProductRegister />} />
           <Route path="/product/detail/:pid" element={<ProductDetail />} />
+
+          <Route path="/category/:c1/:c2" element={<ViewCategory />} />
         </Routes>
       </BrowserRouter>
     </div>
