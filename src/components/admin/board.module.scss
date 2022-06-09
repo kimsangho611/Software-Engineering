@@ -1,0 +1,12 @@
+@import "../../styles/main.module.scss";
+.boardLine {
+  @include flexBox(between, center);
+  width: 1313px;
+  height: 60px;
+  border-bottom: 1px solid $grey;
+
+  span {
+    width: 20%;
+    text-align: center;
+  }
+}
