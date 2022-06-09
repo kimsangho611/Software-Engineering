@@ -150,6 +150,10 @@ values (null, "카테고리1", "카테고리2", "블라우스 팝니다.", 30000
 select u.u_name, p.* 
 from user u join product p on u.u_id = p.User_u_id
 where p.p_id = 1;
+# 개별상품 디테일 - 조최수 증가를 위한 쿼리
+update product
+set p_view = p_view + 1
+where p_id = 1;
 
 # 개별 상품 디테일에서 구매자 이름 및 평점을 전달하는 쿼리
 
@@ -263,9 +267,6 @@ where trim(p.p_title) like "%?%";
 # 찜 - 찜 역할을 하는 shopbasket 테이블에 사용자 번호와 제품 번호를 저장함
 insert into shopbasket(User_u_id, Product_p_id)
 values (1, 1);
-
-
-
 
 
 
