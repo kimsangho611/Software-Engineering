@@ -9,8 +9,9 @@ import styles from "./productRegister.module.scss";
 
 const ProductRegister = () => {
   const [success, setSuccess] = useState("");
+
   const [userInput, setUserInput] = useState({
-    thumbnail: "",
+    imgPicker: "",
     cate1: "WOMEN",
     cate2: "아우터",
     title: "",
@@ -20,7 +21,6 @@ const ProductRegister = () => {
     state: "새 상품",
     wearCnt: "",
     pollution: "",
-    pid: "",
     introduction: "",
   });
 
@@ -56,7 +56,7 @@ const ProductRegister = () => {
     reader.readAsDataURL(fileBlob);
     return new Promise((resolve) => {
       reader.onload = () => {
-        setUserInput((prev) => ({ ...prev, thumbnail: reader.result }));
+        setUserInput((prev) => ({ ...prev, imgPicker: reader.result }));
         resolve();
       };
     });
@@ -67,7 +67,11 @@ const ProductRegister = () => {
       {success === true ? (
         <SuccessModal text={"상품 등록"} btnText={"홈으로"} linkTo={"/"} />
       ) : success === false ? (
-        <FailModal text={"상품 등록"} btnText={"다시 시도"} linkTo={""} />
+        <FailModal
+          text={"상품 등록"}
+          btnText={"다시 시도"}
+          linkTo={"/product/register"}
+        />
       ) : (
         <></>
       )}
@@ -79,11 +83,12 @@ const ProductRegister = () => {
             encodeFileToBase64(e.target.files[0]);
           }}
           id="imgPicker"
+          name="imgPicker"
         />
         <label htmlFor="imgPicker" className={styles.imagePicker}>
-          {userInput.thumbnail ? (
+          {userInput.imgPicker ? (
             <img
-              src={userInput.thumbnail}
+              src={userInput.imgPicker}
               alt="preview-img"
               className={styles.imagePicker}
             />
@@ -122,7 +127,6 @@ const ProductRegister = () => {
               setUserInput({ ...userInput, title: e.target.value })
             }
           />
-
           <ProductRegisterBox
             type={2}
             text={"가격"}
@@ -170,13 +174,6 @@ const ProductRegister = () => {
               }
             />
           </div>
-          <ProductRegisterBox
-            type={2}
-            text={"상품 번호"}
-            onChange={(e) =>
-              setUserInput({ ...userInput, pid: e.target.value })
-            }
-          />
           <ProductRegisterBox
             type={3}
             text={"상품 설명"}
