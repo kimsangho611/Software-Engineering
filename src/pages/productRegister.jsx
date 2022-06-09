@@ -30,7 +30,7 @@ const ProductRegister = () => {
   const forWomen = [
     "아우터",
     "니트",
-    "셔츠/블라우스",
+    "셔츠",
     "티셔츠",
     "원피스",
     "팬츠",

@@ -166,3 +166,31 @@
     margin-bottom: 60px;
   }
 }
+
+.searchModal {
+  h1 {
+    @include text(24px, $text, 600);
+    font-family: "Font";
+    text-align: left;
+  }
+  .whole {
+    display: flex;
+    height: 80%;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+  }
+  .title {
+    @include text(24px, $text, 500);
+    font-family: "Font";
+  }
+  .searchBtn {
+    @include text(24px, $text, 500);
+    color: white;
+    height: 50px;
+    font-family: "Font";
+  }
+  .one {
+    margin-bottom: 40px;
+  }
+}

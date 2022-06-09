@@ -114,24 +114,57 @@ const Sidebar = ({ openSide, setOpenSide }) => {
           )}
           <div className="maincate">
             <span className="bigcate2">WOMEN</span>
-            <span className="smallcate">아우터</span>
-            <span className="smallcate">니트</span>
-            <span className="smallcate">셔츠/블라우스</span>
-            <span className="smallcate">티셔츠</span>
-            <span className="smallcate">원피스</span>
-            <span className="smallcate">팬츠</span>
-            <span className="smallcate">스커트</span>
+            <a href="/category/WOMEN/아우터" className="smallcate">
+              아우터
+            </a>
+            <a href="/category/WOMEN/니트" className="smallcate">
+              니트
+            </a>
+            <a href="/category/WOMEN/셔츠" className="smallcate">
+              셔츠
+            </a>
+            <a href="/category/WOMEN/티셔츠" className="smallcate">
+              티셔츠
+            </a>
+            <a href="/category/WOMEN/원피스" className="smallcate">
+              원피스
+            </a>
+            <a href="/category/WOMEN/팬츠" className="smallcate">
+              팬츠
+            </a>
+
+            <a href="/category/WOMEN/스커트" className="smallcate">
+              스커트
+            </a>
             <span className="bigcate2">MEN</span>
-            <span className="smallcate">아우터</span>
-            <span className="smallcate">니트</span>
-            <span className="smallcate">셔츠</span>
-            <span className="smallcate">티셔츠</span>
-            <span className="smallcate">팬츠</span>
+            <a href="/category/MEN/아우터" className="smallcate">
+              아우터
+            </a>
+            <a href="/category/MEN/니트" className="smallcate">
+              니트
+            </a>
+            <a href="/category/MEN/셔츠" className="smallcate">
+              셔츠
+            </a>
+            <a href="/category/MEN/티셔츠" className="smallcate">
+              티셔츠
+            </a>
+            <a href="/category/MEN/팬츠" className="smallcate">
+              팬츠
+            </a>
             <span className="bigcate2">ACC</span>
-            <span className="smallcate">가방</span>
-            <span className="smallcate">지갑</span>
-            <span className="smallcate">신발</span>
-            <span className="smallcate">기타 잡화</span>
+            <a href="/category/ACC/가방" className="smallcate">
+              가방
+            </a>
+            <a href="/category/ACC/지갑" className="smallcate">
+              지갑
+            </a>
+            <a href="/category/ACC/신발" className="smallcate">
+              신발
+            </a>
+            <a href="/category/ACC/기타 잡화" className="smallcate">
+              기타 잡화
+            </a>
           </div>
           {localStorage.getItem("accessToken") ? (
             <span className="bigcate">마이페이지</span>
