@@ -12,6 +12,7 @@ import MyPagePoint from "./pages/mypage/point";
 import MyPageBuyList from "./pages/mypage/buyList";
 import MyPageSellList from "./pages/mypage/sellList";
 import MyPageAsk from "./pages/mypage/ask";
+import MyPageActivityList from "./pages/mypage/activityList";
 import EditInfo from "./pages/mypage/editInfo";
 import ProductDetail from "./pages/productDetail";
 import ViewCategory from "./pages/category/category";
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/mypage/sellList" element={<MyPageSellList />} />
           <Route path="/mypage/ask" element={<MyPageAsk />} />
           <Route path="/mypage/editInfo" element={<EditInfo />} />
+          <Route path="/mypage/activityList" element={<MyPageActivityList />} />
 
           <Route path="/product/register" element={<ProductRegister />} />
           <Route path="/product/detail/:pid" element={<ProductDetail />} />
