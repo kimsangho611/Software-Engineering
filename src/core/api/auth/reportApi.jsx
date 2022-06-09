@@ -11,5 +11,5 @@ export const ReportApi = async (title, contents, productId) => {
       productId: productId,
     },
   });
-  return res.data;
+  return res.status;
 };
