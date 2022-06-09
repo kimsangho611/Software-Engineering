@@ -1,4 +1,5 @@
 @mixin text($size: $fs-15, $color: $white, $weight: 700, $align: center) {
+  font-family: "Font";
   @if (type-of($size) == number) {
     font-size: $size;
   }

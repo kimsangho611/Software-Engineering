@@ -8,13 +8,19 @@
     margin-bottom: 56px;
   }
 
+  h3 {
+    @include text(18px, $strong_orange, 500);
+  }
+
   input {
+    @include text(24px, $text, 400, left);
     width: 600px;
     height: 96px;
     padding: 33px 24px;
     margin-bottom: 16px;
     font-size: 30px;
     border: 2px solid $grey;
+    border-radius: 5px;
   }
 
   input::placeholder {
@@ -23,12 +29,12 @@
 
   .dis {
     @include btn-with-text($grey, $white, 600px, 70px);
-    margin-top: 50px;
+    margin-top: 30px;
     cursor: default;
   }
 
   .ok {
     @include btn-with-text($main, $white, 600px, 70px);
-    margin-top: 50px;
+    margin-top: 30px;
   }
 }
