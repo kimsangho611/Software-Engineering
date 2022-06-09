@@ -27,7 +27,7 @@ router.post("/login/:type", function (req, res, next) {
     var sql = "SELECT * FROM user WHERE u_email=? and u_pw=?;"; //관리자로 변경해야함.
     connection.query(sql, datas, async function (err, result) {
       if (err) {
-        res.status(500).send({ success: false, err: "DB 오류" + err });
+        res.status(500).send({ success: false, msg: "DB 오류" + err });
         console.error("err : " + err);
       } else {
         if (result.length > 0) {
@@ -41,7 +41,7 @@ router.post("/login/:type", function (req, res, next) {
         } else
           res.status(401).send({
             success: false,
-            err: "이메일 또는 비밀번호를 다시 확인해주세요.",
+            msg: "이메일 또는 비밀번호를 다시 확인해주세요.",
           });
       }
       connection.release();
