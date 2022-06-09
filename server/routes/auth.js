@@ -24,10 +24,7 @@ router.post("/login/:type", function (req, res, next) {
   var datas = [email, password];
 
   pool.getConnection(function (err, connection) {
-    var sql =
-      type === 1
-        ? "SELECT * FROM user WHERE u_email=? and u_pw=?;"
-        : "SELECT * FROM user WHERE u_email=? and u_pw=?;"; //관리자로 변경해야함.
+    var sql = "SELECT * FROM user WHERE u_email=? and u_pw=?;"; //관리자로 변경해야함.
     connection.query(sql, datas, async function (err, result) {
       if (err) {
         res.status(500).send({ success: false, err: "DB 오류" + err });
@@ -36,6 +33,7 @@ router.post("/login/:type", function (req, res, next) {
         if (result.length > 0) {
           const jwtToken = await jwt.sign({
             uid: result[0].u_id,
+            admin: result[0].u_admin,
             id: result[0].u_email,
             name: result[0].u_name,
           });
@@ -54,16 +52,14 @@ router.post("/login/:type", function (req, res, next) {
 router.post("/signup/:type", async function (req, res, next) {
   const type = req.params.type;
   const { email, password, name, phone } = req.body;
-  var datas = [email, password, name, phone];
+  var datas = [email, password, name, phone, type];
 
   const connection = await pool2.getConnection(async (conn) => conn);
   try {
-    const result1 =
-      type === 1
-        ? await connection.query("select * from user where u_email=?;", [email])
-        : await connection.query("select * from user where u_email=?;", [
-            email,
-          ]); //관리자로 변경해야함.
+    const result1 = await connection.query(
+      "select * from user where u_email=?;",
+      [email]
+    );
     const data1 = result1[0];
     if (data1.length > 0) {
       res.status(401).send({
@@ -72,7 +68,7 @@ router.post("/signup/:type", async function (req, res, next) {
       });
     } else {
       var sql =
-        "insert into user(u_email, u_pw, u_name, u_phone) values (?,?,?,?);";
+        "insert into user(u_email, u_pw, u_name, u_phone, u_admin) values (?,?,?,?,?);";
       await connection.query(sql, datas);
       res.status(200).send({ success: true, msg: "회원가입 성공" });
     }
