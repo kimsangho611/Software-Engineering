@@ -5,5 +5,5 @@ export const buyWithPoint = async (productId) => {
     url: `/point/buy`,
     data: { productId: productId },
   });
-  return res.data;
+  return res.status;
 };
