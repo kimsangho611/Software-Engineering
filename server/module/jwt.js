@@ -8,6 +8,7 @@ const options = require("../config/token.js").options;
 module.exports = {
   sign: async (user) => {
     const payload = {
+      uid: user.uid,
       id: user.id,
       name: user.name,
     };
@@ -17,6 +18,12 @@ module.exports = {
     let decoded;
     try {
       decoded = jwt.verify(token, secretKey);
+      return {
+        ok: true,
+        uid: decoded.uid,
+        id: decoded.id,
+        name: decoded.name,
+      };
     } catch (err) {
       return 401;
     }
