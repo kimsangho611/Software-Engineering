@@ -30,7 +30,7 @@ router.post("/login/:type", function (req, res, next) {
         res.status(500).send({ success: false, msg: "DB 오류" + err });
         console.error("err : " + err);
       } else {
-        if (result[0].length > 0) {
+        if (result.length > 0) {
           const jwtToken = await jwt.sign({
             uid: result[0].u_id,
             admin: result[0].u_admin,
