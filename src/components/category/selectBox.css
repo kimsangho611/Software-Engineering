@@ -1,0 +1,33 @@
+.alignbox {
+  width: 260px;
+  height: 56px;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-family: "Font";
+  font-weight: 500;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.selectPriceBox .pricebox {
+  width: 200px;
+  height: 56px;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-family: "Font";
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.selectPriceBox .text {
+  font-family: "Font";
+  font-weight: 500;
+  font-size: 20px;
+}
