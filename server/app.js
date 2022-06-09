@@ -9,6 +9,7 @@ const mypage = require("./routes/mypage");
 const oneToOneInquiry = require("./routes/oneToOneInquiry");
 const notice = require("./routes/notice");
 const inquire = require("./routes/inquire");
+const report = require("./routes/report");
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -46,3 +47,4 @@ app.use("/mypage", mypage);
 app.use("/oneToOneInquiry", oneToOneInquiry);
 app.use("/notice", notice);
 app.use("/inquire", inquire);
+app.use("/report", report);
