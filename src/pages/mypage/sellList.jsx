@@ -1,39 +1,28 @@
 import { Layout } from "../../components/layout";
 import { MypageProductCard } from "../../components/mypage/mypageCard";
 import styles from "./list.module.scss";
+import { getSellList } from "../../core/api/product/list";
+import { useState, useEffect } from "react";
 
 const MyPageSellList = () => {
-  const productInfo = [
-    {
-      title: "한 번만 입은 h&m 니트 팔아요",
-      state: "판매중",
-      category1: "WOMEN",
-      category2: "니트",
-      date: "2022.06.12",
-    },
-    {
-      title: "8세컨즈 원피스 팔아요",
-      state: "거래 완료",
-      category1: "WOMEN",
-      category2: "원피스",
-      date: "2022.06.02",
-    },
-    {
-      title: "바지 팔아요",
-      state: "판매중",
-      category1: "MEN",
-      category2: "바지",
-      date: "2022.05.24",
-    },
-  ];
+  const [sell, setSell] = useState([]);
+  const GetSellList = async () => {
+    const res = await getSellList();
+    setSell(res.result);
+  };
+
+  useEffect(() => {
+    GetSellList();
+  }, []);
+
   return (
     <Layout otherClass={styles.mypageBuyList}>
       <h1 className={styles.title}>판매 목록</h1>
       <div className={styles.lists}>
-        {productInfo.map((data, i) => {
+        {sell?.map((data, i) => {
           return (
             <div className={styles.card} key={i}>
-              <span className={styles.date}>{data.date}</span>
+              <span className={styles.date}>{data.p_date?.substr(0, 10)}</span>
               <MypageProductCard productInfo={data} />
             </div>
           );

@@ -22,12 +22,14 @@
   }
 
   .lists {
-    @include flexBox(between, center);
+    @include flexBox(center, start);
+    width: 1283px;
     flex-direction: column;
 
     .card {
       @include flexBox(center, start);
       flex-direction: column;
+      margin-right: 45px;
 
       .date {
         @include text(24px, $text, 400, left);

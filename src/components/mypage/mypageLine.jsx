@@ -26,30 +26,38 @@ export const MypageAskLine = ({ askInfo, setOpen, open }) => {
     <>
       <div
         className={styles.mypageAskLine}
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => {
+          setOpen((prev) => ({ ...prev, [askInfo.q_id]: !open[askInfo.q_id] }));
+        }}
       >
-        <h1 className={styles.title}>{askInfo.inquiryTitle}</h1>
+        <h1 className={styles.title}>{askInfo.q_title}</h1>
         <div className={styles.rightSide}>
-          <div className={askInfo.isAnswer ? styles.orangeTag : styles.greyTag}>
-            <span>{askInfo.isAnswer ? "답변 완료" : "답변 대기"}</span>
+          <div
+            className={
+              askInfo.q_answer !== null ? styles.orangeTag : styles.greyTag
+            }
+          >
+            <span>{askInfo.q_answer !== null ? "답변 완료" : "답변 대기"}</span>
           </div>
-          {open ? (
+          {open[askInfo.q_id] ? (
             <IC_Up className={styles.arrow} />
           ) : (
             <IC_Down className={styles.arrow} />
           )}
         </div>
       </div>
-      {open && (
+      {open[askInfo.q_id] && (
         <div className={styles.contents}>
-          <div className={styles.userQ}>{askInfo.inquiryContent}</div>
+          <div className={styles.userQ}>{askInfo.q_contents}</div>
           {askInfo.isAnswer && (
             <>
               <div className={styles.line} />
 
               <div className={styles.adminA}>
                 <span className={styles.admin}>관리자</span>
-                <span className={styles.answer}>{askInfo.adminAnswer}</span>
+                <span className={styles.answer}>
+                  {askInfo.q_answer === null ? "" : askInfo.q_answer}
+                </span>
               </div>
             </>
           )}
