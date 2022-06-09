@@ -16,6 +16,9 @@ import { ReactComponent as IC_SecondHand } from "./secondhand.svg";
 import { ReactComponent as IC_Close } from "./closebtn.svg";
 import { ReactComponent as IC_Down } from "./down.svg";
 import { ReactComponent as IC_Up } from "./up.svg";
+import { ReactComponent as IC_Check_Circle } from "./check_circle.svg";
+import { ReactComponent as IC_X_Circle } from "./x_circle.svg";
+import { ReactComponent as IC_Plus_Circle } from "./plus_circle.svg";
 
 export {
   IC_Hamburger_Bar,
@@ -36,4 +39,7 @@ export {
   IC_Close,
   IC_Down,
   IC_Up,
+  IC_Check_Circle,
+  IC_X_Circle,
+  IC_Plus_Circle,
 };
