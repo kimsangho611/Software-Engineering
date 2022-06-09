@@ -9,6 +9,7 @@ module.exports = {
   sign: async (user) => {
     const payload = {
       uid: user.uid,
+      admin: user.admin,
       id: user.id,
       name: user.name,
     };
@@ -21,6 +22,7 @@ module.exports = {
       return {
         ok: true,
         uid: decoded.uid,
+        admin: user.admin,
         id: decoded.id,
         name: decoded.name,
       };
