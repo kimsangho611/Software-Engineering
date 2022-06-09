@@ -3,6 +3,13 @@
   flex-direction: column;
   align-items: center;
 }
+.drop .errmsg {
+  font-family: "Font";
+  font-weight: 500;
+  font-size: 18px;
+  color: #ffa243;
+  padding: 10px;
+}
 
 .dropTitle {
   font-family: "Font";
@@ -30,7 +37,7 @@
   height: 147px;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 .drop .btntrue {
   width: 600px;
