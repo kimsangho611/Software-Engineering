@@ -280,3 +280,7 @@ values (1, 1);
 select count(*)
 from shopbasket sb join product p on sb.Product_p_id = p.p_id
 where p.p_id = ? and p.p_likeitem = 1;
+
+# 특정 product의 찜 개수 포함한 상세정보 출력
+select *, (select count(*) from shopbasket where Product_p_id=1) as likecnt
+from product p LEFT JOIN shopbasket on shopbasket.Product_p_id = p.p_id where p.p_id = (select sb.Product_p_id from user u join shopbasket sb on u.u_id = sb.User_u_id where u.u_id = 1);
