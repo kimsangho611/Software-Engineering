@@ -201,22 +201,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `secondhand`.`Point` (
   `point_id` INT NOT NULL AUTO_INCREMENT,
-  `point_use` VARCHAR(45) NULL,
+  `point_title` VARCHAR(90) NULL,
   `point_amount` INT NULL DEFAULT 0,
   `point_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `User_u_id` INT NOT NULL,
-  `Product_p_id` INT NOT NULL,
   PRIMARY KEY (`point_id`),
   INDEX `fk_Point_User1_idx` (`User_u_id` ASC) VISIBLE,
-  INDEX `fk_Point_Product1_idx` (`Product_p_id` ASC) VISIBLE,
   CONSTRAINT `fk_Point_User1`
     FOREIGN KEY (`User_u_id`)
     REFERENCES `secondhand`.`User` (`u_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Point_Product1`
-    FOREIGN KEY (`Product_p_id`)
-    REFERENCES `secondhand`.`Product` (`p_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
