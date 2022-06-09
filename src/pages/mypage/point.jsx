@@ -1,38 +1,55 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Layout } from "../../components/layout";
 import {
   PointChargeCompleteModal,
   PointChargeModal,
 } from "../../components/modals/pointModal";
 import { MypagePointLine } from "../../components/mypage/mypageLine";
+import { getPoint, getPointList } from "../../core/api/point/getPoint";
 import styles from "./point.module.scss";
+import { chargePoint } from "../../core/api/point/chargePoint";
 
 const MyPagePoint = () => {
   const [charge, setCharge] = useState(false);
-  const pointInfo = [
-    {
-      boughtProductTitle: "포인트 충전",
-      isTradeConfirm: "none",
-      pointTrade: +19000,
-    },
-    {
-      boughtProductTitle: "한 번만 입은 h&m 니트 팔아요",
-      isTradeConfirm: false,
-      pointTrade: +19000,
-    },
-    {
-      boughtProductTitle: "8seconds 치마 팝니다.",
-      isTradeConfirm: true,
-      pointTrade: -19000,
-    },
-  ];
+  const [chargeComp, setChargeComp] = useState(false);
+  const [list, setList] = useState([]);
+  const [amount, setAmount] = useState(0);
+  const [nowPoint, setNowPoint] = useState();
+
+  const GetPoints = async () => {
+    const res = await getPointList();
+    const res2 = await getPoint();
+    setList(res.result);
+    setNowPoint(res2.result[0].u_point);
+  };
+
+  useEffect(() => {
+    GetPoints();
+  }, []);
+
+  const Charge = async () => {
+    const res = await chargePoint(amount);
+    if (res === 200) {
+      setCharge(false);
+      setChargeComp(true);
+    }
+  };
+
   return (
     <Layout otherClass={styles.mypagePoint}>
-      {charge && <PointChargeCompleteModal setModal={setCharge} />}
-      {/* {charge && <PointChargeModal setModal={setCharge} />} */}
+      {chargeComp && <PointChargeCompleteModal />}
+      {charge && (
+        <PointChargeModal
+          setModal={setCharge}
+          setAmount={setAmount}
+          onClick={Charge}
+        />
+      )}
       <h1 className={styles.mypagePointTitle}>포인트</h1>
       <div className={styles.current}>
-        <strong className={styles.currentPoint}>19,000 point</strong>
+        <strong className={styles.currentPoint}>
+          {nowPoint?.toLocaleString("ko-KR")} point
+        </strong>
         <button
           type="button"
           onClick={() => setCharge(true)}
@@ -41,10 +58,12 @@ const MyPagePoint = () => {
           충전하기
         </button>
       </div>
-      {pointInfo.map((data, i) => {
+      {list.map((data, i) => {
         return (
           <Fragment key={i}>
-            <span className={styles.date}>2022.04.14</span>
+            <span className={styles.date}>
+              {data.point_date?.substr(0, 10)}
+            </span>
             <MypagePointLine pointInfo={data} />
           </Fragment>
         );

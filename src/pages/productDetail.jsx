@@ -66,11 +66,7 @@ const ProductDetail = () => {
         />
       )}
       {buyModal && (
-        <BuyModal
-          setModal={setBuyModal}
-          price={detail.p_listprice}
-          onClick={Buy}
-        />
+        <BuyModal setModal={setBuyModal} price={detail.p_price} onClick={Buy} />
       )}
       {buyFailModal && <BuyFailModal setModal={setBuyFailModal} />}
       {buySucModal && <BuySuccessModal setModal={setBuySucModal} />}
