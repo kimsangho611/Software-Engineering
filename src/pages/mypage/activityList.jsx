@@ -36,8 +36,7 @@ const MyPageActivityList = () => {
           ))}
         </select>
       </div>
-
-      <div className={styles.lists}>
+      <div className="hotNewItem">
         <div className="productOneLine">
           {productInfo?.map((item, key) => {
             return (
