@@ -2,13 +2,16 @@ import { IC_Check_Circle, IC_X_Circle } from "../../assets/icons";
 import { OrangeBtn, WhiteBtn } from "../common/button";
 import { Modal } from "../common/modal";
 import styles from "./modals.module.scss";
+import { Link } from "react-router-dom";
 
 export const SuccessModal = ({ text, btnText, linkTo }) => {
   return (
     <Modal otherStyle={styles.successModal} prevent={true}>
       <IC_Check_Circle />
       <h1>{text}에 성공하였습니다.</h1>
-      <OrangeBtn text={btnText} />
+      <Link to={linkTo}>
+        <OrangeBtn text={btnText} />
+      </Link>
     </Modal>
   );
 };

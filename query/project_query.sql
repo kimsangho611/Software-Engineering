@@ -86,21 +86,27 @@ from user
 where u_id = 1;
 
 # 포인트 중천 및 사용 내역
+select u.u_point, p.*
+from user u join point p on u.u_id = p.User_u_id
+where u.u_id = 1;
+
 
 # 포인트 충전
 update user
 set u_point = u_point + 10000
 where u_id = 1;
 # 밑에 insert로 포인트 량과 해당 정보를 기입
-insert into point(point_use, User_u_id, Product_p_id)
-values ("포인트 충전", 1, 1);
+insert into point(point_title, point_amount, User_u_id)
+values ("포인트 충전", 10000, 1);
+
 
 # 포인트로 상품구매
 update user
 set u_point = u_point - 10000
 where u_id = 1;
 # 포인트로 상품을 구매하면 위의 쿼리와 insert로 point 테이블에 상품 번호와 사용자 정보를 기입
-
+insert into point(point_title, point_amount, User_u_id)
+values ("블라우스 팝니다.", -10000, 1);
 
 
 
@@ -135,7 +141,7 @@ from product p
 where p.p_id = (
 	select pi.Product_p_id
     from user u join productinquiry pi on u.u_id = pi.User_u_id
-    where u.u_id = 1 );
+    where u.u_id = 1);
 
 
 # ================= Product =================
@@ -260,13 +266,13 @@ where p_id = 1;
 # =========================================
 
 # 검색 - 상품의 제목에서 원하는 검색 결과가 있는 상품 정보를 선택함
-select count(*) as search_cnt, p.*
+select p.*
 from product p
-where trim(p.p_title) like "%?%";
+where trim(p.p_title) like "%팝니다%";
 
 # 찜 - 찜 역할을 하는 shopbasket 테이블에 사용자 번호와 제품 번호를 저장함
 insert into shopbasket(User_u_id, Product_p_id)
 values (1, 1);
 
 
-
+# ==================================================================
