@@ -16,6 +16,7 @@ import { useParams } from "react-router-dom";
 import { hit } from "../core/api/product/hit";
 import { ReportApi } from "../core/api/auth/reportApi";
 import { buyWithPoint } from "../core/api/point/dealWithPoint";
+import { CancleLike, productLike } from "../core/api/product/like";
 
 const ProductDetail = () => {
   const [like, setLike] = useState(false);
@@ -30,8 +31,13 @@ const ProductDetail = () => {
   const fetch = async () => {
     await hit(params.pid);
     const res = await getProductDetail(params.pid);
-    setDetail(res);
+    setDetail(res.list);
+    setLike(res.isLike);
   };
+
+  useEffect(() => {
+    console.log("like", like);
+  }, [like]);
 
   useEffect(() => {
     if (params.pid != undefined && params.pid != null) fetch();
@@ -134,10 +140,18 @@ const ProductDetail = () => {
           <button
             type="button"
             className={styles.whiteBtn}
-            onClick={() => setLike((prev) => !prev)}
+            onClick={async () => {
+              if (like === 0) {
+                await productLike(params.pid);
+                window.location.reload();
+              } else {
+                await CancleLike(params.pid);
+                window.location.reload();
+              }
+            }}
           >
             <IC_Heart
-              className={like ? styles.heartFill : styles.heartNotFill}
+              className={like === 1 ? styles.heartFill : styles.heartNotFill}
             />
             찜
           </button>

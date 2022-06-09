@@ -40,13 +40,22 @@ router.post(
 );
 
 router.post("/detail", async function (req, res, next) {
+  let token_res = await jwt.verify(req.headers.authorization);
   const connection = await pool2.getConnection(async (conn) => conn);
   try {
     let sql2 =
       "select *,count(Product_p_id) as likecnt from product LEFT JOIN shopbasket on shopbasket.Product_p_id = product.p_id where product.p_id=?;";
+    let sql1 =
+      "SELECT count(*) as isLike FROM secondhand.shopbasket where User_u_id=? and Product_p_id=?;";
     const detail = await connection.query(sql2, [req.body.productId]);
+    const isLike = await connection.query(sql1, [
+      token_res.uid,
+      req.body.productId,
+    ]);
+
     const detail2 = detail[0];
-    res.status(200).send(detail2[0]);
+    console.log(detail2);
+    res.status(200).send({ list: detail2[0], isLike: isLike[0][0].isLike });
   } catch (err) {
     res.status(500).send();
   } finally {
@@ -70,7 +79,7 @@ router.post("/hit", async function (req, res, next) {
 router.get("/list", async function (req, res) {
   var { orderBy, min, max, bigCategory, smallCategory } = req.query;
   var datas = [min, max, bigCategory, smallCategory];
- 
+
   const connection = await pool2.getConnection(async (conn) => conn);
   try {
     let sql =
