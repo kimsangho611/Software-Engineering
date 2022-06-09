@@ -96,4 +96,26 @@ router.post("/list", async function (req, res) {
   }
 });
 
+router.post("/charge", async function(req, res) {
+    const token = req.body.token;
+    const pointAmount = req.body.pointAmount;
+    var token_res = await jwt.verify(token);
+
+    const connection = await pool.getConnection(async (conn) => conn);
+    try {
+        if (token_res === 401) {
+            res.status(401).send({ success: false, msg: "로그인 기한이 만료되어 포인트를 충전할 수 없습니다. 다시 로그인해주세요."});
+        } else {
+            await connection.query(
+                "update user set u_point = u_point + ? where u_id = ?; \
+                insert into point(point_title, point_amount, User_u_id) values ('포인트 충전', ?, ?);",
+                [pointAmount, token_res.uid, pointAmount, token_res.uid]);
+        }
+    } catch (err) {
+        req.stale(500).send({ success: true, msg: "서버 오류" + err});
+    } finally {
+        connection.release();
+    }
+})
+
 module.exports = router;
