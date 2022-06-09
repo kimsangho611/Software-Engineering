@@ -146,3 +146,23 @@
     margin-bottom: 78px;
   }
 }
+
+.successModal {
+  h1 {
+    @include text(32px, $text, 700);
+    margin-top: 60px;
+    margin-bottom: 80px;
+  }
+}
+
+.failModal {
+  h1 {
+    @include text(32px, $text, 700);
+    margin-top: 60px;
+  }
+
+  span {
+    @include text(24px, $text, 500);
+    margin-bottom: 60px;
+  }
+}

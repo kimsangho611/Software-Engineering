@@ -93,7 +93,9 @@ const Sidebar = ({ openSide, setOpenSide }) => {
           <Link to={"/login"} className="bigcate">
             로그인/회원가입
           </Link>
-          <span className="bigcate">상품 판매하기</span>
+          <Link to={"/product/register"} className="bigcate">
+            상품 판매하기
+          </Link>
           <div className="maincate">
             <span className="bigcate2">WOMEN</span>
             <span className="smallcate">아우터</span>
