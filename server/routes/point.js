@@ -1,15 +1,21 @@
 const express = require("express");
+const token = require("../config/token");
 const router = express.Router();
 const jwt = require("../module/jwt");
 const pool = require("../module/mysql2");
 
 router.get("/now", async function(req, res) {
+    var token_res = await jwt.verify(req.body.token);
+
     const connection = await pool.getConnection(async (conn) => conn);
 
     try {
-        const result = await connection.query("select u_point from user where u_id = 1;");
-        res.send(200).send({ success: true, result: result[0]});
-
+        if (token_res === 401) {
+            res.send(401).send({ success: false, msg: "로그인 기간이 만료되어 포인트롤 조회할 수 없습니다. 다시 로그인해주세요."});
+        } else {
+            const result = await connection.query("select u_point from user where u_id = ?;", [token_res.uid]);
+            res.send(200).send({ success: true, result: result[0]});
+        }
     } catch (err) {
         res.status(500).send({ success: false, msg: "서버 오류" + err});
     } finally {
