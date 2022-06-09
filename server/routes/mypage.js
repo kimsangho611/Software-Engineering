@@ -56,8 +56,8 @@ router.get("/list/sell", async function (req, res) {
 });
 
 router.get("/list/activity", async function (req, res) {
-  const type = req.query;
-  const token_res = await jwt.verify(req.header.authorization);
+  const type = req.query.type;
+  const token_res = await jwt.verify(req.headers.authorization);
 
   const connection = await pool.getConnection(async (conn) => conn);
   try {
@@ -69,14 +69,13 @@ router.get("/list/activity", async function (req, res) {
     } else {
       if (type === "1") {
         const result = await connection.query(
-          "select p.p_category1, p.p_category2, p.p_title, p.p_date, p.p_trade \
-                    from product p where p.p_id = (select sb.Product_p_id from user u join shopbasket sb on u.u_id = sb.User_u_id where u.u_id = ?);",
+          "select *, (select count(*) from shopbasket where Product_p_id=p.p_id) as likecnt from product p LEFT JOIN shopbasket on shopbasket.Product_p_id = p.p_id where p.p_id = (select sb.Product_p_id from user u join shopbasket sb on u.u_id = sb.User_u_id where u.u_id = 1);",
           [token_res.uid]
         );
         res.status(200).send({ success: true, result: result[0] });
       } else if (type === "2") {
         const result = await connection.query(
-          "select p.p_category1, p.p_category2, p.p_title, p.p_date, p.p_trade \
+          "select p.p_category1, p.p_category2, p.p_title, p.p_date, p.p_trade, p.p_image, p.p_id, p.p_view, \
                     from product p where p.p_id = (select p_i.Product_p_id from user u join productinquiry p_i on u.u_id = p_i.User_u_id where u.u_id = ?);",
           [token_res.uid]
         );
@@ -86,7 +85,7 @@ router.get("/list/activity", async function (req, res) {
       }
     }
   } catch (err) {
-    req.stale(500).send({ success: false, msg: "서버 오류" + err });
+    res.status(500).send({ success: false, msg: "서버 오류" + err });
   } finally {
     connection.release();
   }

@@ -23,6 +23,7 @@
 
   .lists {
     @include flexBox(between, center);
+    flex-direction: column;
 
     .card {
       @include flexBox(center, start);
@@ -32,5 +33,13 @@
         @include text(24px, $text, 400, left);
       }
     }
+  }
+
+  .activitySelect {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    width: 90%;
   }
 }

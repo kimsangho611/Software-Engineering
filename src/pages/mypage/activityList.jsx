@@ -23,20 +23,23 @@ const MyPageActivityList = () => {
   useEffect(() => {
     GetProductInfo();
   }, [order]);
+
   return (
     <Layout otherClass={styles.mypageBuyList}>
-      <h1 className={styles.title}>판매 목록</h1>
-      <select onChange={handleChange}>
-        {OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.name}
-          </option>
-        ))}
-      </select>
+      <h1 className={styles.title}>활동 목록</h1>
+      <div className={styles.activitySelect}>
+        <select onChange={handleChange}>
+          {OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div className={styles.lists}>
         <div className="productOneLine">
-          {productInfo.map((item, key) => {
+          {productInfo?.map((item, key) => {
             return (
               <ProductBlock
                 key={key}
