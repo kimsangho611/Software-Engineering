@@ -1,11 +1,15 @@
 import classNames from "classnames";
 import styles from "./common.module.scss";
-export const OrangeBtn = ({ text, otherStyle, onClick }) => {
+export const OrangeBtn = ({ text, otherStyle, onClick, dis }) => {
   return (
     <button
       type="button"
-      className={classNames(styles.orangeBtn, otherStyle)}
+      className={classNames(
+        !dis ? styles.orangeBtn : styles.greyBtn,
+        otherStyle
+      )}
       onClick={onClick}
+      disabled={dis ? true : false}
     >
       {text}
     </button>
