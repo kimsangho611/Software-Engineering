@@ -10,8 +10,10 @@ import {
   IC_Shop,
   IC_Shopping_Bag,
 } from "../../assets/icons";
+import { useNavigate } from "react-router-dom";
 
 const MyPageMain = () => {
+  const navigate = useNavigate();
   return (
     <Layout otherClass={styles.mypageMain}>
       <h1>마이페이지</h1>
@@ -48,7 +50,7 @@ const MyPageMain = () => {
           <span>포인트</span>
         </MypageCard>
       </div>
-      <OrangeBtn text={"회원탈퇴"} />
+      <OrangeBtn onClick={() => navigate("/drop")} text={"회원탈퇴"} />
     </Layout>
   );
 };
