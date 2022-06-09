@@ -1,13 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthInput } from "../../components/auth/authBox";
 import { Layout } from "../../components/layout";
+import { DropApi } from "../../core/api/auth/dropApi";
+import { EmailValidation } from "../../util/validation";
 import "./drop.css";
 
 const Drop = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [drop, setDrop] = useState("");
+  const [errmsg, setErrmsg] = useState("");
   const [dis, setDis] = useState(true);
+  useEffect(() => {
+    if (email === "" || password === "" || drop === "") {
+      setErrmsg("모든 항목을 입력해주세요.");
+      setDis(true);
+    } else if (!EmailValidation(email)) {
+      setErrmsg("올바른 이메일을 입력해주세요.");
+      setDis(true);
+    } else if (drop != "탈퇴") {
+      setErrmsg("탈퇴를 입력해주세요.");
+      setDis(true);
+    } else {
+      setErrmsg("");
+      setDis(false);
+    }
+  }, [drop]);
   return (
     <Layout>
       <div className="drop">
@@ -40,10 +58,18 @@ const Drop = () => {
             setValue={setDrop}
           />
         </section>
+        <span className="errmsg">{errmsg}</span>
         <button
           className={`btn${dis}`}
-          onClick={() => {
-            console.log("회원 탈퇴 클릭!");
+          onClick={async () => {
+            const res = await DropApi(email, password);
+            if (res.success) {
+              alert(res.msg);
+              localStorage.removeItem("accessToken");
+              window.location.replace("/");
+            } else {
+              alert(res.msg);
+            }
           }}
           disabled={dis}
         >
