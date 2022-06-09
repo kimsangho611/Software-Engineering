@@ -22,7 +22,7 @@ set u_report = 1
 where u_email = "";
 
 # 사용자 조회 - 이메일, 이름, 휴대폰, 가입날짜, 상품판매횟수
-select u.u_email, u.u_name, u.u_phone, u.u_sign_date, count(*) as sell_count
+select u.u_email, u.u_name, u.u_phone, u.u_sign_date, count(*) sell_count
 from user u join product p on u.u_id = p.User_u_id
 where u.u_id = 1;
 
@@ -43,6 +43,17 @@ values ("허위매물", "이 제품은 한국에서 판매 안하는 짝퉁입�
 # product와 user를 join하면 p_id에 해당하는 사람 정보를 찾으면 신고당한 사람을 찾을 수 있음
 # user와 report를 join하면 신고한 사람을 찾을 수 있음
 # 따라서 이를 활용하면 불 수 있을 것으로 보임
+select u.u_email, r.*
+from user u join report r on u.u_id = r.User_u_id; # 신고한 사람의 이메일 정보
+
+select u.u_id, u.u_email
+from user u
+where u.u_id = (
+	select r.*
+	from report r join product p on r.Product_p_id = p.p_id
+    where p.p_id = 1 # 신고된 제품 ?
+); # 신고당한 사람의 user id
+    
 
 # 신고처리 상세보기
 select u.u_email, r.r_title, r.r_contents
@@ -50,39 +61,24 @@ from user u join report r on u.u_id = r.User_u_id
 where r.r_id = 1;
 
 
-# hot, new item 리스트 반환 
-# hot -> 찜 많은 순으로 상품 정보를 출력
-select p.*
-from (select sb.Product_p_id as hot_p_id, count(*) as hot_p_count
-    from shopbasket sb
-    group by sb.Product_p_id
-    order by count(sb.Product_p_id)) sb join product p on sb.hot_p_id = p.p_id;
-    
-# new -> 최근 등록 순으로 상품 정보를 출력
-select *
-from product p
-order by p.p_date desc;
+# ================= Product Inquiry =================
+# 상품 문의 관련 Query
 
 # 상품 문의 댓글 조회
-
+select u_pi.u_name, u_pi.pi_date, u_pi.pi_contents, u_pi.pi_answer
+from (select u.u_name, pi.*
+	from user u join productinquiry pi
+    on u.u_id = pi.User_u_id) u_pi join product p on u_pi.Product_p_id = p.p_id
+where p_id = 1;
 
 # 상품 문의 댓글 (구매자) 작성
-insert into productinquiry() 
-values ();
+insert into productinquiry(pi_contents, User_u_id, Product_p_id)
+values ("총 기장은 어느정도 인가요?", 1, 1);
 
 # 상품 문의 대댓글 (판매자) 작성
-
-
-# 검색 - 상품의 제목에서 원하는 검색 결과가 있는 상품 정보를 선택함.
-select count(*) as search_cnt, p.*
-from product p
-where trim(p.p_title) like "%?%";
-
-
-# 찜 - 찜 역할을 하는 shopbasket 테이블에 사용자 번호와 제품 번호를 저장함
-insert into shopbasket(User_u_id, Product_p_id)
-values (1, 1);
-
+update productinquiry
+set pi_answer = ""
+where pi_id = 1;
 
 # ================= Point =================
 # 포인트 관련 Query
@@ -101,7 +97,7 @@ where u_id = 1;
 
 
 # ================= 마이페이지 구매/판매/활동 목록 =================
-# 상품 관련 Query
+# 구매, 판매, 활동 관련 Query
 
 # 구매 목록 - 사용자의 상품 구매 목록을 선택함
 select *
@@ -139,13 +135,13 @@ where p.p_id = (
 
 SELECT * FROM product;
 # 상품 등록
-insert into product(p_thumnail, p_image, p_category1, p_category2, p_title, p_price, p_listprice, p_size, p_status, p_puton_count, p_dirty, p_contents, User_u_id) 
-values (null, null, "카테고리1", "카테고리2", "블라우스 팝니다.", 30000, 100000, "S", "좋음", 10, "N", "많이 입지 않은 블라우스 팝니다.", 1);
+insert into product(p_image, p_category1, p_category2, p_title, p_price, p_listprice, p_size, p_status, p_puton_count, p_dirty, p_contents, User_u_id) 
+values (null, "카테고리1", "카테고리2", "블라우스 팝니다.", 30000, 100000, "S", "좋음", 10, "N", "많이 입지 않은 블라우스 팝니다.", 1);
 
 # 개별 상품 디테일 - 구매자 이름, 구매자 평점, 제품 관련 정보 전달
-select * 
-from product 
-where p_id = 1;
+select u.u_name, p.* 
+from user u join product p on u.u_id = p.User_u_id
+where p.p_id = 1;
 
 # 개별 상품 디테일에서 구매자 이름 및 평점을 전달하는 쿼리
 
@@ -168,6 +164,19 @@ select *
 from product
 where (p_price between 0 and 100000) and p_category1 = "" and p_category2 = ""
 order by p_view DESC;
+
+# 사용자 쪽에서 hot, new item 리스트 반환 
+# hot -> 찜 많은 순으로 상품 정보를 출력
+select p.*
+from (select sb.Product_p_id as hot_p_id, count(*) as hot_p_count
+    from shopbasket sb
+    group by sb.Product_p_id
+    order by count(sb.Product_p_id)) sb join product p on sb.hot_p_id = p.p_id;
+    
+# new -> 최근 등록 순으로 상품 정보를 출력
+select *
+from product p
+order by p.p_date desc;
 
 # ================= Announce =================
 # 공지사항 관련 Query
@@ -235,6 +244,17 @@ from user u join product p on u.u_id = p.User_u_id;
 delete from product
 where p_id = 1;
 
+
+# =========================================
+
+# 검색 - 상품의 제목에서 원하는 검색 결과가 있는 상품 정보를 선택함
+select count(*) as search_cnt, p.*
+from product p
+where trim(p.p_title) like "%?%";
+
+# 찜 - 찜 역할을 하는 shopbasket 테이블에 사용자 번호와 제품 번호를 저장함
+insert into shopbasket(User_u_id, Product_p_id)
+values (1, 1);
 
 
 
