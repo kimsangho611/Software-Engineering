@@ -22,7 +22,7 @@ module.exports = {
       return {
         ok: true,
         uid: decoded.uid,
-        admin: user.admin,
+        admin: decoded.admin,
         id: decoded.id,
         name: decoded.name,
       };

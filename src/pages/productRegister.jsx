@@ -5,11 +5,13 @@ import { Layout } from "../components/layout";
 import { FailModal, SuccessModal } from "../components/modals/resultModal";
 import { ProductRegisterBox } from "../components/productDetail/productRegisterBox";
 import { productRegister } from "../core/api/product/productRegister";
+import { CheckEmptyInputExists } from "../utils/checkInputs";
 import styles from "./productRegister.module.scss";
 
 const ProductRegister = () => {
   const [success, setSuccess] = useState("");
-
+  const [dis, setDis] = useState(true);
+  const [err, setErr] = useState("");
   const [userInput, setUserInput] = useState({
     imgPicker: "",
     cate1: "WOMEN",
@@ -19,8 +21,8 @@ const ProductRegister = () => {
     originPrice: "",
     size: "",
     state: "새 상품",
-    wearCnt: "",
-    pollution: "",
+    wearCnt: 0,
+    pollution: null,
     introduction: "",
   });
 
@@ -36,7 +38,6 @@ const ProductRegister = () => {
   ];
   const forMen = ["아우터", "니트", "셔츠", "티셔츠", "팬츠"];
   const forAcc = ["가방", "지갑", "신발", "기타 잡화"];
-
   const [category2, setCategory2] = useState(forWomen);
   useEffect(() => {
     if (userInput.cate1 == "WOMEN") {
@@ -50,6 +51,25 @@ const ProductRegister = () => {
       setCategory2(forAcc);
     }
   }, [userInput.cate1]);
+
+  useEffect(() => {
+    if (userInput.state === "새 상품")
+      setUserInput((prev) => ({ ...prev, wearCnt: 0, pollution: null }));
+  }, [userInput.state]);
+
+  useEffect(() => {
+    const empty = CheckEmptyInputExists(userInput);
+    if (empty) {
+      setDis(true);
+      setErr("빈 칸을 모두 채워주세요.");
+    } else if (isNaN(userInput.price) || isNaN(userInput.originPrice)) {
+      setDis(true);
+      setErr("가격은 숫자로 이뤄져야 합니다.");
+    } else {
+      setDis(false);
+      setErr("");
+    }
+  }, [userInput]);
 
   const encodeFileToBase64 = (fileBlob) => {
     const reader = new FileReader();
@@ -156,24 +176,26 @@ const ProductRegister = () => {
               setUserInput({ ...userInput, state: e.target.value })
             }
           />
-          <div className={styles.alignRow}>
-            <ProductRegisterBox
-              type={2}
-              text={"실착 횟수"}
-              other={styles.half}
-              onChange={(e) =>
-                setUserInput({ ...userInput, wearCnt: e.target.value })
-              }
-            />
-            <ProductRegisterBox
-              type={2}
-              text={"오염 여부"}
-              other={styles.half}
-              onChange={(e) =>
-                setUserInput({ ...userInput, pollution: e.target.value })
-              }
-            />
-          </div>
+          {userInput.state === "중고" && (
+            <div className={styles.alignRow}>
+              <ProductRegisterBox
+                type={2}
+                text={"실착 횟수"}
+                other={styles.half}
+                onChange={(e) =>
+                  setUserInput({ ...userInput, wearCnt: e.target.value })
+                }
+              />
+              <ProductRegisterBox
+                type={2}
+                text={"오염 여부"}
+                other={styles.half}
+                onChange={(e) =>
+                  setUserInput({ ...userInput, pollution: e.target.value })
+                }
+              />
+            </div>
+          )}
           <ProductRegisterBox
             type={3}
             text={"상품 설명"}
@@ -183,6 +205,7 @@ const ProductRegister = () => {
           />
         </div>
       </div>
+      <span className={styles.errMsg}>{err}</span>
       <OrangeBtn
         text={"등록"}
         onClick={async () => {
@@ -190,6 +213,7 @@ const ProductRegister = () => {
           if (res.status == 200) setSuccess(true);
           else setSuccess(false);
         }}
+        dis={dis}
       />
     </Layout>
   );
