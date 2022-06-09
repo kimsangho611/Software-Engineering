@@ -12,6 +12,8 @@ const inquire = require("./routes/inquire");
 const report = require("./routes/report");
 const user = require("./routes/user");
 const post = require("./routes/post");
+const likeitem = require("./routes/likeitem");
+
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -52,3 +54,4 @@ app.use("/inquire", inquire);
 app.use("/report", report);
 app.use("/user", user);
 app.use("/post", post);
+app.use("/likeitem", likeitem);
