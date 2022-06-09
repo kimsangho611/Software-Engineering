@@ -7,11 +7,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 -- -----------------------------------------------------
 -- Schema secondhand
 -- -----------------------------------------------------
@@ -20,7 +15,7 @@ CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 -- Schema secondhand
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `secondhand` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-USE `mydb` ;
+USE `secondhand` ;
 
 -- -----------------------------------------------------
 -- Table `secondhand`.`User`
@@ -35,16 +30,9 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`User` (
   `u_stop` INT NULL DEFAULT 0,
   `u_point` INT NULL DEFAULT 0,
   `u_sign_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `Point_point_id` INT NOT NULL,
   UNIQUE INDEX `u_email_UNIQUE` (`u_email` ASC) VISIBLE,
   UNIQUE INDEX `u_phone_UNIQUE` (`u_phone` ASC) VISIBLE,
-  PRIMARY KEY (`u_id`),
-  INDEX `fk_User_Point1_idx` (`Point_point_id` ASC) VISIBLE,
-  CONSTRAINT `fk_User_Point1`
-    FOREIGN KEY (`Point_point_id`)
-    REFERENCES `mydb`.`Point` (`point_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`u_id`))
 ENGINE = InnoDB;
 
 
@@ -78,25 +66,6 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Product` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`Point`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Point` (
-  `point_id` INT NOT NULL,
-  `point_use` VARCHAR(45) NULL DEFAULT NULL,
-  `point_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `Product_p_id` INT NOT NULL,
-  PRIMARY KEY (`point_id`),
-  INDEX `fk_Point_Product_idx` (`Product_p_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Point_Product`
-    FOREIGN KEY (`Product_p_id`)
-    REFERENCES `secondhand`.`Product` (`p_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-USE `secondhand` ;
 
 -- -----------------------------------------------------
 -- Table `secondhand`.`Order`
@@ -184,7 +153,6 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Report` (
   `r_id` INT NOT NULL AUTO_INCREMENT,
   `r_title` VARCHAR(90) NOT NULL,
   `r_contents` VARCHAR(100) NULL DEFAULT NULL,
-  `r_report_user` INT NOT NULL,
   `User_u_id` INT NOT NULL,
   `Product_p_id` INT NOT NULL,
   INDEX `fk_Report_User1_idx` (`User_u_id` ASC) VISIBLE,
@@ -230,14 +198,24 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `secondhand`.`ProductPrice`
+-- Table `secondhand`.`Point`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `secondhand`.`ProductPrice` (
-  `pp_date` DATETIME NULL,
-  `pp_avg_price` DOUBLE NULL DEFAULT 0,
+CREATE TABLE IF NOT EXISTS `secondhand`.`Point` (
+  `point_id` INT NOT NULL AUTO_INCREMENT,
+  `point_use` VARCHAR(45) NULL,
+  `point_amount` INT NULL DEFAULT 0,
+  `point_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `User_u_id` INT NOT NULL,
   `Product_p_id` INT NOT NULL,
-  INDEX `fk_ProductPrice_Product1_idx` (`Product_p_id` ASC) VISIBLE,
-  CONSTRAINT `fk_ProductPrice_Product1`
+  PRIMARY KEY (`point_id`),
+  INDEX `fk_Point_User1_idx` (`User_u_id` ASC) VISIBLE,
+  INDEX `fk_Point_Product1_idx` (`Product_p_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Point_User1`
+    FOREIGN KEY (`User_u_id`)
+    REFERENCES `secondhand`.`User` (`u_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Point_Product1`
     FOREIGN KEY (`Product_p_id`)
     REFERENCES `secondhand`.`Product` (`p_id`)
     ON DELETE NO ACTION
