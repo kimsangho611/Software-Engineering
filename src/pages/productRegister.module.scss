@@ -3,6 +3,11 @@
   @include flexBox(even, center);
   flex-direction: column;
 
+  .errMsg {
+    @include text(24px, $main, 700);
+    margin-bottom: 20px;
+  }
+
   .putInfos {
     @include flexBox(even, start);
     width: 100%;

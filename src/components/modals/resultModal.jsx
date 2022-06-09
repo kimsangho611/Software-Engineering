@@ -22,7 +22,9 @@ export const FailModal = ({ text, btnText, linkTo }) => {
       <IC_X_Circle />
       <h1>{text}에 실패하였습니다.</h1>
       <span>다시 시도하시거나, 관리자에게 문의해주세요.</span>
-      <OrangeBtn text={btnText} />
+      <Link to={linkTo}>
+        <OrangeBtn text={btnText} />
+      </Link>
     </Modal>
   );
 };
