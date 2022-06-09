@@ -1,8 +1,9 @@
 import myAxios, { METHOD } from "../apiController";
-export const LoginApi = async (type, email, password) => {
+
+export const DropApi = async (email, password) => {
   const res = await myAxios({
-    method: METHOD.POST,
-    url: `/auth/login/${type}`,
+    method: METHOD.DELETE,
+    url: `/auth/drop`,
     data: {
       email: email,
       password: password,

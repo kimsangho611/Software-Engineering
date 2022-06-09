@@ -2,13 +2,15 @@ import "./signup.css";
 import { Layout } from "../../components/layout";
 import { AuthInput } from "../../components/auth/authBox";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   EmailValidation,
   NameValidation,
   PhoneValidation,
 } from "../../util/validation";
+import { SignupApi } from "../../core/api/auth/signupApi";
 const SignUp = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -88,8 +90,20 @@ const SignUp = () => {
         <span className="errmsg">{errMsg}</span>
         <button
           className={`btn${dis}`}
-          onClick={() => {
-            console.log("회원가입 클릭!");
+          onClick={async () => {
+            const res = await SignupApi(
+              1,
+              email,
+              password,
+              name,
+              phone.replace(/-/g, "")
+            );
+            if (res.success) {
+              alert("회원가입이 완료되었습니다.");
+              navigate("/login");
+            } else {
+              alert(res.msg);
+            }
           }}
           disabled={dis}
         >
