@@ -3,25 +3,24 @@ import "./search.css";
 import { SearchBar } from "../../components/search/searchBar";
 import { useEffect, useState } from "react";
 import ProductBlock from "../../components/common/productBlock";
-import ClothesImg from "../../assets/samples/product.png";
 import { useParams } from "react-router-dom";
 import { GetAllProduct } from "../../core/api/product/getAllProduct";
 
 const Search = () => {
   const params = useParams();
-  console.log("params=", params);
   const [searchString, setSearchString] = useState(params.word);
   const [list, setList] = useState([]);
   const GetSearchList = async () => {
     const res = await GetAllProduct();
-    const filterData = res.filter(
+    console.log("res=", res);
+    const filterData = res.list.filter(
       (i) =>
-        i.p_title.includes(params) ||
-        i.p_contents.includes(params) ||
-        i.p_category1.includes(params) ||
-        i.p_category2.includes(params)
+        i.p_title.includes(params.word) ||
+        i.p_contents.includes(params.word) ||
+        i.p_category1.includes(params.word) ||
+        i.p_category2.includes(params.word)
     );
-    console.log("res==", filterData);
+    setList(filterData);
   };
   useEffect(() => {
     GetSearchList();
@@ -29,48 +28,33 @@ const Search = () => {
   return (
     <Layout>
       <section className="search">
-        <SearchBar value={searchString} setValue={setSearchString} />
+        <SearchBar
+          value={searchString}
+          setValue={setSearchString}
+          clickHandler={() =>
+            window.location.replace(`/search/${searchString}`)
+          }
+        />
         <span className="result">{`'${params.word}'에 관한 검색결과 (${list.length})건`}</span>
+
         {list.length != 0 ? (
           <div className="productOneLine">
-            <ProductBlock
-              img={ClothesImg}
-              like={"1200"}
-              firstCate={"WOMEN"}
-              secondCate={"니트"}
-              title={"한 번 입은 니트 판매합니다!!"}
-              view={"1200"}
-              price={"12000"}
-              state={"판매 완료"}
-            />
-            <ProductBlock
-              img={ClothesImg}
-              like={"1200"}
-              firstCate={"WOMEN"}
-              secondCate={"니트"}
-              title={"한 번 입은 니트 판매합니다!!"}
-              view={"1200"}
-              price={"12000"}
-            />
-            <ProductBlock
-              img={ClothesImg}
-              like={"1200"}
-              firstCate={"WOMEN"}
-              secondCate={"니트"}
-              title={"한 번 입은 니트 판매합니다!!"}
-              view={"1200"}
-              price={"12000"}
-            />
-            <ProductBlock
-              img={ClothesImg}
-              like={"1200"}
-              firstCate={"WOMEN"}
-              secondCate={"니트"}
-              title={"한 번 입은 니트 판매합니다!!"}
-              view={"1200"}
-              price={"12000"}
-              state={"거래 중"}
-            />
+            {list.map((item, key) => {
+              return (
+                <ProductBlock
+                  key={key}
+                  id={item?.p_id}
+                  img={item?.p_image}
+                  like={item?.likecnt}
+                  firstCate={item?.p_category1}
+                  secondCate={item?.p_category2}
+                  title={item?.p_title}
+                  view={item?.p_view}
+                  price={item?.p_price}
+                  state={item?.p_trade}
+                />
+              );
+            })}
           </div>
         ) : (
           <div className="no">
