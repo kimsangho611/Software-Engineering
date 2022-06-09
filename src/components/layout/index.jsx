@@ -12,11 +12,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const SearchBar = () => {
-  const navigate = useNavigate();
   const [word, setWord] = useState("");
   const [style, setStyle] = useState({ display: "none" });
   const onClick = () => {
-    word === "" ? alert("검색어를 입력해주세요!") : navigate(`/search/${word}`);
+    word === ""
+      ? alert("검색어를 입력해주세요!")
+      : window.location.replace(`/search/${word}`);
   };
   return (
     <>

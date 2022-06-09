@@ -10,9 +10,14 @@ export const SearchBar = ({ clickHandler, value, setValue }) => {
         value={value}
         placeholder={"검색어를 입력해주세요."}
         onChange={(e) => setValue(e.target.value)}
+        onKeyPress={(e) => {
+          if (e.key === "Enter") {
+            clickHandler();
+          }
+        }}
         name="searchtext"
       />
-      <button className="btn" onClick={() => clickHandler}>
+      <button className="btn" onClick={clickHandler}>
         <IC_Search />
       </button>
     </div>
