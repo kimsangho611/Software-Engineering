@@ -2,6 +2,7 @@ const express = require("express");
 const index = require("./routes/index");
 const auth = require("./routes/auth");
 const product = require("./routes/product");
+const main = require("./routes/main");
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -32,3 +33,4 @@ app.listen(app.get("port"), () => {
 app.use("/", index);
 app.use("/auth", auth);
 app.use("/product", product);
+app.use("/main", main);

@@ -1,6 +1,8 @@
 import "./productBlock.css";
 import { IC_Heart } from "../../assets/icons";
+import { Link } from "react-router-dom";
 const ProductBlock = ({
+  id,
   img,
   like,
   firstCate,
@@ -11,7 +13,7 @@ const ProductBlock = ({
   state,
 }) => {
   return (
-    <div className="productBlock">
+    <Link to={`/product/detail/${id}`} className="productBlock">
       {state === "판매 완료" ? <div className="alreadySell" /> : <></>}
       <div className="imgPart">
         <img className="img" src={img} alt={"clothes"} />
@@ -40,7 +42,7 @@ const ProductBlock = ({
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
