@@ -117,7 +117,7 @@ ENGINE = InnoDB;
 -- Table `secondhand`.`Questions`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `secondhand`.`Questions` (
-  `q_id` INT NOT NULL,
+  `q_id` INT NOT NULL AUTO_INCREMENT,
   `q_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `q_title` VARCHAR(90) NOT NULL,
   `q_contents` VARCHAR(200) NOT NULL,
