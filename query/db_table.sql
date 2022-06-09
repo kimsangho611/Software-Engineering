@@ -7,6 +7,11 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 -- -----------------------------------------------------
 -- Schema secondhand
 -- -----------------------------------------------------
@@ -15,13 +20,14 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema secondhand
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `secondhand` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-USE `secondhand` ;
+USE `mydb` ;
 
 -- -----------------------------------------------------
 -- Table `secondhand`.`User`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `secondhand`.`User` (
   `u_id` INT NOT NULL AUTO_INCREMENT,
+  `u_admin` INT NULL DEFAULT 0,
   `u_email` VARCHAR(45) NOT NULL,
   `u_pw` VARCHAR(45) NOT NULL,
   `u_name` VARCHAR(45) NOT NULL,
@@ -40,7 +46,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `secondhand`.`Product` (
   `p_id` INT NOT NULL AUTO_INCREMENT,
-  `p_thumnail` VARCHAR(45) NULL DEFAULT NULL,
   `p_image` VARCHAR(45) NULL DEFAULT NULL,
   `p_category1` VARCHAR(45) NOT NULL,
   `p_category2` VARCHAR(45) NOT NULL,
@@ -53,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Product` (
   `p_dirty` VARCHAR(10) NULL DEFAULT NULL,
   `p_contents` VARCHAR(200) NULL DEFAULT NULL,
   `p_trade` VARCHAR(10) NULL DEFAULT '판매중',
+  `p_likeitem` INT NULL DEFAULT 0,
   `p_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `p_view` INT ZEROFILL NULL DEFAULT 0,
   `User_u_id` INT NOT NULL,
@@ -65,6 +71,32 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Product` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Point`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`Point` (
+  `point_id` INT NOT NULL,
+  `point_title` VARCHAR(45) NULL DEFAULT NULL,
+  `User_u_id` INT NOT NULL,
+  `Product_p_id` INT NOT NULL,
+  `Pointcol` VARCHAR(45) NULL,
+  PRIMARY KEY (`point_id`),
+  INDEX `fk_Point_User_idx` (`User_u_id` ASC) VISIBLE,
+  INDEX `fk_Point_Product1_idx` (`Product_p_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Point_User`
+    FOREIGN KEY (`User_u_id`)
+    REFERENCES `secondhand`.`User` (`u_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Point_Product1`
+    FOREIGN KEY (`Product_p_id`)
+    REFERENCES `secondhand`.`Product` (`p_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+USE `secondhand` ;
 
 -- -----------------------------------------------------
 -- Table `secondhand`.`Order`
@@ -152,6 +184,7 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Report` (
   `r_id` INT NOT NULL AUTO_INCREMENT,
   `r_title` VARCHAR(90) NOT NULL,
   `r_contents` VARCHAR(100) NULL DEFAULT NULL,
+  `r_report_user` INT NOT NULL,
   `User_u_id` INT NOT NULL,
   `Product_p_id` INT NOT NULL,
   INDEX `fk_Report_User1_idx` (`User_u_id` ASC) VISIBLE,

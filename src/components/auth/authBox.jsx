@@ -1,8 +1,7 @@
 import { useState } from "react";
 import "./authBox.css";
 
-export const AuthRadio = () => {
-  const [x, setX] = useState("1");
+export const AuthRadio = ({ x, setX }) => {
   return (
     <div className="authRadio">
       <label className="authRadioSet">
