@@ -51,7 +51,7 @@ router.post("/:reportId/stopId", async function(req, res) {
             (select u_p.u_email from report r join (select u.u_email, u.u_id, p.p_id from user u join product p on u.u_id = p.User_u_id) u_p \
             on r.Product_p_id = u_p.p_id and r.r_id = 1);"
         );
-        res.status(200).send({ success: true, msg: "신고당한 사용자를 정지하였습니다."});
+        res.status(200).send({ success: true, msg: "신고하신 사용자를 정지하였습니다."});
     } catch (err) {
         res.status(500).send({ success: false, msg: "서버 오류" + err});
     } finally {
