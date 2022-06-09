@@ -16,7 +16,7 @@ router.get("/list/buy", async function(req, res) {
         } else {
             const result = await connection.query(
                 "select p.p_category1, p.p_category2, p.p_title, p.p_date, p.p_trade \
-                from product p where p.p_id = (select o.Product_p_id from user u join market.order o on u.u_id = o.User_u_id where u.u_id = ?);", 
+                from product p where p.p_id = (select o.Product_p_id from user u join order o on u.u_id = o.User_u_id where u.u_id = ?);", 
                 [token_res.uid]);
             
             res.status(200).send({ success: true, result: result[0]});        
