@@ -7,6 +7,7 @@ const search = require("./routes/search");
 const point = require("./routes/point");
 const mypage = require("./routes/mypage");
 const notice = require("./routes/notice");
+const inquire = require("./routes/inquire");
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -42,3 +43,4 @@ app.use("/search", search);
 app.use("/point", point);
 app.use("/mypage", mypage);
 app.use("/notice", notice);
+app.use("/inquire", inquire);
