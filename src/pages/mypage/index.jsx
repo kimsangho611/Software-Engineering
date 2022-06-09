@@ -16,34 +16,34 @@ const MyPageMain = () => {
     <Layout otherClass={styles.mypageMain}>
       <h1>마이페이지</h1>
       <div className={styles.cardLine}>
-        <MypageCard>
+        <MypageCard link={"/mypage/editInfo"}>
           <IC_Person />
           <span>내 정보 수정</span>
         </MypageCard>
 
-        <MypageCard>
+        <MypageCard link={"/mypage/buyList"}>
           <IC_Shopping_Bag />
           <span>구매 목록</span>
         </MypageCard>
 
-        <MypageCard>
+        <MypageCard link={"/mypage/sellList"}>
           <IC_Shop />
           <span>판매 목록</span>
         </MypageCard>
       </div>
 
       <div className={styles.cardLine}>
-        <MypageCard>
+        <MypageCard link={"/mypage/activityList"}>
           <IC_Heart_In_Circle />
           <span>활동 목록</span>
         </MypageCard>
 
-        <MypageCard>
+        <MypageCard link={"/mypage/ask"}>
           <IC_Counselor />
           <span>1:1 문의</span>
         </MypageCard>
 
-        <MypageCard>
+        <MypageCard link={"/mypage/point"}>
           <IC_Piggy_Bank />
           <span>포인트</span>
         </MypageCard>

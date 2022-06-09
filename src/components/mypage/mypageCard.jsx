@@ -2,9 +2,14 @@ import styles from "./mypage.module.scss";
 import product from "../../assets/samples/product.png";
 import { IC_Heart } from "../../assets/icons";
 import temp from "../common/productBlock.css";
+import { Link } from "react-router-dom";
 
-export const MypageCard = ({ children }) => {
-  return <div className={styles.mypageCard}>{children}</div>;
+export const MypageCard = ({ children, link }) => {
+  return (
+    <Link to={link} className={styles.mypageCard}>
+      {children}
+    </Link>
+  );
 };
 
 export const MypageProductCard = ({ productInfo }) => {
