@@ -35,25 +35,25 @@
     white-space: nowrap;
   }
 
+  .pointAdd {
+    @include text(36px, $main, 700, right);
+  }
+
+  .pointSub {
+    @include text(36px, $blue, 700, right);
+  }
+
+  .pointAdd,
+  .pointSub {
+    width: 300px;
+
+    span {
+      @include text(36px, $text, 700);
+    }
+  }
+
   .rightSide {
     @include flexBox;
-
-    .pointAdd {
-      @include text(36px, $main, 700, right);
-    }
-
-    .pointSub {
-      @include text(36px, $blue, 700, right);
-    }
-
-    .pointAdd,
-    .pointSub {
-      width: 300px;
-
-      span {
-        @include text(36px, $text, 700);
-      }
-    }
 
     .greyTag {
       @include tag($light_grey);

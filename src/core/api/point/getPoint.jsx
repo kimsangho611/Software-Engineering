@@ -6,3 +6,11 @@ export const getPoint = async () => {
   });
   return res.data;
 };
+
+export const getPointList = async () => {
+  const res = await myAxios({
+    method: METHOD.POST,
+    url: `/point/list`,
+  });
+  return res.data;
+};
