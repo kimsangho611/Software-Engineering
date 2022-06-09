@@ -24,7 +24,6 @@
   .lists {
     @include flexBox(center, start);
     width: 1283px;
-    flex-direction: column;
 
     .card {
       @include flexBox(center, start);
