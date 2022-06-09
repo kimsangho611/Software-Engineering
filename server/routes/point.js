@@ -57,8 +57,9 @@ router.post("/buy", async function (req, res) {
       } else {
         await connection.query(
           "update user set u_point = u_point - ? where u_id = ?; \
-                    insert into point(point_title, point_amount, User_u_id) values (?,?,?);",
-          [p_price, token_res.uid, p_title, -1 * p_price, token_res.uid]
+                    insert into point(point_title, point_amount, User_u_id) values (?,?,?);\
+                    insert into secondhand.order(User_u_id, Product_p_id) values (?,?);",
+          [p_price, token_res.uid, p_title, -1 * p_price, token_res.uid, token_res.uid, productId]
         );
 
         res
