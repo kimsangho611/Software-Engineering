@@ -7,3 +7,12 @@ export const productLike = async (productId) => {
   });
   return res.data;
 };
+
+export const CancleLike = async (productId) => {
+  const res = await myAxios({
+    method: METHOD.DELETE,
+    url: `/likeItem`,
+    data: { productId: productId },
+  });
+  return res.data;
+};
