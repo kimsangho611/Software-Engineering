@@ -92,10 +92,11 @@ update user
 set u_point = u_point + 10000
 where u_id = 1;
 # 밑에 insert로 포인트 량과 해당 정보를 기입
-insert into point(point_use, User_u_id, Product_p_id)
-values ("포인트 충전", 1, 1);
+
 
 # 포인트로 상품구매
+# 여기서는 상품 번호를 가져올 수 있어 보임 그러면 문제가 되지 않는데
+# 문제는 포인트만 충전한 경우 
 update user
 set u_point = u_point - 10000
 where u_id = 1;
@@ -260,13 +261,13 @@ where p_id = 1;
 # =========================================
 
 # 검색 - 상품의 제목에서 원하는 검색 결과가 있는 상품 정보를 선택함
-select count(*) as search_cnt, p.*
+select p.*
 from product p
-where trim(p.p_title) like "%?%";
+where trim(p.p_title) like "%팝니다%";
 
 # 찜 - 찜 역할을 하는 shopbasket 테이블에 사용자 번호와 제품 번호를 저장함
 insert into shopbasket(User_u_id, Product_p_id)
 values (1, 1);
 
 
-
+# ==================================================================

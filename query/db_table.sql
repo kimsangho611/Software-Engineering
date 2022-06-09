@@ -41,7 +41,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `secondhand`.`Product` (
   `p_id` INT NOT NULL AUTO_INCREMENT,
-  `p_image` VARCHAR(45) NULL DEFAULT NULL,
+  `p_image` LONGBLOB NULL DEFAULT NULL,
   `p_category1` VARCHAR(45) NOT NULL,
   `p_category2` VARCHAR(45) NOT NULL,
   `p_title` VARCHAR(100) NOT NULL,
@@ -53,7 +53,6 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Product` (
   `p_dirty` VARCHAR(10) NULL DEFAULT NULL,
   `p_contents` VARCHAR(200) NULL DEFAULT NULL,
   `p_trade` VARCHAR(10) NULL DEFAULT '판매중',
-  `p_likeitem` INT NULL DEFAULT 0,
   `p_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `p_view` INT ZEROFILL NULL DEFAULT 0,
   `User_u_id` INT NOT NULL,
