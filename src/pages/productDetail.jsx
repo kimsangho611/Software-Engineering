@@ -129,6 +129,7 @@ const ProductDetail = () => {
           <OrangeBtn
             text={"바로 구매"}
             onClick={() => setBuyModal((prev) => !prev)}
+            dis={detail.p_trade === "판매중" ? false : true}
           />
           <button
             type="button"

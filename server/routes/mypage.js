@@ -16,8 +16,11 @@ router.get("/list/buy", async function (req, res) {
       });
     } else {
       const result = await connection.query(
-        "select p.p_category1, p.p_category2, p.p_title, p.p_date, p.p_trade,p.p_image \
-                from product p where p.p_id = (select o.Product_p_id from user u join `order` o on u.u_id = o.User_u_id where u.u_id = ?);",
+        "select *\
+        from product p join (\
+          select o.Product_p_id\
+            from user u left join `order` o on u.u_id = o.User_u_id\
+            where u.u_id = ?) u_o on p.p_id = u_o.Product_p_id;",
         [token_res.uid]
       );
       res.status(200).send({ success: true, result: result[0] });
