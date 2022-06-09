@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Order` (
   CONSTRAINT `fk_Seller_Product1`
     FOREIGN KEY (`Product_p_id`)
     REFERENCES `secondhand`.`Product` (`p_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`ShopBasket` (
   CONSTRAINT `fk_ShopBasket_Product1`
     FOREIGN KEY (`Product_p_id`)
     REFERENCES `secondhand`.`Product` (`p_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ShopBasket_User1`
     FOREIGN KEY (`User_u_id`)
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Report` (
   CONSTRAINT `fk_Report_Product1`
     FOREIGN KEY (`Product_p_id`)
     REFERENCES `secondhand`.`Product` (`p_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`ProductInquiry` (
   CONSTRAINT `fk_ProductInquiry_Product1`
     FOREIGN KEY (`Product_p_id`)
     REFERENCES `secondhand`.`Product` (`p_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

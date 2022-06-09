@@ -17,7 +17,7 @@ router.get("/list", async function(req, res) {
 });
 
 router.get("/detail", async function(req, res) {
-    var noticeId = req.query;
+    var noticeId = req.query.noticeId;
 
     const connection = await pool.getConnection(async (conn) => conn);
     try {
