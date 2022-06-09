@@ -86,22 +86,27 @@ from user
 where u_id = 1;
 
 # 포인트 중천 및 사용 내역
+select u.u_point, p.*
+from user u join point p on u.u_id = p.User_u_id
+where u.u_id = 1;
+
 
 # 포인트 충전
 update user
 set u_point = u_point + 10000
 where u_id = 1;
 # 밑에 insert로 포인트 량과 해당 정보를 기입
+insert into point(point_title, point_amount, User_u_id)
+values ("포인트 충전", 10000, 1);
 
 
 # 포인트로 상품구매
-# 여기서는 상품 번호를 가져올 수 있어 보임 그러면 문제가 되지 않는데
-# 문제는 포인트만 충전한 경우 
 update user
 set u_point = u_point - 10000
 where u_id = 1;
 # 포인트로 상품을 구매하면 위의 쿼리와 insert로 point 테이블에 상품 번호와 사용자 정보를 기입
-
+insert into point(point_title, point_amount, User_u_id)
+values ("블라우스 팝니다.", -10000, 1);
 
 
 
@@ -136,7 +141,7 @@ from product p
 where p.p_id = (
 	select pi.Product_p_id
     from user u join productinquiry pi on u.u_id = pi.User_u_id
-    where u.u_id = 1 );
+    where u.u_id = 1);
 
 
 # ================= Product =================
