@@ -30,7 +30,7 @@ router.post("/login/:type", function (req, res, next) {
         res.status(500).send({ success: false, msg: "DB 오류" + err });
         console.error("err : " + err);
       } else {
-        if (result.length > 0) {
+        if (result[0].length > 0) {
           const jwtToken = await jwt.sign({
             uid: result[0].u_id,
             admin: result[0].u_admin,
@@ -138,11 +138,36 @@ router.post("/report", async function (req, res) {
   }
 });
 
+router.get("/editInfo", async function (req, res) {
+  var token_res = await jwt.verify(req.headers.authorization);
+
+  console.log(token_res);
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    if (token_res === 401) {
+      res.status(401).send({
+        success: false,
+        msg: "로그인 기한이 만료되었습니다. 다시 로그인해주세요.",
+      });
+    } else {
+      const result1 = await connection.query(
+        "select u.u_email, u.u_name, u.u_phone, u.u_sign_date from user u  where u.u_id = ?;",
+        [token_res.uid]
+      );
+      res.status(200).send({ success: true, info: result1[0] });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ success: false, msg: "서버 오류" + err });
+  } finally {
+    connection.release();
+  }
+});
+
 router.post("/editInfo", async function (req, res) {
   const { token, email, oldpw, newpw, name, phone } = req.body;
   var token_res = await jwt.verify(token);
   var datas = [name, newpw, phone, email, token_res.id, oldpw];
-  console.log(datas);
 
   const connection = await pool2.getConnection(async (conn) => conn);
   try {
@@ -152,11 +177,22 @@ router.post("/editInfo", async function (req, res) {
         msg: "로그인 기한이 만료되어 수정에 실패했습니다. 다시 로그인해주세요.",
       });
     } else {
-      await connection.query(
-        "update user set u_name = ?, u_pw = ?, u_phone=?, u_email=? where u_email =? and u_pw = ?;",
-        datas
+      const result1 = await connection.query(
+        "SELECT * FROM user WHERE u_email=? and u_pw=?;",
+        [token_res.id, oldpw]
       );
-      res.status(200).send({ success: true, msg: "수정이 완료되었습니다." });
+      if (result1[0].length <= 0) {
+        res.status(401).send({
+          success: false,
+          msg: "비밀번호가 일치하지 않습니다. 다시 시도해주세요.",
+        });
+      } else {
+        await connection.query(
+          "update user set u_name = ?, u_pw = ?, u_phone=?, u_email=? where u_email =? and u_pw = ?;",
+          datas
+        );
+        res.status(200).send({ success: true, msg: "수정이 완료되었습니다." });
+      }
     }
   } catch (err) {
     console.log(err);
