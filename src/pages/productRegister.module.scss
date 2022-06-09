@@ -1,0 +1,58 @@
+@import "../styles/main.module.scss";
+.productRegister {
+  @include flexBox(even, center);
+  flex-direction: column;
+
+  .putInfos {
+    @include flexBox(even, start);
+    width: 100%;
+    margin-bottom: 56px;
+
+    .imgInput {
+      display: none;
+    }
+
+    .imagePicker {
+      width: 612px;
+      height: 844px;
+      border: 0;
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+      img {
+        // object-fit: cover;
+        // object-fit: fill;
+        object-fit: contain;
+        cursor: pointer;
+      }
+
+      .noImg {
+        @include flexBox;
+        flex-direction: column;
+        width: 612px;
+        height: 844px;
+        cursor: pointer;
+
+        span {
+          @include text(24px, $text, 700);
+          margin-top: 31px;
+        }
+      }
+    }
+
+    .textInputs {
+      @include flexBox(between, start);
+      @include text(24px, $text, 500);
+      flex-direction: column;
+      width: 607px;
+
+      .alignRow {
+        @include flexBox(between, start);
+        width: 607px;
+
+        .half {
+          width: 299px;
+        }
+      }
+    }
+  }
+}

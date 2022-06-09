@@ -13,3 +13,34 @@
     width: 60%;
   }
 }
+
+.register_input::placeholder,
+.register_textarea::placeholder {
+  @include text(24px, $grey, 400, left);
+}
+
+.register_input,
+.register_select,
+.register_textarea {
+  width: 607px;
+  height: 72px;
+  padding: 12px 24px;
+  margin-bottom: 11px;
+  border: 2px solid $light_grey;
+  outline: none;
+}
+
+.register_select {
+  color: $grey;
+  background-image: url("../../assets/icons/triangle.svg");
+  background-repeat: no-repeat;
+  background-position-x: 95%;
+  background-position-y: 50%;
+  -webkit-appearance: none;
+}
+
+.register_textarea {
+  width: 607px;
+  height: 180px;
+  resize: none;
+}
