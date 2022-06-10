@@ -91,11 +91,13 @@ const Sidebar = ({ openSide, setOpenSide }) => {
           <IC_SecondHand />
         </div>
         <div className="cates">
-          {localStorage.getItem("accessToken") ? (
+          {localStorage.getItem("userOrAdmin") === "1" &&
+          localStorage.getItem("accessToken") ? (
             <>
               <button
                 onClick={() => {
                   localStorage.removeItem("accessToken");
+                  localStorage.removeItem("userOrAdmin");
                   alert("로그아웃 되었습니다.");
                   window.location.replace("/");
                 }}
@@ -107,6 +109,11 @@ const Sidebar = ({ openSide, setOpenSide }) => {
                 상품 판매하기
               </Link>
             </>
+          ) : localStorage.getItem("userOrAdmin") === "2" &&
+            localStorage.getItem("accessToken") ? (
+            <Link to={"/admin/mypage"} className="bigcate">
+              관리 페이지 메인
+            </Link>
           ) : (
             <Link to={"/login"} className="bigcate">
               로그인/회원가입
@@ -166,14 +173,17 @@ const Sidebar = ({ openSide, setOpenSide }) => {
               기타 잡화
             </a>
           </div>
-          {localStorage.getItem("accessToken") ? (
+          {localStorage.getItem("userOrAdmin") === "1" &&
+          localStorage.getItem("accessToken") ? (
             <Link to={"/mypage"} className="bigcate">
               마이페이지
             </Link>
           ) : (
             <></>
           )}
-          <span className="bigcate">공지사항</span>
+          <a href="/notice" className="bigcate">
+            공지사항
+          </a>
         </div>
       </div>
       <button className="closebtn" onClick={() => setOpenSide(!openSide)}>

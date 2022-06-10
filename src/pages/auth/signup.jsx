@@ -9,8 +9,10 @@ import {
   PhoneValidation,
 } from "../../util/validation";
 import { SignupApi } from "../../core/api/auth/signupApi";
+import { AuthRadio } from "../../components/auth/authBox";
 const SignUp = () => {
   const navigate = useNavigate();
+  const [x, setX] = useState("1");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -50,6 +52,7 @@ const SignUp = () => {
     <Layout>
       <div className="signup">
         <div className="signupTitle">회원가입</div>
+        <AuthRadio x={x} setX={setX} />
         <section className="inputSet">
           <AuthInput
             type={"email"}
@@ -92,7 +95,7 @@ const SignUp = () => {
           className={`btn${dis}`}
           onClick={async () => {
             const res = await SignupApi(
-              1,
+              x,
               email,
               password,
               name,

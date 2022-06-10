@@ -66,6 +66,7 @@ const Drop = () => {
             if (res.success) {
               alert(res.msg);
               localStorage.removeItem("accessToken");
+              localStorage.removeItem("userOrAdmin");
               window.location.replace("/");
             } else {
               alert(res.msg);

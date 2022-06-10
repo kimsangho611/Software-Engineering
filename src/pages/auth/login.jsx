@@ -44,13 +44,9 @@ const Login = () => {
           onClick={async () => {
             const res = await LoginApi(x, email, password);
             if (res.success) {
-              if (x === "1") {
-                localStorage.setItem("accessToken", res.jwtToken);
-                navigate("/");
-              } else {
-                localStorage.setItem("accessToken", res.jwtToken);
-                navigate("/admin/mypage"); //관리자 페이지 메인으로 이동하게 변경 필요
-              }
+              localStorage.setItem("accessToken", res.jwtToken);
+              localStorage.setItem("userOrAdmin", x);
+              x === "1" ? navigate("/") : navigate("/admin/mypage");
             } else {
               alert(res.msg);
             }

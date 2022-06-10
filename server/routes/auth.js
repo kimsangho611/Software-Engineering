@@ -31,13 +31,20 @@ router.post("/login/:type", function (req, res, next) {
         console.error("err : " + err);
       } else {
         if (result.length > 0) {
-          const jwtToken = await jwt.sign({
-            uid: result[0].u_id,
-            admin: result[0].u_admin,
-            id: result[0].u_email,
-            name: result[0].u_name,
-          });
-          res.send({ success: true, jwtToken: jwtToken.token });
+          if (type != result[0].u_admin) {
+            res.status(401).send({
+              success: false,
+              msg: "고객 또는 관리자가 아닙니다. 올바른 구분을 선택해주세요.",
+            });
+          } else {
+            const jwtToken = await jwt.sign({
+              uid: result[0].u_id,
+              admin: result[0].u_admin,
+              id: result[0].u_email,
+              name: result[0].u_name,
+            });
+            res.status(200).send({ success: true, jwtToken: jwtToken.token });
+          }
         } else
           res.status(401).send({
             success: false,
@@ -143,7 +150,6 @@ router.post("/report", async function (req, res) {
 router.get("/editInfo", async function (req, res) {
   var token_res = await jwt.verify(req.headers.authorization);
 
-  console.log(token_res);
   const connection = await pool2.getConnection(async (conn) => conn);
   try {
     if (token_res === 401) {
