@@ -30,3 +30,19 @@ export const getNoticeLists = async () => {
   });
   return res;
 };
+
+export const getPostingLists = async () => {
+  const res = await myAxios({
+    method: METHOD.GET,
+    url: `/post/list`,
+  });
+  return res;
+};
+
+export const deletePosting = async (pid) => {
+  const res = await myAxios({
+    method: METHOD.DELETE,
+    url: `/post/${pid}/delete`,
+  });
+  return res.status;
+};
