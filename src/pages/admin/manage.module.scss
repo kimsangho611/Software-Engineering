@@ -1,0 +1,49 @@
+@import "../../styles/main.module.scss";
+
+.manage {
+  @include flexBox(start, center);
+  flex-direction: column;
+
+  .title {
+    @include text(36px, $text, 700);
+    margin-bottom: 43px;
+  }
+
+  .board {
+    width: 1313px;
+    height: 660px;
+    margin-bottom: 34px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+    .boardLine {
+      @include flexBox(between, center);
+      width: 1313px;
+      height: 60px;
+      color: $text;
+      text-decoration: none;
+      border-bottom: 1px solid $grey;
+
+      span {
+        width: 25%;
+        text-align: center;
+      }
+    }
+  }
+
+  .btnSet {
+    @include flexBox(between, center);
+    width: 160px;
+
+    button {
+      @include btn-with-text($light_yellow, $text, 69px, 40px);
+      @include text(24px, $text, 500);
+      border-radius: 10px;
+    }
+  }
+
+  .orange {
+    margin-top: 33px;
+  }
+}

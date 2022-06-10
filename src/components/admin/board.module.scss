@@ -1,0 +1,19 @@
+@import "../../styles/main.module.scss";
+.boardLine {
+  @include flexBox(between, center);
+  width: 1313px;
+  height: 60px;
+  text-align: center;
+  border-bottom: 1px solid $grey;
+
+  span {
+    @include text(24px, $text, 400);
+    text-align: center;
+  }
+
+  .deleteBtn {
+    @include btn-with-text($light_yellow, $text, 69px, 40px);
+    @include text(24px, $text, 400);
+    border-radius: 10px;
+  }
+}
