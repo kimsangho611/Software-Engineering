@@ -13,4 +13,21 @@
     width: 1325px;
     margin-bottom: 37px;
   }
+
+  .logout {
+    @include flexBox;
+    flex-direction: column;
+    width: 425px;
+    height: 271px;
+    text-decoration: none;
+    cursor: pointer;
+    background: $white;
+    border: 0;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+    span {
+      @include text(28px, $text, 500);
+      margin-top: 23px;
+    }
+  }
 }

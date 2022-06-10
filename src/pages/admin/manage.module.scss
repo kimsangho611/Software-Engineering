@@ -42,7 +42,17 @@
       border-radius: 10px;
     }
   }
+  .noticeBtn {
+    @include flexBox(between, center);
+    width: 160px;
 
+    button {
+      @include btn-with-text($light_yellow, $text, 69px, 40px);
+      @include text(24px, $text, 500);
+      border-radius: 10px;
+    }
+    margin-bottom: 20px;
+  }
   .orange {
     margin-top: 33px;
   }
