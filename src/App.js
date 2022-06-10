@@ -22,6 +22,7 @@ import ManagePosting from "./pages/admin/managePosting";
 import ManageNotice from "./pages/admin/manageNotice";
 import ManageInquiry from "./pages/admin/manageInquiry";
 import ManageReport from "./pages/admin/manageReport";
+import ManageReportDetail from "./pages/admin/manageReportDetail";
 
 const App = () => {
   return (
@@ -55,6 +56,10 @@ const App = () => {
           <Route path="/admin/manage/notice/:id" element={<ManageNotice />} />
 
           <Route path="/admin/manage/report" element={<ManageReport />} />
+          <Route
+            path="/admin/manage/report/:id"
+            element={<ManageReportDetail />}
+          />
 
           <Route path="/admin/manage/inquiry" element={<ManageInquiry />} />
           <Route path="/admin/manage/inquiry/:id" element={<ManageInquiry />} />
