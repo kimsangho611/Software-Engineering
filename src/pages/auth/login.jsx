@@ -44,12 +44,12 @@ const Login = () => {
           onClick={async () => {
             const res = await LoginApi(x, email, password);
             if (res.success) {
-              if (x === 1) {
+              if (x === "1") {
                 localStorage.setItem("accessToken", res.jwtToken);
                 navigate("/");
               } else {
                 localStorage.setItem("accessToken", res.jwtToken);
-                navigate("/"); //관리자 페이지 메인으로 이동하게 변경 필요
+                navigate("/admin/mypage"); //관리자 페이지 메인으로 이동하게 변경 필요
               }
             } else {
               alert(res.msg);

@@ -16,6 +16,12 @@ import MyPageActivityList from "./pages/mypage/activityList";
 import EditInfo from "./pages/mypage/editInfo";
 import ProductDetail from "./pages/productDetail";
 import ViewCategory from "./pages/category/category";
+import AdminMain from "./pages/admin";
+import ManageUser from "./pages/admin/manageUser";
+import ManagePosting from "./pages/admin/managePosting";
+import ManageNotice from "./pages/admin/manageNotice";
+import ManageInquiry from "./pages/admin/manageInquiry";
+import ManageReport from "./pages/admin/manageReport";
 
 const App = () => {
   return (
@@ -41,6 +47,17 @@ const App = () => {
           <Route path="/product/detail/:pid" element={<ProductDetail />} />
 
           <Route path="/category/:c1/:c2" element={<ViewCategory />} />
+          <Route path="/admin/mypage" element={<AdminMain />} />
+          <Route path="/admin/manage/user" element={<ManageUser />} />
+          <Route path="/admin/manage/posting" element={<ManagePosting />} />
+
+          <Route path="/admin/manage/notice" element={<ManageNotice />} />
+          <Route path="/admin/manage/notice/:id" element={<ManageNotice />} />
+
+          <Route path="/admin/manage/report" element={<ManageReport />} />
+
+          <Route path="/admin/manage/inquiry" element={<ManageInquiry />} />
+          <Route path="/admin/manage/inquiry/:id" element={<ManageInquiry />} />
         </Routes>
       </BrowserRouter>
     </div>
