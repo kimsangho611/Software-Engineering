@@ -54,8 +54,9 @@ router.post("/:reportId/stopId", async function (req, res) {
     await connection.query(
       "update user set u_stop = 1 where u_email = \
             (select u_p.u_email from report r join (select u.u_email, u.u_id, p.p_id from user u join product p on u.u_id = p.User_u_id) u_p \
-            on r.Product_p_id = u_p.p_id and r.r_id = ?);",
-      [reportId]
+            on r.Product_p_id = u_p.p_id and r.r_id = ?);\
+      delete from report where r_id = ?",
+      [reportId, reportId]
     );
     res
       .status(200)
@@ -72,6 +73,9 @@ router.post("/:reportId/ignore", async function (req, res) {
 
   const connection = await pool.getConnection(async (conn) => conn);
   try {
+    await connection.query(
+      "delete from report where r_id = ?", [reportId]
+    );
     res
       .status(200)
       .send({ success: true, msg: "사용자의 신고가 무시되었습니다." });
