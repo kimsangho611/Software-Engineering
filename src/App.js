@@ -23,6 +23,11 @@ import ManageNotice from "./pages/admin/manageNotice";
 import ManageInquiry from "./pages/admin/manageInquiry";
 import ManageReport from "./pages/admin/manageReport";
 import ManageReportDetail from "./pages/admin/manageReportDetail";
+import ManageNoticeDetail from "./pages/admin/manageNoticeDetail";
+import ManageNoticeEdit from "./pages/admin/manageNoticeEdit";
+import ManageNoticeUpload from "./pages/admin/manageNoticeUpload";
+import UserNotice from "./pages/notice/userNotice";
+import UserNoticeDetail from "./pages/notice/userNoticeDetail";
 
 const App = () => {
   return (
@@ -48,12 +53,26 @@ const App = () => {
           <Route path="/product/detail/:pid" element={<ProductDetail />} />
 
           <Route path="/category/:c1/:c2" element={<ViewCategory />} />
+          <Route path="/notice" element={<UserNotice />} />
+          <Route path="/notice/:id" element={<UserNoticeDetail />} />
+
           <Route path="/admin/mypage" element={<AdminMain />} />
           <Route path="/admin/manage/user" element={<ManageUser />} />
           <Route path="/admin/manage/posting" element={<ManagePosting />} />
 
           <Route path="/admin/manage/notice" element={<ManageNotice />} />
-          <Route path="/admin/manage/notice/:id" element={<ManageNotice />} />
+          <Route
+            path="/admin/manage/notice/:id"
+            element={<ManageNoticeDetail />}
+          />
+          <Route
+            path="/admin/manage/notice/upload"
+            element={<ManageNoticeUpload />}
+          />
+          <Route
+            path="/admin/manage/notice/:id/edit"
+            element={<ManageNoticeEdit />}
+          />
 
           <Route path="/admin/manage/report" element={<ManageReport />} />
           <Route

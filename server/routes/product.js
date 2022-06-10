@@ -53,7 +53,6 @@ router.post("/detail", async function (req, res, next) {
       req.body.productId,
     ]);
     const detail2 = detail[0];
-    console.log(detail2);
     res.status(200).send({ list: detail2[0], isLike: isLike[0][0].isLike });
   } catch (err) {
     res.status(500).send();
