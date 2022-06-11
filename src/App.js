@@ -29,6 +29,7 @@ import ManageNoticeUpload from "./pages/admin/manageNoticeUpload";
 import UserNotice from "./pages/notice/userNotice";
 import UserNoticeDetail from "./pages/notice/userNoticeDetail";
 import ManageInquiryDetail from "./pages/admin/manageInquiryDetail";
+import ProductDetailEdit from "./pages/productDetailEdit";
 
 const App = () => {
   return (
@@ -52,6 +53,10 @@ const App = () => {
 
           <Route path="/product/register" element={<ProductRegister />} />
           <Route path="/product/detail/:pid" element={<ProductDetail />} />
+          <Route
+            path="/product/detail/:pid/edit"
+            element={<ProductDetailEdit />}
+          />
 
           <Route path="/category/:c1/:c2" element={<ViewCategory />} />
           <Route path="/notice" element={<UserNotice />} />

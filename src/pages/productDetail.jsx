@@ -12,7 +12,7 @@ import {
   BuyFailModal,
 } from "../components/modals/buyModal";
 import { amISeller, getProductDetail } from "../core/api/product/detail";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { hit } from "../core/api/product/hit";
 import { ReportApi } from "../core/api/auth/reportApi";
 import { buyWithPoint } from "../core/api/point/dealWithPoint";
@@ -22,6 +22,7 @@ import {
   ProductComment,
   ProductReply,
 } from "../components/productDetail/comment";
+import { ProductDelete } from "../core/api/product/editAndDelete";
 
 const ProductDetail = () => {
   const [like, setLike] = useState(false);
@@ -35,6 +36,8 @@ const ProductDetail = () => {
   const [comment, setComment] = useState("");
   const [write, setWrite] = useState("");
   const [seller, setSeller] = useState(false);
+
+  const navigate = useNavigate();
 
   const fetch = async () => {
     await hit(params.pid);
@@ -99,10 +102,19 @@ const ProductDetail = () => {
             <span
               className={styles.category}
             >{`${detail.p_category1} > ${detail.p_category2}`}</span>
-            <button type="button" onClick={() => setReportModal(true)}>
-              <IC_Siren width={26} height={26} />
-              신고하기
-            </button>
+            {seller ? (
+              <button
+                type="button"
+                onClick={() => navigate(`/product/detail/${params.pid}/edit`)}
+              >
+                🪄수정하기
+              </button>
+            ) : (
+              <button type="button" onClick={() => setReportModal(true)}>
+                <IC_Siren width={26} height={26} />
+                신고하기
+              </button>
+            )}
           </div>
           <h1>{detail.p_title}</h1>
 
@@ -144,32 +156,47 @@ const ProductDetail = () => {
             />
             <ProductInfoLine title={"상품 설명"} content={detail.p_contents} />
           </div>
-
-          <div className={styles.btns}>
-            <OrangeBtn
-              text={"바로 구매"}
-              onClick={() => setBuyModal((prev) => !prev)}
-              dis={detail.p_trade === "판매중" ? false : true}
-            />
-            <button
-              type="button"
-              className={styles.whiteBtn}
-              onClick={async () => {
-                if (like === 0) {
-                  await productLike(params.pid);
-                  window.location.reload();
-                } else {
-                  await CancleLike(params.pid);
-                  window.location.reload();
-                }
-              }}
-            >
-              <IC_Heart
-                className={like === 1 ? styles.heartFill : styles.heartNotFill}
+          {seller ? (
+            <div className={styles.btns}>
+              <OrangeBtn
+                text={"상품 삭제"}
+                onClick={async () => {
+                  const res = await ProductDelete(params.pid);
+                  res.success
+                    ? window.location.replace("/")
+                    : alert("삭제에 실패했습니다. 다시 시도해주세요.");
+                }}
               />
-              찜
-            </button>
-          </div>
+            </div>
+          ) : (
+            <div className={styles.btns}>
+              <OrangeBtn
+                text={"바로 구매"}
+                onClick={() => setBuyModal((prev) => !prev)}
+                dis={detail.p_trade === "판매중" ? false : true}
+              />
+              <button
+                type="button"
+                className={styles.whiteBtn}
+                onClick={async () => {
+                  if (like === 0) {
+                    await productLike(params.pid);
+                    window.location.reload();
+                  } else {
+                    await CancleLike(params.pid);
+                    window.location.reload();
+                  }
+                }}
+              >
+                <IC_Heart
+                  className={
+                    like === 1 ? styles.heartFill : styles.heartNotFill
+                  }
+                />
+                찜
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

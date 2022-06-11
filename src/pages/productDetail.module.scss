@@ -17,6 +17,7 @@
 
     .productInfo {
       padding: 0 72px;
+      width: 40%;
 
       .categoryInfo {
         @include flexBox(between);
@@ -37,12 +38,33 @@
         margin-bottom: 22px;
       }
 
+      .editTitle {
+        @include text(48px, $text, 700, left);
+        margin-bottom: 22px;
+        outline: none;
+        border: 0px;
+        text-decoration: underline;
+      }
+
       .dealInfo {
         @include flexBox(between);
         margin-bottom: 41px;
 
         .status {
           @include text(42px, $main, 700);
+        }
+
+        .editPrice {
+          @include text(42px, $main, 700);
+          width: 70%;
+          text-align: right;
+          outline: none;
+          border: none;
+          text-decoration: underline;
+        }
+
+        .won {
+          @include text(30px, $text, 500);
         }
 
         .price {
@@ -66,6 +88,36 @@
         span {
           @include text(20px, $text, 400);
           @include flexBox;
+        }
+      }
+
+      .errmsg {
+        @include text(20px, $main, 500, left);
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .editInfoLine {
+        @include flexBox(start, start);
+
+        .infoTitle {
+          @include text(24px, $text, 500, left);
+          width: 30%;
+        }
+
+        .infoContent {
+          @include text(24px, $text, 500, left);
+          outline: none;
+          border: none;
+          padding-left: 4px;
+          text-decoration: underline;
+        }
+
+        select {
+          @include text(24px, $text, 500, left);
+          outline: none;
+          border: none;
+          text-decoration: underline;
         }
       }
 
