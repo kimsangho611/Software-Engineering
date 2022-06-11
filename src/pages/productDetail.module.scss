@@ -2,105 +2,136 @@
 
 .productDetailLayout {
   @include flexBox(even, start);
+  flex-direction: column;
 
-  .productImg {
-    width: 612px;
-    height: 844px;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  }
+  .topBlock {
+    @include flexBox(even, start);
+    width: 100%;
+    margin-bottom: 100px;
 
-  .productInfo {
-    padding: 0 72px;
-
-    .categoryInfo {
-      @include flexBox(between);
-      margin-bottom: 22px;
-
-      .category {
-        @include text(24px, $text, 500);
-      }
-
-      button {
-        @extend %btn-base;
-        @include text(20px, $text, 500);
-      }
+    .productImg {
+      width: 612px;
+      height: 844px;
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     }
 
-    h1 {
-      @include text(48px, $text, 700, left);
-      margin-bottom: 22px;
-    }
+    .productInfo {
+      padding: 0 72px;
 
-    .dealInfo {
-      @include flexBox(between);
-      margin-bottom: 41px;
+      .categoryInfo {
+        @include flexBox(between);
+        margin-bottom: 22px;
 
-      .status {
-        @include text(42px, $main, 700);
-      }
+        .category {
+          @include text(24px, $text, 500);
+        }
 
-      .price {
-        @include text(42px, $main, 700);
-
-        span {
-          @include text(30px, $text, 500);
+        button {
+          @extend %btn-base;
+          @include text(20px, $text, 500);
         }
       }
-    }
 
-    .line {
-      width: 100%;
-      height: 1px;
-      margin-bottom: 17px;
-      background-color: $text;
-    }
+      h1 {
+        @include text(48px, $text, 700, left);
+        margin-bottom: 22px;
+      }
 
-    .postInfo {
-      @include flexBox(between);
-      margin-bottom: 75px;
-
-      div {
+      .dealInfo {
         @include flexBox(between);
-        width: 180px;
-      }
+        margin-bottom: 41px;
 
-      span {
-        @include text(20px, $text, 400);
-        @include flexBox;
-      }
-    }
+        .status {
+          @include text(42px, $main, 700);
+        }
 
-    .infos {
-      height: 260px;
-      margin-bottom: 75px;
-    }
+        .price {
+          @include text(42px, $main, 700);
 
-    .btns {
-      @include flexBox(even, center);
-
-      .whiteBtn {
-        @include flexBox;
-        @include btn-with-text($white, $main);
-        width: 196px;
-        border: 5px solid $main;
-
-        .heartFill,
-        .heartNotFill {
-          width: 51px;
-          height: 41px;
-          margin-right: 10px;
-
-          path {
-            stroke: $main;
-            stroke-width: 2;
+          span {
+            @include text(30px, $text, 500);
           }
         }
+      }
 
-        .heartFill {
-          border: 0;
-          fill: $main;
+      .postInfo {
+        @include flexBox(between);
+        margin-bottom: 75px;
+
+        div {
+          @include flexBox(between);
+          width: 180px;
+        }
+
+        span {
+          @include text(20px, $text, 400);
+          @include flexBox;
         }
       }
+
+      .infos {
+        height: 260px;
+        margin-bottom: 75px;
+      }
+
+      .btns {
+        @include flexBox(even, center);
+
+        .whiteBtn {
+          @include flexBox;
+          @include btn-with-text($white, $main);
+          width: 196px;
+          border: 5px solid $main;
+
+          .heartFill,
+          .heartNotFill {
+            width: 51px;
+            height: 41px;
+            margin-right: 10px;
+
+            path {
+              stroke: $main;
+              stroke-width: 2;
+            }
+          }
+
+          .heartFill {
+            border: 0;
+            fill: $main;
+          }
+        }
+      }
+    }
+  }
+
+  .line {
+    width: 100%;
+    height: 1px;
+    margin-bottom: 17px;
+    background-color: $text;
+  }
+
+  .productQ {
+    @include flexBox(even, end);
+    flex-direction: column;
+    width: 100%;
+    padding: 70px;
+
+    textarea {
+      width: 100%;
+      height: 130px;
+      padding: 15px;
+      margin-bottom: 14px;
+      border: 3px solid $text;
+      border-radius: 10px;
+      outline: none;
+      resize: none;
+    }
+
+    button {
+      @include btn-with-text($main, $white, 134px, 44);
+      margin-bottom: 30px;
+      font-size: 24px;
     }
   }
 }

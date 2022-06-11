@@ -13,14 +13,14 @@ export const writeCommentAsBuyer = async (productId, comment) => {
     url: `/product/${productId}/qna`,
     data: { question: comment },
   });
-  return res.data;
+  return res.status;
 };
 
-export const writeCommentAsSeller = async (productId, qnaId, comment) => {
+export const writeCommentAsSeller = async (productInquiryId, comment) => {
   const res = await myAxios({
     method: METHOD.POST,
-    url: `/product/${productId}/qna/${qnaId}`,
+    url: `/product/${productInquiryId}/answer`,
     data: { answer: comment },
   });
-  return res.data;
+  return res.status;
 };
