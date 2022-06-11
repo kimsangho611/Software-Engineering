@@ -22,3 +22,20 @@ export const ignoreReport = async (reportId) => {
   });
   return res.status;
 };
+
+export const getInquiryDetail = async (inquiryId) => {
+  const res = await myAxios({
+    method: METHOD.GET,
+    url: `/inquire/${inquiryId}/detail`,
+  });
+  return res.data;
+};
+
+export const writeAnswerToInquiry = async (inquiryId, answer) => {
+  const res = await myAxios({
+    method: METHOD.POST,
+    url: `/inquire/${inquiryId}/upload`,
+    data: { answer: answer },
+  });
+  return res.status;
+};

@@ -23,7 +23,7 @@ router.get("/:inquiryId/detail", async function (req, res) {
 
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    const result = connection.query(
+    const result = await connection.query(
       "select u.u_email, q.q_title, q.q_contents, q.q_answer from user u join questions q on u.u_id = q.User_u_id where q.q_id = ?;",
       [inquiryId]
     );

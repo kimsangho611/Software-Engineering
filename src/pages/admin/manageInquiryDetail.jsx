@@ -1,54 +1,62 @@
 import { useEffect, useState } from "react";
-// import { BoardLine } from "../../components/admin/board";
-import { getInquiryLists } from "../../core/api/admin/manage";
-import styles from "./manage.module.scss";
+import styles from "./manageDetail.module.scss";
 import { Layout } from "../../components/layout";
+import {
+  getInquiryDetail,
+  writeAnswerToInquiry,
+} from "../../core/api/admin/manageDetail";
+import { useParams } from "react-router-dom";
+import { OrangeBtn } from "../../components/common/button";
 
-const ManageInquiry = () => {
+const ManageInquiryDetail = () => {
+  const param = useParams();
   const [result, setResult] = useState([]);
-  const GetInquiryLists = async () => {
-    const res = await getInquiryLists();
-    console.log("result=", res.data.result);
-    setResult(res.data.result);
+  const [answer, setAnswer] = useState("");
+  const [answerExists, setAnswerExists] = useState(false);
+
+  const GetInquiryDetail = async () => {
+    const res = await getInquiryDetail(param.id);
+    setResult(res.result[0]);
+    setAnswerExists(res.result[0].q_answer === null ? false : true);
   };
 
   useEffect(() => {
-    console.log("result=", result);
-  }, [result]);
-
-  useEffect(() => {
-    GetInquiryLists();
+    GetInquiryDetail();
   }, []);
 
   return (
-    <Layout otherClass={styles.manage}>
+    <Layout otherClass={styles.manageDetail}>
       <h1 className={styles.title}>문의사항 확인</h1>
-      <div className={styles.board}>
-        <div className={styles.boardLine}>
-          <span>문의사항 ID</span>
-          <span>제목</span>
-          <span>문의 날짜</span>
-          <span>답변 여부</span>
-        </div>
-        {result.length != 0 &&
-          result?.map((data, i) => {
-            console.log("data=,", data);
-            return (
-              <div className={styles.boardLine}>
-                {/* <span>{data.q_id}</span>
-                <span>{data.q_title}</span>
-                <span>{data.q_date?.substr(0, 10)}</span> */}
-                {/* <span>{data.q_id}</span> */}
-              </div>
-            );
-            // return <BoardLine list={data} key={i} />;
-          })}
+      <div className={styles.question}>
+        <span className={styles.topLine}>
+          <h1>{result.q_title}</h1>
+          <span>문의한 사용자: {result.u_email}</span>
+        </span>
+        <div className={styles.line} />
+        <p>{result.q_contents}</p>
       </div>
-      <div className={styles.btnSet}>
-        <button type="button">이전</button>
-        <button type="button">다음</button>
-      </div>
+      {answerExists ? (
+        <div className={styles.answer}>{result.q_answer}</div>
+      ) : (
+        <textarea
+          placeholder="답변"
+          className={styles.answer}
+          onChange={(e) => setAnswer(e.target.value)}
+        ></textarea>
+      )}
+      {!answerExists && (
+        <OrangeBtn
+          text={"답변 등록"}
+          onClick={async () => {
+            const res = await writeAnswerToInquiry(param.id, answer);
+            if (res === 200) {
+              alert("답변 등록이 완료되었습니다.");
+              window.location.reload();
+            } else alert("답변 등록에 실패했습니다.");
+          }}
+        />
+      )}
     </Layout>
   );
 };
-export default ManageInquiry;
+export default ManageInquiryDetail;
