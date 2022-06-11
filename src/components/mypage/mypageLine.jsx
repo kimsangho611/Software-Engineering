@@ -49,15 +49,13 @@ export const MypageAskLine = ({ askInfo, setOpen, open }) => {
       {open[askInfo.q_id] && (
         <div className={styles.contents}>
           <div className={styles.userQ}>{askInfo.q_contents}</div>
-          {askInfo.isAnswer && (
+          {askInfo.q_answer !== null && (
             <>
               <div className={styles.line} />
 
               <div className={styles.adminA}>
                 <span className={styles.admin}>관리자</span>
-                <span className={styles.answer}>
-                  {askInfo.q_answer === null ? "" : askInfo.q_answer}
-                </span>
+                <span className={styles.answer}>{askInfo.q_answer}</span>
               </div>
             </>
           )}

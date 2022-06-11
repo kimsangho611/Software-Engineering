@@ -28,6 +28,7 @@ import ManageNoticeEdit from "./pages/admin/manageNoticeEdit";
 import ManageNoticeUpload from "./pages/admin/manageNoticeUpload";
 import UserNotice from "./pages/notice/userNotice";
 import UserNoticeDetail from "./pages/notice/userNoticeDetail";
+import ManageInquiryDetail from "./pages/admin/manageInquiryDetail";
 
 const App = () => {
   return (
@@ -81,7 +82,10 @@ const App = () => {
           />
 
           <Route path="/admin/manage/inquiry" element={<ManageInquiry />} />
-          <Route path="/admin/manage/inquiry/:id" element={<ManageInquiry />} />
+          <Route
+            path="/admin/manage/inquiry/:id"
+            element={<ManageInquiryDetail />}
+          />
         </Routes>
       </BrowserRouter>
     </div>
