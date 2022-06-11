@@ -36,6 +36,11 @@ router.post("/login/:type", function (req, res, next) {
               success: false,
               msg: "고객 또는 관리자가 아닙니다. 올바른 구분을 선택해주세요.",
             });
+          } else if (result[0].u_stop) {
+            res.status(401).send({
+              success: false,
+              msg: "정지 된 계정입니다.",
+            });
           } else {
             const jwtToken = await jwt.sign({
               uid: result[0].u_id,
@@ -67,11 +72,21 @@ router.post("/signup/:type", async function (req, res, next) {
       "select * from user where u_email=?;",
       [email]
     );
+    const result2 = await connection.query(
+      "select * from user where u_phone=?;",
+      [phone]
+    );
     const data1 = result1[0];
+    const data2 = result2[0];
     if (data1.length > 0) {
       res.status(401).send({
         success: false,
         msg: "이미 사용 중인 이메일입니다. 다른 이메일을 사용해주세요.",
+      });
+    } else if (data2.length > 0) {
+      res.status(401).send({
+        success: false,
+        msg: "이미 사용 중인 번호입니다. 다른 휴대전화 번호를 사용해주세요.",
       });
     } else {
       var sql =
