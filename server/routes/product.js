@@ -96,6 +96,47 @@ router.post("/hit", async function (req, res, next) {
   }
 });
 
+router.post("/edit", async function (req, res, next) {
+  const body = req.body.detail;
+  console.log("result", body);
+  let datas = [
+    body.p_title,
+    body.p_price,
+    body.p_listprice,
+    body.p_size,
+    body.p_status,
+    body.p_puton_count,
+    body.p_dirty,
+    body.p_contents,
+    body.p_id,
+  ];
+
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    let sql =
+      "update product set p_title=?, p_price=?, p_listprice=?, p_size=?, p_status=?, p_puton_count=?, p_dirty=?, p_contents=? where p_id =?;";
+    await connection.query(sql, datas);
+    res.status(200).send({ success: true, msg: "수정이 완료되었습니다." });
+  } catch (err) {
+    res.status(500).send({ success: false, msg: "서버오류" + err });
+  } finally {
+    connection.release();
+  }
+});
+
+router.delete("/delete", async function (req, res) {
+  var id = req.query.id;
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    await connection.query("delete from product where p_id=?;", id);
+    res.status(200).send({ success: true });
+  } catch (err) {
+    res.status(500).send({ success: false, msg: "서버 오류" + err });
+  } finally {
+    connection.release();
+  }
+});
+
 router.get("/list", async function (req, res) {
   var { orderBy, min, max, bigCategory, smallCategory } = req.query;
   var datas = [min, max, bigCategory, smallCategory];
