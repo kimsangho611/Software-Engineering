@@ -13,8 +13,8 @@ router.get("/list", async function (req, res) {
                 from (select u.u_email, u.u_id from user u join report r on u.u_id = r.User_u_id) reporting_u \
                 join (select u_p.u_email, r.* from report r \
                     join (select u.u_email, u.u_id, p.p_id from user u join product p on u.u_id = p.User_u_id) \
-                    u_p on r.Product_p_id = u_p.p_id) \
-            reported_u on reporting_u.u_id = reported_u.User_u_id;"
+                    u_p on r.Product_p_id = u_p.p_id) reported_u \
+                    on reporting_u.u_id = reported_u.User_u_id and reporting_u.r_id = reported_u.r_id;"
     );
     res.status(200).send({ success: true, result: result[0] });
   } catch (err) {
