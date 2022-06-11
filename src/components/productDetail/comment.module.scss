@@ -1,0 +1,43 @@
+@import "../../styles/main.module.scss";
+.comment,
+.reply {
+  @include flexBox(center, between);
+  flex-direction: column;
+  width: 100%;
+  padding: 18px;
+  margin-bottom: 20px;
+  background-color: $beige;
+  border-radius: 10px;
+
+  .firstLine {
+    @include flexBox(between);
+
+    .name {
+      @include text(24px, $text, 500, left);
+    }
+
+    .date {
+      @include text(24px, $grey, 500, left);
+    }
+  }
+
+  .lastLine {
+    @include flexBox(between, end);
+
+    .content {
+      @include text(24px, $text, 500, left);
+      width: 80%;
+    }
+
+    button {
+      @extend %btn-base;
+      @include text(24px, $text, 500, right);
+      margin: 0;
+    }
+  }
+}
+
+.reply {
+  width: 90%;
+  margin-bottom: 50px;
+}

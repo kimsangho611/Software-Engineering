@@ -47,13 +47,35 @@ router.post("/detail", async function (req, res, next) {
       "select *,count(Product_p_id) as likecnt from product LEFT JOIN shopbasket on shopbasket.Product_p_id = product.p_id where product.p_id=?;";
     let sql1 =
       "SELECT count(*) as isLike FROM secondhand.shopbasket where User_u_id=? and Product_p_id=?;";
+    let sql3 = "SELECT User_u_id FROM product where p_id=?";
     const detail = await connection.query(sql2, [req.body.productId]);
     const isLike = await connection.query(sql1, [
       token_res.uid,
       req.body.productId,
     ]);
     const detail2 = detail[0];
-    res.status(200).send({ list: detail2[0], isLike: isLike[0][0].isLike });
+    const seller = await connection.query(sql3, [req.body.productId]);
+    res
+      .status(200)
+      .send({ list: detail2[0], isLike: isLike[0][0].isLike, seller: seller });
+  } catch (err) {
+    res.status(500).send();
+  } finally {
+    connection.release();
+  }
+});
+
+router.post("/amISeller", async function (req, res, next) {
+  let token_res = await jwt.verify(req.headers.authorization);
+  let result = false;
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    let sql = "SELECT User_u_id FROM product where p_id=?";
+    const seller = await connection.query(sql, [req.body.productId]);
+    const seller2 = seller[0];
+    if (seller2[0].User_u_id === token_res.uid) result = true;
+    else result = false;
+    res.status(200).send({ result: result });
   } catch (err) {
     res.status(500).send();
   } finally {
@@ -86,6 +108,61 @@ router.get("/list", async function (req, res) {
         : "select * ,count(Product_p_id) as likecnt from product LEFT outer join shopbasket on shopbasket.Product_p_id = product.p_id where (p_price between ? and ?) and p_category1 = ? and p_category2 = ? group by product.p_id order by p_view DESC;";
     const result1 = await connection.query(sql, datas);
 
+    res.status(200).send({ success: true, list: result1[0] });
+  } catch (err) {
+    res.status(500).send({ success: false, msg: "서버 오류" + err });
+  } finally {
+    connection.release();
+  }
+});
+
+router.post("/:productId/qna", async function (req, res) {
+  const { question } = req.body;
+  const token_res = await jwt.verify(req.headers.authorization);
+  const productId = req.params.productId;
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    let sql =
+      "insert into productinquiry(pi_contents, User_u_id, Product_p_id) values (?, ?, ?);";
+    const result1 = await connection.query(sql, [
+      question,
+      token_res.uid,
+      productId,
+    ]);
+    res.status(200).send({ success: true, list: result1[0] });
+  } catch (err) {
+    res.status(500).send({ success: false, msg: "서버 오류" + err });
+  } finally {
+    connection.release();
+  }
+});
+
+router.post("/:productInquiryId/answer", async function (req, res) {
+  const { answer } = req.body;
+  const productInquiryId = req.params.productInquiryId;
+
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    let sql = "update productinquiry set pi_answer = ? where pi_id = ?;";
+    await connection.query(sql, [answer, productInquiryId]);
+    res.status(200).send();
+  } catch (err) {
+    res.status(500).send({ success: false, msg: "서버 오류" + err });
+  } finally {
+    connection.release();
+  }
+});
+
+router.post("/:productId/qna/list", async function (req, res) {
+  const connection = await pool2.getConnection(async (conn) => conn);
+  try {
+    let sql =
+      "select u_pi.u_name, u_pi.pi_date, u_pi.pi_contents, u_pi.pi_answer, u_pi.pi_id \
+    from (select u.u_name, pi.* \
+	  from user u join productinquiry pi \
+    on u.u_id = pi.User_u_id) u_pi join product p on u_pi.Product_p_id = p.p_id \
+    where p_id = ? order by u_pi.pi_date desc";
+    const result1 = await connection.query(sql, [req.params.productId]);
     res.status(200).send({ success: true, list: result1[0] });
   } catch (err) {
     res.status(500).send({ success: false, msg: "서버 오류" + err });
