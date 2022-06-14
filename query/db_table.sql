@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`User` (
   `u_stop` INT NULL DEFAULT 0,
   `u_point` INT NULL DEFAULT 0,
   `u_sign_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `u_grade` INT NULL DEFAULT 0,
   UNIQUE INDEX `u_email_UNIQUE` (`u_email` ASC) VISIBLE,
   UNIQUE INDEX `u_phone_UNIQUE` (`u_phone` ASC) VISIBLE,
   PRIMARY KEY (`u_id`))
@@ -223,6 +222,7 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Review` (
   `re_id` INT NOT NULL AUTO_INCREMENT,
   `re_title` VARCHAR(90) NULL,
   `re_contents` VARCHAR(100) NOT NULL,
+  `re_grade` INT NULL DEFAULT 0,
   `User_u_id` INT NOT NULL,
   `Product_p_id` INT NOT NULL,
   PRIMARY KEY (`re_id`),

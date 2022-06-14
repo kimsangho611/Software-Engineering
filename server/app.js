@@ -13,6 +13,7 @@ const report = require("./routes/report");
 const user = require("./routes/user");
 const post = require("./routes/post");
 const likeitem = require("./routes/likeitem");
+const review = require("./routes/review");
 
 
 const bodyParser = require("body-parser");
@@ -55,3 +56,4 @@ app.use("/report", report);
 app.use("/user", user);
 app.use("/post", post);
 app.use("/likeitem", likeitem);
+app.use("/review", review);
