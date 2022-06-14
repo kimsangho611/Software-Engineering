@@ -19,4 +19,23 @@ router.get("/list", async function (req, res) {
   }
 });
 
+router.get("/detailInfo", async function(req, res) {
+  var productId = req.body.productId;
+
+  const connection = await pool.getConnection(async (conn) => conn);
+  try {
+    const result1 = await connection.query(
+      "select u.u_id from user u join product p on u.u_id = p.User_p_id where p.p_id = ?", [productId]);
+    
+    var u_id = result1[0].u_id;
+
+    const result2 = await connection.query("select * from review where User_u_id = ?", [u_id]);
+    res.status(200).send({ success: true, result: result2[0]});
+  } catch (err) {
+    res.status(500).send({ success: false, msg: "서버 오류" + err});
+  } finally {
+    connection.release();
+  }
+})
+
 module.exports = router;

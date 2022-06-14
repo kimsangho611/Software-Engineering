@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`User` (
   `u_stop` INT NULL DEFAULT 0,
   `u_point` INT NULL DEFAULT 0,
   `u_sign_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `u_grade` INT NULL DEFAULT 0,
   UNIQUE INDEX `u_email_UNIQUE` (`u_email` ASC) VISIBLE,
   UNIQUE INDEX `u_phone_UNIQUE` (`u_phone` ASC) VISIBLE,
   PRIMARY KEY (`u_id`))
@@ -52,7 +53,6 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Product` (
   `p_puton_count` INT ZEROFILL NULL DEFAULT 0,
   `p_dirty` VARCHAR(10) NULL DEFAULT NULL,
   `p_contents` VARCHAR(200) NULL DEFAULT NULL,
-  `p_likeitem` INT NULL DEFAULT 0,
   `p_trade` VARCHAR(10) NULL DEFAULT '판매중',
   `p_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `p_view` INT ZEROFILL NULL DEFAULT 0,
@@ -103,12 +103,12 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`ShopBasket` (
   CONSTRAINT `fk_ShopBasket_Product1`
     FOREIGN KEY (`Product_p_id`)
     REFERENCES `secondhand`.`Product` (`p_id`)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ShopBasket_User1`
     FOREIGN KEY (`User_u_id`)
     REFERENCES `secondhand`.`User` (`u_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -212,6 +212,31 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Point` (
     FOREIGN KEY (`User_u_id`)
     REFERENCES `secondhand`.`User` (`u_id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `secondhand`.`Review`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `secondhand`.`Review` (
+  `re_id` INT NOT NULL AUTO_INCREMENT,
+  `re_title` VARCHAR(90) NULL,
+  `re_contents` VARCHAR(100) NOT NULL,
+  `User_u_id` INT NOT NULL,
+  `Product_p_id` INT NOT NULL,
+  PRIMARY KEY (`re_id`),
+  INDEX `fk_Review_User1_idx` (`User_u_id` ASC) VISIBLE,
+  INDEX `fk_Review_Product1_idx` (`Product_p_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Review_User1`
+    FOREIGN KEY (`User_u_id`)
+    REFERENCES `secondhand`.`User` (`u_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Review_Product1`
+    FOREIGN KEY (`Product_p_id`)
+    REFERENCES `secondhand`.`Product` (`p_id`)
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
