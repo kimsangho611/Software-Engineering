@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Layout } from "../components/layout";
 import styles from "./productDetail.module.scss";
-import sample from "../assets/samples/product.png";
 import { IC_Heart, IC_Siren } from "../assets/icons";
 import { OrangeBtn } from "../components/common/button";
 import { ProductInfoLine } from "../components/productDetail/productInfoLine";
@@ -36,17 +36,25 @@ const ProductDetail = () => {
   const [comment, setComment] = useState("");
   const [write, setWrite] = useState("");
   const [seller, setSeller] = useState(false);
+  const [sellerId, setSellerId] = useState("");
 
   const navigate = useNavigate();
 
   const fetch = async () => {
     await hit(params.pid);
     const res = await getProductDetail(params.pid);
+    const seller = res.seller[0];
+    setSellerId(seller[0]);
+    console.log("seller=", res.seller);
     setDetail(res.list);
     setLike(res.isLike);
     const res2 = await amISeller(params.pid);
     setSeller(res2.data.result);
   };
+
+  useEffect(() => {
+    console.log("detail=", detail);
+  }, [detail]);
 
   useEffect(() => {
     if (params.pid != undefined && params.pid != null) fetch();
@@ -135,9 +143,11 @@ const ProductDetail = () => {
             </div>
             <span>상품 등록일 {detail.p_date?.substr(0, 10)}</span>
           </div>
-          <button type="button" className={styles.sellerInfo}>
-            <span>판매자 정보 보기</span>
-          </button>
+          <Link to={`/seller/${sellerId.User_u_id}`}>
+            <button type="button" className={styles.sellerInfo}>
+              <span>판매자 정보 보기</span>
+            </button>
+          </Link>
           <div className={styles.infos}>
             <ProductInfoLine
               title={"정가"}
@@ -228,12 +238,12 @@ const ProductDetail = () => {
         {comment.length != 0 &&
           comment.map((data, i) => {
             return (
-              <>
-                <ProductComment key={i} data={data} seller={seller} />
+              <Fragment key={i}>
+                <ProductComment data={data} seller={seller} />
                 {data.pi_answer !== null && (
                   <ProductReply data={data.pi_answer} />
                 )}
-              </>
+              </Fragment>
             );
           })}
       </div>

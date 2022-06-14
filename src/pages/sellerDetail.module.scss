@@ -1,0 +1,51 @@
+@import "../styles/main.module.scss";
+
+.sellerInfo {
+  @include flexBox(even, center);
+  flex-direction: column;
+
+  h1 {
+    @include text(36px, $text, 700);
+  }
+
+  .reviewLine {
+    @include flexBox(between);
+    width: 100%;
+    height: 126px;
+    padding: 43px;
+    margin-bottom: 20px;
+    border: 0;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+    .buyer {
+      @include text(16px, $text, 400, right);
+    }
+
+    .alignCol {
+      @include flexBox(center, start);
+      flex-direction: column;
+      width: 80%;
+
+      p {
+        @include text(18px, $text, 500, left);
+        width: 100%;
+        margin: 0;
+      }
+
+      .star {
+        position: relative;
+        font-size: 30px;
+        color: $light_grey;
+      }
+
+      .star span {
+        position: absolute;
+        left: 0;
+        width: 0;
+        overflow: hidden;
+        color: $main;
+        pointer-events: none;
+      }
+    }
+  }
+}
