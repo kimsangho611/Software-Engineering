@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `secondhand`.`Review` (
   `re_id` INT NOT NULL AUTO_INCREMENT,
   `re_title` VARCHAR(90) NULL,
   `re_contents` VARCHAR(100) NOT NULL,
-  `re_grade` INT NULL DEFAULT 0,
+  `re_star` INT NULL DEFAULT 0,
   `User_u_id` INT NOT NULL,
   `Product_p_id` INT NOT NULL,
   PRIMARY KEY (`re_id`),

@@ -290,3 +290,17 @@ SELECT count(*) FROM secondhand.shopbasket where User_u_id=1 and Product_p_id=1;
 # 특정 product의 찜 개수 포함한 상세정보 출력
 select *, (select count(*) from shopbasket where Product_p_id=1) as likecnt
 from product p LEFT JOIN shopbasket on shopbasket.Product_p_id = p.p_id where p.p_id = (select sb.Product_p_id from user u join shopbasket sb on u.u_id = sb.User_u_id where u.u_id = 1);
+
+# ==================================================================
+# review 관련 쿼리 
+insert into review(re_title, re_contents, re_grade, User_u_id, Product_p_id) values
+	("1번 상품 구매함", "너무 좋아요!!!", 3, 3, 1),
+    ("2번 상품 구매함", "너무 좋아요!!!", 4, 4, 2),
+    ("5번 상품 구매함", "너무 좋아요!!!", 2, 3, 5);
+    
+select * from review where User_u_id = 3;
+
+# 사용자 평점을 얻는 쿼리
+select ifnull(sum(re_grade) / count(*), 0) as u_star
+from review
+where User_u_id = 4;
