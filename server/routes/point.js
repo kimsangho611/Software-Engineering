@@ -41,11 +41,15 @@ router.post("/buy", async function (req, res) {
       });
     } else {
       const result1 = await connection.query(
-        "select u.u_point, p.p_title, p.p_price from user u join product p on u.u_id = p.User_u_id where p.p_id = ?;",
+        "select p.p_title, p.p_price from product p where p.p_id = ?;",
         [productId]
-      ); // 여기서 상품의 가격과 사용자의 보유 포인트를 조회
+      ); // 여기서 상품의 가격 조회
       const result2 = result1[0];
-      const u_point = result2[0].u_point;
+      const result3 = await connection.query(
+        "select u.u_point from user u where u.u_id = ?;",
+        [token_res.uid]
+      ); //구매자의 잔여 포인트 조회
+      const u_point = result3[0].u_point;
       const p_title = result2[0].p_title;
       const p_price = result2[0].p_price;
 

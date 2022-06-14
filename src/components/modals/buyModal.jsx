@@ -75,7 +75,12 @@ export const BuyFailModal = ({ setModal }) => {
     <Modal setModal={setModal} otherStyle={styles.buyFailModal}>
       <h1>포인트가 부족합니다.</h1>
       <h1>포인트 충전 후 다시 시도해주세요.</h1>
-      <OrangeBtn text={"포인트 충전하러 가기"} otherStyle={styles.chargeBtn} />
+      <Link to={"/mypage/point"}>
+        <OrangeBtn
+          text={"포인트 충전하러 가기"}
+          otherStyle={styles.chargeBtn}
+        />
+      </Link>
       <Link to={"/"}>
         <WhiteBtn text={"홈으로 가기"} />
       </Link>
