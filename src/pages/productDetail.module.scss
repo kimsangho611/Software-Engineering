@@ -92,6 +92,12 @@
         }
       }
 
+      .sellerInfo {
+        @include btn-with-text($main, $white, 150px, 50px);
+        @include text(18px, $white, 400);
+        margin-bottom: 30px;
+      }
+
       .errmsg {
         @include text(20px, $main, 500, left);
         align-items: center;

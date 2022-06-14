@@ -117,7 +117,6 @@ const ProductDetail = () => {
             )}
           </div>
           <h1>{detail.p_title}</h1>
-
           <div className={styles.dealInfo}>
             <strong className={styles.status}>{detail.p_trade}</strong>
             <strong className={styles.price}>
@@ -125,9 +124,7 @@ const ProductDetail = () => {
               <span>원</span>
             </strong>
           </div>
-
           <div className={styles.line} />
-
           <div className={styles.postInfo}>
             <div>
               <span>
@@ -138,7 +135,9 @@ const ProductDetail = () => {
             </div>
             <span>상품 등록일 {detail.p_date?.substr(0, 10)}</span>
           </div>
-
+          <button type="button" className={styles.sellerInfo}>
+            <span>판매자 정보 보기</span>
+          </button>
           <div className={styles.infos}>
             <ProductInfoLine
               title={"정가"}
