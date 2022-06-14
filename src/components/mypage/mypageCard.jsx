@@ -13,6 +13,7 @@ export const MypageCard = ({ children, link }) => {
 };
 
 export const MypageProductCard = ({ productInfo }) => {
+  console.log("productInfo=", productInfo);
   return (
     <div className={styles.mypageProductCard}>
       <img src={productInfo.p_image} alt="clothes" />
@@ -21,9 +22,9 @@ export const MypageProductCard = ({ productInfo }) => {
           className={styles.category}
         >{`${productInfo.p_category1} > ${productInfo.p_category2}`}</span>
         <h1>{productInfo.p_title}</h1>
-        {productInfo.p_trade === "거래확정" ? (
+        {productInfo.p_trade === "거래 중" ? (
           <button type="button" className={styles.orangeTag}>
-            <span>{productInfo.p_trade}</span>
+            <span>거래 확정</span>
           </button>
         ) : (
           <div className={styles.greyTag}>
