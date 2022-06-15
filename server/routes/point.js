@@ -49,9 +49,10 @@ router.post("/buy", async function (req, res) {
         "select u.u_point from user u where u.u_id = ?;",
         [token_res.uid]
       ); //구매자의 잔여 포인트 조회
-      const u_point = result3[0].u_point;
       const p_title = result2[0].p_title;
       const p_price = result2[0].p_price;
+      const result4 = result3[0];
+      const u_point = result4[0].u_point;
 
       if (u_point < p_price) {
         res.status(401).send({
