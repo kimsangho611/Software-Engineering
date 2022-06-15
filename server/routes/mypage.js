@@ -71,12 +71,10 @@ router.get("/list/activity", async function (req, res) {
     } else {
       if (type === "1") {
         const result = await connection.query(
-          "select p.* from product p join (select sb.Product_p_id from user u join shopbasket sb on u.u_id = sb.User_u_id where u.u_id = ?) u_sb on p.p_id = u_sb.Product_p_id;",
+          "select p.*, count(*) as likecnt from product p join (select sb.Product_p_id from user u join shopbasket sb on u.u_id = sb.User_u_id where u.u_id = ?) u_sb on p.p_id = u_sb.Product_p_id group by p.p_id;",
           [token_res.uid]
         );
-        var likecnt = result[0].length;
-
-        res.status(200).send({ success: true, result: result[0], likecnt: likecnt});
+        res.status(200).send({ success: true, result: result[0]});
       } else if (type === "2") {
         const result = await connection.query(
           "select p.* from product p join (select pi.Product_p_id from user u join productinquiry pi on u.u_id = pi.User_u_id where u.u_id = ?) u_pi on p.p_id = u_pi.Product_p_id;",
