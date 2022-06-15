@@ -113,10 +113,6 @@ const SignUp = () => {
           회원가입
         </button>
         <div className="btnBottom">
-          <span className="link">아이디 찾기</span>
-          <span className="link">|</span>
-          <span className="link">비밀번호 찾기</span>
-          <span className="link">|</span>
           <Link to={"/login"} className="link">
             로그인
           </Link>
