@@ -20,7 +20,7 @@ router.post("/product/:productId", async function (req, res) {
     var u_id = result[0].u_id;
 
     await connection.query(
-      "insert into review(re_title, re_contents, re_star, User_u_id, Product_p_id values (?,?,?,?,?);",
+      "insert into review(re_title, re_contents, re_star, User_u_id, Product_p_id) values (?,?,?,?,?);",
       [review_title, review_contents, review_star, u_id, productId]
     );
 
