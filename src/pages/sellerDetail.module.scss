@@ -1,16 +1,23 @@
 @import "../styles/main.module.scss";
 
 .sellerInfo {
-  @include flexBox(even, center);
+  @include flexBox(center, center);
   flex-direction: column;
 
   h1 {
     @include text(36px, $text, 700);
   }
 
+  h2 {
+    @include text(30px, $text, 700);
+  }
+  h3 {
+    @include text(20px, $text, 700);
+  }
+
   .reviewLine {
     @include flexBox(between);
-    width: 100%;
+    width: 80%;
     height: 126px;
     padding: 43px;
     margin-bottom: 20px;
@@ -23,8 +30,8 @@
 
     .alignCol {
       @include flexBox(center, start);
-      flex-direction: column;
       width: 80%;
+      flex-direction: column;
 
       p {
         @include text(18px, $text, 500, left);

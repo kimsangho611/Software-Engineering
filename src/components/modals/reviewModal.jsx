@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { writeReview } from "../../core/api/mypage/review";
+import { BuyConfirm } from "../../core/api/mypage/sellConfirm";
 import { OrangeBtn } from "../common/button";
 import { Modal } from "../common/modal";
 import styles from "./modals.module.scss";
@@ -18,6 +19,10 @@ export const ReviewModal = ({ productId }) => {
     fillStar.style.width = `${fillRange.value * 10}%`;
     setReview({ ...review, review_star: fillRange.value / 2 });
   };
+
+  useEffect(() => {
+    console.log(review.review_star);
+  }, [review.review_star]);
 
   return (
     <Modal otherStyle={styles.reviewModal} prevent={true}>
@@ -47,6 +52,10 @@ export const ReviewModal = ({ productId }) => {
         onClick={async () => {
           console.log("produ=", productId);
           const res = await writeReview(productId, review);
+          const res2 = await BuyConfirm(productId);
+          if (res2.success) {
+            window.location.reload();
+          }
         }}
       />
     </Modal>

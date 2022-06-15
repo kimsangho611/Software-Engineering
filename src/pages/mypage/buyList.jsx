@@ -31,6 +31,7 @@ const MyPageBuyList = () => {
                 productInfo={data}
                 setReviewModal={setReviewModal}
                 setSelected={setSelected}
+                isSeller={false}
               />
             </div>
           );
