@@ -210,8 +210,13 @@ const ProductRegister = () => {
         text={"등록"}
         onClick={async () => {
           const res = await productRegister(userInput);
-          if (res.status == 200) setSuccess(true);
-          else setSuccess(false);
+          if (res.status == 200) {
+            setSuccess(true);
+            console.log(res);
+          } else {
+            setSuccess(false);
+            console.log(res);
+          }
         }}
         dis={dis}
       />

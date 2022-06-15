@@ -33,7 +33,9 @@ const ProductBlock = ({
               .toString()
               .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}회`}
           </span>
-          {state === "판매 완료" || state === "거래 중" ? (
+          {state === "판매 완료" ||
+          state === "거래 중" ||
+          state === "확정 대기 중" ? (
             <span className="price">{`${state}`}</span>
           ) : (
             <span className="price">{`${price
