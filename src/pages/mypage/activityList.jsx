@@ -44,11 +44,11 @@ const MyPageActivityList = () => {
                 key={key}
                 id={item?.p_id}
                 img={item?.p_image}
-                like={item?.likecnt}
+                like={String(item?.likecnt)}
                 firstCate={item?.p_category1}
                 secondCate={item?.p_category2}
                 title={item?.p_title}
-                view={item?.p_view}
+                view={String(item?.p_view)}
                 price={item?.p_price}
                 state={item?.p_trade}
               />
