@@ -30,6 +30,7 @@ import UserNotice from "./pages/notice/userNotice";
 import UserNoticeDetail from "./pages/notice/userNoticeDetail";
 import ManageInquiryDetail from "./pages/admin/manageInquiryDetail";
 import ProductDetailEdit from "./pages/productDetailEdit";
+import SellerInfo from "./pages/sellerDetail";
 
 const App = () => {
   return (
@@ -57,6 +58,7 @@ const App = () => {
             path="/product/detail/:pid/edit"
             element={<ProductDetailEdit />}
           />
+          <Route path="/seller/:uid" element={<SellerInfo />} />
 
           <Route path="/category/:c1/:c2" element={<ViewCategory />} />
           <Route path="/notice" element={<UserNotice />} />
