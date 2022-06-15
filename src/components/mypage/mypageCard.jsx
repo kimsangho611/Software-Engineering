@@ -3,6 +3,7 @@ import product from "../../assets/samples/product.png";
 import { IC_Heart } from "../../assets/icons";
 import temp from "../common/productBlock.css";
 import { Link } from "react-router-dom";
+import { BuyConfirm, SellConfirm } from "../../core/api/mypage/sellConfirm";
 
 export const MypageCard = ({ children, link }) => {
   return (
@@ -16,6 +17,7 @@ export const MypageProductCard = ({
   productInfo,
   setReviewModal,
   setSelected,
+  isSeller,
 }) => {
   return (
     <div className={styles.mypageProductCard}>
@@ -25,13 +27,27 @@ export const MypageProductCard = ({
           className={styles.category}
         >{`${productInfo.p_category1} > ${productInfo.p_category2}`}</span>
         <h1>{productInfo.p_title}</h1>
-        {productInfo.p_trade === "거래 중" ? (
+        {!isSeller && productInfo.p_trade === "거래 중" ? (
           <button
             type="button"
             className={styles.orangeTag}
             onClick={() => {
               setReviewModal(true);
               setSelected(productInfo.p_id);
+            }}
+          >
+            <span>거래 확정</span>
+          </button>
+        ) : isSeller && productInfo.p_trade === "확정 대기 중" ? (
+          <button
+            type="button"
+            className={styles.orangeTag}
+            onClick={async () => {
+              console.log("클릭했다");
+              console.log(productInfo);
+              const res = await SellConfirm(productInfo.p_id);
+              console.log(res);
+              window.location.reload();
             }}
           >
             <span>거래 확정</span>

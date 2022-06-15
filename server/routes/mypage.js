@@ -44,7 +44,7 @@ router.get("/list/sell", async function (req, res) {
       });
     } else {
       const result = await connection.query(
-        "select p.p_category1, p.p_category2, p.p_title, p.p_date, p.p_trade,p.p_image \
+        "select p.p_id, p.p_category1, p.p_category2, p.p_title, p.p_date, p.p_trade,p.p_image \
                 from user u join product p on u.u_id = p.User_u_id where u.u_id = ?;",
         [token_res.uid]
       );
@@ -93,29 +93,41 @@ router.get("/list/activity", async function (req, res) {
   }
 });
 
-router.post("/list/buy/:productId", async function(req, res) {
+router.post("/list/buy/:productId", async function (req, res) {
   var productId = req.params.productId;
 
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    await connection.query("update product set p_trade = '거래 대기 중' where p_id = ?", [productId]);
-    res.status(200).send({ success: true, msg: "거래 확정이 완료되었습니다. 판매자가 거래 확정을 할 때까지 기다려주세요"});
+    await connection.query(
+      "update product set p_trade = '확정 대기 중' where p_id = ?",
+      [productId]
+    );
+    res.status(200).send({
+      success: true,
+      msg: "거래 확정이 완료되었습니다. 판매자가 거래 확정을 할 때까지 기다려주세요",
+    });
   } catch (err) {
-    res.status(500).send({ success: false, msg: "서버 오류" + err});
+    res.status(500).send({ success: false, msg: "서버 오류" + err });
   } finally {
     connection.release();
   }
 });
 
-router.post("/list/sell/:productId", async function(req, res) {
+router.post("/list/sell/:productId", async function (req, res) {
   var productId = req.params.productId;
 
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    await connection.query("update product set p_trade = '거래 완료' where p_id = ?", [productId]);
-    res.status(200).send({ success: true, msg: "최종적으로 구매자와 거래가 완료되었습니다."});
+    await connection.query(
+      "update product set p_trade = '판매 완료' where p_id = ?",
+      [productId]
+    );
+    res.status(200).send({
+      success: true,
+      msg: "최종적으로 구매자와 거래가 완료되었습니다.",
+    });
   } catch (err) {
-    res.status(500).send({ success: false, msg: "서버 오류" + err});
+    res.status(500).send({ success: false, msg: "서버 오류" + err });
   } finally {
     connection.release();
   }

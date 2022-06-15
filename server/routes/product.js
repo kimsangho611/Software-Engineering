@@ -32,7 +32,8 @@ router.post(
       await connection.query(sql, datas);
       res.status(200).send();
     } catch (err) {
-      res.status(500).send();
+      console.log(err);
+      res.status(500).send({ msg: err });
     } finally {
       connection.release();
     }

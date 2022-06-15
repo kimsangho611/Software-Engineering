@@ -169,6 +169,7 @@ const ProductDetail = () => {
             <div className={styles.btns}>
               <OrangeBtn
                 text={"상품 삭제"}
+                dis={detail.p_trade === "판매중" ? false : true}
                 onClick={async () => {
                   const res = await ProductDelete(params.pid);
                   res.success

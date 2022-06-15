@@ -7,3 +7,12 @@ export const writeReview = async (productId, review) => {
   });
   return res.data;
 };
+
+export const getSellerReview = async (productId) => {
+  const res = await myAxios({
+    method: METHOD.GET,
+    url: `/review/seller/${productId}`,
+  });
+  console.log("res in api", res);
+  return res.data;
+};

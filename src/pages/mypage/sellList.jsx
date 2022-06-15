@@ -23,7 +23,7 @@ const MyPageSellList = () => {
           return (
             <div className={styles.card} key={i}>
               <span className={styles.date}>{data.p_date?.substr(0, 10)}</span>
-              <MypageProductCard productInfo={data} />
+              <MypageProductCard productInfo={data} isSeller={true} />
             </div>
           );
         })}
