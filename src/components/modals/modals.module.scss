@@ -144,6 +144,7 @@
   }
 
   textarea {
+    @include text(32px, $text, 500, left);
     width: 573px;
     height: 286px;
     padding: 10px 18px;

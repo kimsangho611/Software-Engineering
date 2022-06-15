@@ -24,7 +24,9 @@ const ManageUser = () => {
       <div className={styles.board}>
         <BoardLine list={title} cnt={5} />
         {user.map((data, i) => {
-          return <BoardLine list={data} key={i} cnt={5} />;
+          let dataFixed = data;
+          dataFixed.u_sign_date = data.u_sign_date?.substr(0, 10);
+          return <BoardLine list={dataFixed} key={i} cnt={5} />;
         })}
       </div>
       <div className={styles.btnSet}>
